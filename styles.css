@@ -640,7 +640,7 @@ header.scrolled {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
-  align-items: start;
+  align-items: flex-start;
 }
 
 .skill-sticky {
@@ -651,6 +651,7 @@ header.scrolled {
   box-shadow: var(--shadow-retro-md);
   transition: var(--transition-smooth);
   position: relative;
+  height: max-content;
 }
 
 .skill-sticky::before {
