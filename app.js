@@ -106,14 +106,41 @@ function initPortfolioModal() {
   // DOM references inside modal
   const mCategory = modalOverlay.querySelector(".modal-category");
   const mTitle = modalOverlay.querySelector(".modal-title");
-  const mImage = modalOverlay.querySelector(".modal-hero-img");
   const mDesc = modalOverlay.querySelector(".modal-desc-text");
+
+  const carouselTrack = document.getElementById("carousel-track");
+  const carouselPrev = document.getElementById("carousel-prev");
+  const carouselNext = document.getElementById("carousel-next");
+  const carouselIndicators = document.getElementById("carousel-indicators");
 
   const metaRole = modalOverlay.querySelector(".meta-role");
   const metaClient = modalOverlay.querySelector(".meta-client");
   const metaTools = modalOverlay.querySelector(".meta-tools");
-  const metaCategory = modalOverlay.querySelector(".meta-category");
+  const metaCategory = modalOverlay.querySelector(".modal-category");
   const goalBadgeContainer = modalOverlay.querySelector(".modal-goal-badges");
+
+  let currentSlideIndex = 0;
+  let totalSlides = 0;
+
+  function updateSlide() {
+    carouselTrack.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+    const dots = carouselIndicators.querySelectorAll(".carousel-dot");
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle("active", idx === currentSlideIndex);
+    });
+  }
+
+  carouselPrev.addEventListener("click", () => {
+    if (totalSlides <= 1) return;
+    currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+    updateSlide();
+  });
+
+  carouselNext.addEventListener("click", () => {
+    if (totalSlides <= 1) return;
+    currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+    updateSlide();
+  });
 
   portfolioCards.forEach(card => {
     card.addEventListener("click", () => {
@@ -123,7 +150,7 @@ function initPortfolioModal() {
       // Read from DOM to support translation
       const category = hiddenData.querySelector(".data-category")?.innerHTML || "";
       const title = hiddenData.querySelector(".data-title")?.innerHTML || "";
-      const image = hiddenData.querySelector(".data-image")?.textContent || "";
+      const imageString = hiddenData.querySelector(".data-image")?.textContent || "";
       const description = hiddenData.querySelector(".data-description")?.innerHTML || "";
       const role = hiddenData.querySelector(".data-meta-role")?.innerHTML || "";
       const clientLabelValue = hiddenData.querySelector(".data-client-label")?.innerHTML || "";
@@ -134,12 +161,50 @@ function initPortfolioModal() {
       const metaCat = hiddenData.querySelector(".data-meta-category")?.innerHTML || "";
       const goalsRaw = hiddenData.querySelector(".data-goals")?.innerHTML || "";
 
+      // Split comma separated images
+      const images = imageString.split(",").map(i => i.trim()).filter(Boolean);
+
       // Populate Modal details
       mCategory.innerHTML = category;
       mTitle.innerHTML = title;
-      mImage.src = image;
-      mImage.alt = title.replace(/<[^>]*>?/gm, ''); // Remove HTML tags from alt
       mDesc.innerHTML = description;
+
+      // Setup Carousel Images
+      carouselTrack.innerHTML = "";
+      carouselIndicators.innerHTML = "";
+      currentSlideIndex = 0;
+      totalSlides = images.length;
+
+      images.forEach((imgSrc, idx) => {
+        const img = document.createElement("img");
+        img.className = "modal-hero-img";
+        img.src = imgSrc;
+        img.alt = title.replace(/<[^>]*>?/gm, '') + " " + (idx + 1);
+        carouselTrack.appendChild(img);
+
+        if (totalSlides > 1) {
+          const dot = document.createElement("span");
+          dot.className = "carousel-dot";
+          if (idx === 0) dot.classList.add("active");
+          dot.addEventListener("click", () => {
+            currentSlideIndex = idx;
+            updateSlide();
+          });
+          carouselIndicators.appendChild(dot);
+        }
+      });
+
+      if (totalSlides > 1) {
+        carouselPrev.style.display = "flex";
+        carouselNext.style.display = "flex";
+        carouselIndicators.style.display = "flex";
+      } else {
+        carouselPrev.style.display = "none";
+        carouselNext.style.display = "none";
+        carouselIndicators.style.display = "none";
+      }
+
+      updateSlide();
 
       // Meta values
       metaRole.innerHTML = role || course || "";
