@@ -3,25 +3,25 @@
 
 /* CSS Variables */
 :root {
-  /* Vanilla Latte Mode (Default Light Theme - Girly Marketing Vibe) */
-  --bg-color: #f7f3eb;
-  --bg-pattern: #f0eae1;
+  /* Baby Blue Latte Mode (Default Light Theme - Cloud Vibe) */
+  --bg-color: #f0f7fc;
+  --bg-pattern: #dbeaf4;
   --card-bg: #ffffff;
-  --folder-bg: #ecdcc9;
-  --folder-bg-active: #dfcca7;
-  --text-primary: #3d3028;
-  --text-secondary: #705b4f;
-  --text-muted: #9c8a7f;
-  --border-color: #3d3028;
+  --folder-bg: #d2e4f5;
+  --folder-bg-active: #bcd6ef;
+  --text-primary: #1c2c3d;
+  --text-secondary: #455a70;
+  --text-muted: #748c9e;
+  --border-color: #1c2c3d;
   
-  --primary-accent: #a35c37;       /* Terracotta/Rust Accent */
-  --primary-accent-rgb: 163, 92, 55;
-  --secondary-accent: #6b8f71;     /* Sage Green Accent */
-  --secondary-accent-rgb: 107, 143, 113;
-  --yellow-accent: #f0ce97;        /* Soft Mustard */
+  --primary-accent: #3b85c6;       /* Soft Medium Blue */
+  --primary-accent-rgb: 59, 133, 198;
+  --secondary-accent: #76a5af;     /* Sage Sky Blue */
+  --secondary-accent-rgb: 118, 165, 175;
+  --yellow-accent: #e5f2ff;        /* Ultra Light Ice Blue */
   
-  --nav-bg: rgba(247, 243, 235, 0.9);
-  --modal-bg: rgba(247, 243, 235, 0.98);
+  --nav-bg: rgba(240, 247, 252, 0.9);
+  --modal-bg: rgba(240, 247, 252, 0.98);
   
   /* Retro Flat Shadows */
   --shadow-retro-sm: 2px 2px 0px var(--border-color);
@@ -34,26 +34,26 @@
   --transition-fast: all 0.15s ease;
 }
 
-/* Dark Chocolate Cocoa Mode (Dark Theme Toggler) */
+/* Midnight Blue Mode (Dark Theme Toggler) */
 [data-theme="dark"] {
-  --bg-color: #271f1a;
-  --bg-pattern: #1e1713;
-  --card-bg: #322822;
-  --folder-bg: #45362e;
-  --folder-bg-active: #54433a;
-  --text-primary: #f5ebe0;
-  --text-secondary: #cbbab0;
-  --text-muted: #9c8a7f;
-  --border-color: #f5ebe0;
+  --bg-color: #111a24;
+  --bg-pattern: #0a1117;
+  --card-bg: #1a2633;
+  --folder-bg: #223245;
+  --folder-bg-active: #2a3e54;
+  --text-primary: #e6f1fa;
+  --text-secondary: #a3c4db;
+  --text-muted: #7394ab;
+  --border-color: #e6f1fa;
   
-  --primary-accent: #e88d67;
-  --primary-accent-rgb: 232, 141, 103;
-  --secondary-accent: #8cb894;
-  --secondary-accent-rgb: 140, 184, 148;
-  --yellow-accent: #dca75b;
+  --primary-accent: #6eb5eb;       /* Bright Baby Blue */
+  --primary-accent-rgb: 110, 181, 235;
+  --secondary-accent: #8dc1cf;     /* Soft Pastel Sky */
+  --secondary-accent-rgb: 141, 193, 207;
+  --yellow-accent: #2e4359;        /* Medium Slate Blue */
   
-  --nav-bg: rgba(39, 31, 26, 0.9);
-  --modal-bg: rgba(39, 31, 26, 0.98);
+  --nav-bg: rgba(17, 26, 36, 0.9);
+  --modal-bg: rgba(17, 26, 36, 0.98);
   
   --shadow-retro-sm: 2px 2px 0px var(--border-color);
   --shadow-retro-md: 4px 4px 0px var(--border-color);
@@ -184,7 +184,7 @@ header.scrolled {
 .nav-menu {
   display: flex;
   list-style: none;
-  gap: 2rem;
+  gap: 1.5rem;
   align-items: center;
 }
 
@@ -197,9 +197,10 @@ header.scrolled {
   letter-spacing: 0.05em;
   color: var(--text-secondary);
   transition: var(--transition-fast);
-  padding: 0.4rem 0.8rem;
+  padding: 0.4rem 0.6rem;
   border-radius: 12px;
   border: 1.5px solid transparent;
+  white-space: nowrap;
 }
 
 .nav-link:hover, .nav-link.active {
@@ -397,7 +398,7 @@ header.scrolled {
 }
 
 [data-theme="dark"] .polaroid-frame {
-  background-color: #ecdcc9;
+  background-color: var(--folder-bg);
 }
 
 .polaroid-frame:hover {
@@ -425,7 +426,7 @@ header.scrolled {
   font-weight: 700;
   text-align: center;
   margin-top: 1rem;
-  color: #3d3028; /* Always deep brown for vintage snapshot look */
+  color: var(--text-primary);
   font-style: italic;
 }
 
@@ -657,7 +658,7 @@ header.scrolled {
   font-size: 1.05rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
-  color: #3d3028; /* Always dark for paper note aesthetic */
+  color: var(--text-primary);
 }
 
 [data-theme="dark"] .skill-sticky h4 {
@@ -1102,7 +1103,7 @@ header.scrolled {
 }
 
 [data-theme="dark"] .polaroid-pile-item {
-  background-color: #ecdcc9;
+  background-color: var(--folder-bg);
 }
 
 .polaroid-pile-item img {
@@ -1118,7 +1119,7 @@ header.scrolled {
   font-style: italic;
   text-align: center;
   margin-top: 0.5rem;
-  color: #3d3028;
+  color: var(--text-primary);
 }
 
 .pile-1 {
@@ -1366,7 +1367,7 @@ footer {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(39, 31, 26, 0.6);
+  background-color: rgba(17, 26, 36, 0.6);
   backdrop-filter: blur(4px);
   z-index: 2000;
   display: flex;
