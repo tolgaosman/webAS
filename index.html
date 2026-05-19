@@ -177,37 +177,32 @@
     .resume-actions-group {
       display: flex !important;
       flex-direction: row !important;
-      gap: 0.5rem !important;
-      margin-top: 1.5rem !important;
-      flex-wrap: nowrap !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 1rem !important;
+      margin-top: 3rem !important;
+      flex-wrap: wrap !important;
       width: 100% !important;
-      box-sizing: border-box !important;
     }
 
     .resume-actions-group .btn {
-      flex: 1 1 50% !important;
-      width: auto !important;
-      font-size: 0.72rem !important;
-      padding: 0.75rem 0.35rem !important;
+      flex: 0 1 auto !important;
+      min-width: 180px !important;
+      max-width: 260px !important;
+      white-space: normal !important;
+      text-align: center !important;
+      padding: 0.85rem 1.5rem !important;
+      font-size: 0.85rem !important;
+      line-height: 1.3 !important;
       display: inline-flex !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: 0.4rem !important;
-      text-align: center !important;
-      border-radius: 12px !important;
-      min-width: 0 !important;
-      box-sizing: border-box !important;
-    }
-
-    .resume-actions-group .btn span {
-      white-space: normal !important;
-      line-height: 1.15 !important;
-      word-break: break-word !important;
+      gap: 0.5rem !important;
     }
 
     .resume-actions-group .btn svg {
-      width: 13px !important;
-      height: 13px !important;
+      width: 16px !important;
+      height: 16px !important;
       flex-shrink: 0 !important;
     }
 
@@ -227,7 +222,7 @@
   </style>
 
   <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=1.8">
+  <link rel="stylesheet" href="styles.css?v=1.9">
 </head>
 
 <body>
@@ -826,29 +821,29 @@
 
             </div>
           </div>
-
-          <!-- Resume Actions: Open and Download CV (Outside folders!) -->
-          <div class="resume-actions-group">
-            <a href="alaraCV.pdf" target="_blank" class="btn btn-secondary">
-              <span>Open Resume</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
-            </a>
-            <a href="alaraCV.pdf" download="Alara_Soysan_CV.pdf" class="btn btn-primary">
-              <span>Download Resume</span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-            </a>
-          </div>
         </div>
+      </div>
+
+      <!-- Resume Actions: Open and Download CV (Below both columns) -->
+      <div class="resume-actions-group">
+        <a href="alaraCV.pdf" target="_blank" class="btn btn-secondary">
+          <span>Open Resume</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+            <polyline points="15 3 21 3 21 9"></polyline>
+            <line x1="10" y1="14" x2="21" y2="3"></line>
+          </svg>
+        </a>
+        <a href="alaraCV.pdf" download="Alara_Soysan_CV.pdf" class="btn btn-primary">
+          <span>Download Resume</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </a>
       </div>
     </div>
   </section>
