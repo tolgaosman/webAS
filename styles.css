@@ -1736,9 +1736,8 @@ footer {
 }
 
 /* Dutch Specific Layout Adjustments */
-html[lang="nl"] .hero-title-group {
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+html[lang="nl"] .hero-main-title br {
+  display: none !important;
 }
 
 html[lang="nl"] .skill-sticky {
