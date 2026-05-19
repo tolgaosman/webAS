@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="tr" data-theme="light">
 
 <head>
   <meta charset="UTF-8">
@@ -187,8 +187,8 @@
 
       <!-- Logo (Left) -->
       <a href="#hero" class="logo" style="display: flex; align-items: center;">
-        <img src="assets/images/siteLogo.png" alt="Alara Soysan Logo" class="nav-logo-img" height="60"
-          style="max-height: 60px; width: auto; display: block;">
+        <img src="assets/images/siteLogo.png" alt="Alara Soysan Logo" class="nav-logo-img" height="80"
+          style="max-height: 80px; width: auto; display: block;">
       </a>
 
       <!-- Mobile Drawer Trigger -->
@@ -216,8 +216,8 @@
       <div class="nav-actions">
         <div class="lang-selector" id="lang-selector">
           <button class="lang-btn notranslate" id="lang-btn" onclick="toggleLangDropdown()">
-            <img id="lang-btn-flag" class="lang-btn-flag notranslate" src="https://flagcdn.com/w40/gb.png" alt="EN">
-            <span id="lang-current" class="notranslate">EN</span>
+            <img id="lang-btn-flag" class="lang-btn-flag notranslate" src="https://flagcdn.com/w40/tr.png" alt="TR">
+            <span id="lang-current" class="notranslate">TR</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
               stroke-linejoin="round" style="width:10px;height:10px">
               <polyline points="6 9 12 15 18 9"></polyline>
@@ -872,7 +872,7 @@
           <h3 class="cert-title">Google Analytics Certification</h3>
           <div class="cert-body-desc">
             Veri takibi, kanal performans ölçümleri, kullanıcı analizleri ve gösterge panoları kullanımı.
-            <div class="cert-id">Dec 2025 - Dec 2026</div>
+            <div class="cert-id">Valid: Dec 2025 - Dec 2026</div>
           </div>
         </div>
       </div>
@@ -1036,7 +1036,7 @@
   <script type="text/javascript">
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({
-        pageLanguage: 'en',
+        pageLanguage: 'tr',
         includedLanguages: 'en,tr,nl',
         autoDisplay: false,
         gaTrack: false
@@ -1101,7 +1101,7 @@
       document.getElementById('label-nl').textContent = labels.nl;
 
       // Trigger Google Translate
-      if (langCode === 'en') {
+      if (langCode === 'tr') {
         // Clear googtrans cookie for all paths and domains
         const cookieClean = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
         document.cookie = cookieClean + ' path=/';
@@ -1115,7 +1115,7 @@
           select.dispatchEvent(new Event('change'));
         }
 
-        // Reload page to restore original English layout
+        // Reload page to restore original Turkish layout
         window.location.reload();
         return;
       }
@@ -1131,8 +1131,8 @@
         setTimeout(hideBanner, 1500);
       } else {
         // Fallback: cookie + reload
-        document.cookie = 'googtrans=/en/' + langCode + '; path=/; domain=' + window.location.hostname;
-        document.cookie = 'googtrans=/en/' + langCode + '; path=/; domain=.' + window.location.hostname;
+        document.cookie = 'googtrans=/tr/' + langCode + '; path=/; domain=' + window.location.hostname;
+        document.cookie = 'googtrans=/tr/' + langCode + '; path=/; domain=.' + window.location.hostname;
         window.location.reload();
       }
     }
@@ -1148,14 +1148,14 @@
     // On page load: sync button label, flag, and dropdown option languages from stored cookie
     (function syncLangButton() {
       const cookie = document.cookie.split(';').find(c => c.trim().startsWith('googtrans='));
-      let activeLang = 'en';
-      let activeLabel = 'EN';
+      let activeLang = 'tr';
+      let activeLabel = 'TR';
 
       if (cookie) {
         const val = cookie.trim().split('/').pop().trim();
-        if (val === 'tr') {
-          activeLang = 'tr';
-          activeLabel = 'TR';
+        if (val === 'en') {
+          activeLang = 'en';
+          activeLabel = 'EN';
         } else if (val === 'nl') {
           activeLang = 'nl';
           activeLabel = 'NL';
