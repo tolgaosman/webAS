@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="dark">
+<html lang="tr" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- SEO Meta Tags -->
-  <title>Alara Soysan | Portfolio & Digital Branding Specialist</title>
-  <meta name="description" content="Alara Soysan'ın profesyonel portfolyosu. Rotterdam İşletme Okulu öğrencisi, Dijital Pazarlama ve Organizasyon Yönetimi Uzmanı.">
-  <meta name="keywords" content="Alara Soysan, Portfolyo, Dijital Pazarlama, Rotterdam, Turkcell Stajyer, Organzasyon Yönetimi, Tasarım">
+  <title>Alara Soysan | Marketing & Branding Portfolio</title>
+  <meta name="description" content="Alara Soysan'ın dijital pazarlama, marka yönetimi ve organizasyonel gelişim portfolyosu. Rotterdam İşletme Okulu.">
+  <meta name="keywords" content="Alara Soysan, Portfolyo, Dijital Pazarlama, Rotterdam, Turkcell Stajyer, Sosyal Medya Kampanyası, Retro Portfolyo">
   <meta name="author" content="Alara Soysan">
   
   <!-- CSS Stylesheet -->
@@ -15,31 +15,25 @@
 </head>
 <body>
 
-  <!-- Background Blur Blobs for Premium Glassmorphism Look -->
-  <div class="ambient-blobs">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
-
-  <!-- Header Section -->
+  <!-- Fixed Header & Navigation -->
   <header>
     <div class="nav-container">
-      <a href="#hero" class="logo">ALARA <span>SOYSAN</span></a>
+      <a href="#hero" class="logo">ALARA <span>SOYSAN.</span></a>
       
-      <!-- Hamburger Icon for Mobile -->
+      <!-- Mobile Drawer Trigger -->
       <button class="hamburger" id="hamburger" aria-label="Menüyü Aç">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
       </button>
 
-      <!-- Navigation Menu Links -->
+      <!-- Navigation Link List -->
       <ul class="nav-menu" id="nav-menu">
         <li><a href="#hero" class="nav-link active">Home</a></li>
         <li><a href="#about" class="nav-link">About Me</a></li>
+        <li><a href="#specialties" class="nav-link">Services</a></li>
         <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
         <li><a href="#resume" class="nav-link">Resume</a></li>
         <li><a href="#certificates" class="nav-link">Certificates</a></li>
@@ -47,14 +41,14 @@
       </ul>
 
       <div class="nav-actions">
-        <!-- Theme Toggle Button -->
+        <!-- Theme Toggle Switch -->
         <button class="theme-toggle" id="theme-toggle" aria-label="Temayı Değiştir">
-          <!-- Moon Icon (Dark Mode Active) -->
-          <svg class="moon-icon" viewBox="0 0 24 24">
+          <!-- Moon Icon (For Dark Cocoa theme) -->
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="currentColor">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
-          <!-- Sun Icon (Light Mode Active) -->
-          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- Sun Icon (For Vanilla Latte theme) -->
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
             <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -73,38 +67,42 @@
   <!-- Hero Section -->
   <section id="hero">
     <div class="container hero-grid">
+      <!-- Polaroid Snapshot Visual (Left Column) -->
       <div class="hero-visual reveal active">
-        <div class="hero-image-wrapper">
-          <img src="assets/images/alara_profile.png" alt="Alara Soysan Portrait">
+        <div class="polaroid-frame">
+          <div class="polaroid-image-box">
+            <img src="assets/images/alara_profile.png" alt="Alara Soysan Portrait">
+          </div>
+          <div class="polaroid-caption">Alara Soysan, 2026</div>
         </div>
       </div>
+      
+      <!-- Hero Headline Details (Right Column) -->
       <div class="hero-content reveal active" style="transition-delay: 0.1s;">
-        <span class="section-tag">Digital Marketer & HR Intern</span>
-        <h1 class="hero-title">Hi, My Name is <br><span class="highlight">Alara Soysan!</span></h1>
-        <p class="hero-desc">
-          NL based, Cyprus raised 3rd year International Business student in Rotterdam. Specializing in Organisation & Change Management, with a Minor in Digital Marketing.
-        </p>
-        
-        <div class="hero-actions">
-          <a href="#portfolio" class="btn btn-primary">
-            Portfolyomu İncele
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </a>
-          <a href="#contact" class="btn btn-secondary">İletişime Geç</a>
+        <div class="hero-title-group">
+          <span class="hero-marketing-label">Specialist in digital branding</span>
+          <h1 class="hero-main-title">Marketing<br>Portfolio</h1>
+          <span class="hero-by-line">by Alara Soysan</span>
         </div>
-
-        <div class="hero-socials">
-          <span class="social-label">Takip Et:</span>
-          <div class="social-links">
-            <a href="https://www.linkedin.com/in/alara-soysan-8a9018247/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
-              <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
-              <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            </a>
+        
+        <!-- Folder Styled Introductory Box -->
+        <div class="folder-container hero-desc-folder">
+          <span class="folder-tab">Welcome</span>
+          <p>
+            Rotterdam merkezli, Kıbrıs kökenli, Rotterdam İşletme Okulu Uluslararası İşletme 3. sınıf öğrencisiyim. Dijital pazarlama, işveren markası ve sakin estetik tasarımlar geliştiriyorum.
+          </p>
+          <div class="hero-actions">
+            <a href="#portfolio" class="btn btn-primary">Portfolyo</a>
+            <a href="#contact" class="btn btn-secondary">İletişim</a>
+            
+            <div class="hero-socials">
+              <a href="https://www.linkedin.com/in/alara-soysan-8a9018247/" target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -114,79 +112,129 @@
   <!-- About Me Section -->
   <section id="about">
     <div class="container">
-      <span class="section-tag">About Me</span>
-      <h2 class="section-title">Aesthetics, Clarity & <br><span class="highlight">Thoughtful Details</span></h2>
+      <div class="section-header-group">
+        <span class="section-tag">About Me</span>
+        <h2 class="section-title">Clarify & Structure</h2>
+        <div class="section-divider"></div>
+      </div>
       
-      <div class="about-grid reveal">
-        <div class="about-text">
+      <div class="about-layout reveal">
+        <!-- Bio Card (Styled as large Vintage Card) -->
+        <div class="folder-container about-bio-card">
+          <span class="folder-tab">Biografi</span>
           <p>
-            Hi, everyone! I am Alara, a 21-year-old International Business student from Cyprus with a strong interest in digital marketing, content creation, organisation management, and design. With my Bachelor's degree, I am studying International Business, specialising in Organisation and Change, also following a Digital Marketing Minor programme. Currently, I am doing my HR&Branding Internship at a telecommunications company called Turkcell.
+            Merhaba! Ben Alara. 21 yaşında, Kıbrıslı bir Uluslararası İşletme öğrencisiyim. Rotterdam'da yaşıyor, organizasyonel değişim yönetimi ile dijital pazarlama alanlarına odaklanıyorum. Şu anda Turkcell'de İK ve Marka Yönetimi (HR & Branding) stajımı yapmaktayım.
           </p>
           <p>
-            I am someone who values clarity, aesthetics, and thoughtful details. I love turning ideas into something clear, structured, and visually calm. I enjoy learning by doing, experimenting with ideas, and improving my work step by step. I am naturally curious and organised, and bringing structure to creative processes gives me satisfaction. I can describe myself as a really positive and hopeful person, who always thinks there will be solutions no matter what the problems are.
+            Fikirleri netleştirmeye, görsel bir düzen oluşturmaya ve tasarımlarda sakin tonlar yakalamaya değer veriyorum. Problem çözme süreçlerine yapıcı yaklaşıyor, kreatif projelerde yapılandırılmış bir sistem kurmaktan keyif alıyorum.
           </p>
           <p>
-            This website is a small reflection of how I think and work. It is a space where I share my projects, interests, and the things I am learning along the way!
+            Bu site; edindiğim dijital birikimi, projelerimi ve estetik anlayışımı paylaştığım kişisel alanımın bir yansımasıdır.
           </p>
         </div>
         
-        <div class="skills-wrapper">
-          <h3>My Hobbies & Interests</h3>
-          <div class="hobbies-flex">
-            <div class="hobby-badge">
-              <svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 0-3 3v1.077c0 .185-.05.367-.145.525L6.68 11.23a1.5 1.5 0 0 0-.214.77v3a1.5 1.5 0 0 0 1.5 1.5h8.068a1.5 1.5 0 0 0 1.5-1.5v-3c0-.28-.08-.553-.228-.79l-2.072-3.32a.965.965 0 0 1-.154-.513V6a3 3 0 0 0-3-3zm0-2a5 5 0 0 1 5 5v1.272l1.928 3.085A3.5 3.5 0 0 1 20 12v3a3.5 3.5 0 0 1-3.5 3.5H7.5A3.5 3.5 0 0 1 4 15v-3c0-.66.186-1.306.537-1.868L6.61 6.883A3 3 0 0 1 7 5.077V6a5 5 0 0 1 5-5zm0 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
-              Yoga
-            </div>
-            <div class="hobby-badge">
-              <svg viewBox="0 0 24 24"><path d="M18 10h-1.071c-.482-2.288-2.502-4-4.929-4s-4.447 1.712-4.929 4h-1.071c-2.757 0-5 2.243-5 5v1c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2v-1c0-2.757-2.243-5-5-5zm-6-2c1.654 0 3 1.346 3 3h-6c0-1.654 1.346-3 3-3zm6 10h-12c-.552 0-1-.449-1-1v-1c0-1.654 1.346-3 3-3h8c1.654 0 3 1.346 3 3v1c0 .551-.448 1-1 1zm-15 3h18v2h-18z"/></svg>
-              Cooking
-            </div>
-            <div class="hobby-badge">
-              <svg viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm1 15.914V14.5c0-.827-.673-1.5-1.5-1.5h-1.895l1.621-1.621A1.493 1.493 0 0 0 12 11c.827 0 1.5-.673 1.5-1.5V5h-3v4.5c0 .276-.224.5-.5.5s-.5-.224-.5-.5V5h-3v4.5a3.5 3.5 0 0 0 3.5 3.5h.395l-1.621 1.621c-.244.244-.374.568-.374.914V17.914A8.016 8.016 0 0 1 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8a8.016 8.016 0 0 1-7 5.914z"/></svg>
-              Singing
-            </div>
-            <div class="hobby-badge">
-              <svg viewBox="0 0 24 24"><path d="M4 4h-4v12h4v-12zm10 2c-2.209 0-4 1.791-4 4s1.791 4 4 4 4-1.791 4-4-1.791-4-4-4zm0 6c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2zm10-8h-8v12h8v-12zm-2 7h-4v-2h4v2z"/></svg>
-              Photography
+        <!-- Sidebar Details -->
+        <div class="about-sidebar">
+          <div class="folder-container about-interests-card">
+            <span class="folder-tab">İlgi Alanları</span>
+            <h3>Hobbies & Interests</h3>
+            <div class="hobbies-list">
+              <div class="hobby-item">
+                <svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 0-3 3v1.077c0 .185-.05.367-.145.525L6.68 11.23a1.5 1.5 0 0 0-.214.77v3a1.5 1.5 0 0 0 1.5 1.5h8.068a1.5 1.5 0 0 0 1.5-1.5v-3c0-.28-.08-.553-.228-.79l-2.072-3.32a.965.965 0 0 1-.154-.513V6a3 3 0 0 0-3-3zm0-2a5 5 0 0 1 5 5v1.272l1.928 3.085A3.5 3.5 0 0 1 20 12v3a3.5 3.5 0 0 1-3.5 3.5H7.5A3.5 3.5 0 0 1 4 15v-3c0-.66.186-1.306.537-1.868L6.61 6.883A3 3 0 0 1 7 5.077V6a5 5 0 0 1 5-5zm0 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
+                Yoga (Zihinsel Denge)
+              </div>
+              <div class="hobby-item">
+                <svg viewBox="0 0 24 24"><path d="M18 10h-1.071c-.482-2.288-2.502-4-4.929-4s-4.447 1.712-4.929 4h-1.071c-2.757 0-5 2.243-5 5v1c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2v-1c0-2.757-2.243-5-5-5zm-6-2c1.654 0 3 1.346 3 3h-6c0-1.654 1.346-3 3-3zm6 10h-12c-.552 0-1-.449-1-1v-1c0-1.654 1.346-3 3-3h8c1.654 0 3 1.346 3 3v1c0 .551-.448 1-1 1zm-15 3h18v2h-18z"/></svg>
+                Yemek Pişirmek (Yaratıcılık)
+              </div>
+              <div class="hobby-item">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm1 15.914V14.5c0-.827-.673-1.5-1.5-1.5h-1.895l1.621-1.621A1.493 1.493 0 0 0 12 11c.827 0 1.5-.673 1.5-1.5V5h-3v4.5c0 .276-.224.5-.5.5s-.5-.224-.5-.5V5h-3v4.5a3.5 3.5 0 0 0 3.5 3.5h.395l-1.621 1.621c-.244.244-.374.568-.374.914V17.914A8.016 8.016 0 0 1 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8a8.016 8.016 0 0 1-7 5.914z"/></svg>
+                Şarkı Söylemek (İfade Gücü)
+              </div>
+              <div class="hobby-item">
+                <svg viewBox="0 0 24 24"><path d="M4 4h-4v12h4v-12zm10 2c-2.209 0-4 1.791-4 4s1.791 4 4 4 4-1.791 4-4-1.791-4-4-4zm0 6c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2zm10-8h-8v12h8v-12zm-2 7h-4v-2h4v2z"/></svg>
+                Fotoğrafçılık (Hafıza)
+              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <div class="skills-wrapper reveal">
-        <h3>Core Skills Focus</h3>
+      
+      <!-- Push-pin Sticky Notes Core Skills Grid -->
+      <div class="skills-intro-group reveal">
+        <h3>Core Skills</h3>
         <div class="skills-grid">
-          <div class="skill-card">
-            <div class="skill-icon-box">
-              <svg viewBox="0 0 24 24"><path d="M22 6v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h16c1.1 0 2 .9 2 2zm-2 0l-8 5-8-5v12h16V6zm-8 3l6-3.75H6L12 9z"/></svg>
+          <!-- Card 1 -->
+          <div class="skill-sticky">
+            <div class="skill-sticky-content">
+              <h4>Digital Content</h4>
+              <p>Canva, CapCut ile işveren markası ve sosyal medya görsel tasarımı.</p>
             </div>
-            <h4>Creating & Organising Digital Content</h4>
-            <p>Canva ve CapCut gibi modern yaratıcı araçları kullanarak yüksek etkileşimli employer branding ve dijital medya içerikleri tasarlama.</p>
           </div>
+          <!-- Card 2 -->
+          <div class="skill-sticky skill-sticky-2">
+            <div class="skill-sticky-content">
+              <h4>Structured Details</h4>
+              <p>Bilgiyi analiz edip sade, temiz ve mantıklı sistemler içinde sunma.</p>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="skill-sticky skill-sticky-3">
+            <div class="skill-sticky-content">
+              <h4>Website UX</h4>
+              <p>Kullanıcı odaklı arayüzler ve dengeli sayfa estetiği oluşturma.</p>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="skill-sticky skill-sticky-4">
+            <div class="skill-sticky-content">
+              <h4>Visual Copy</h4>
+              <p>Metin yazarlığı ile grafik tasarımları uyumlu birleştirebilme.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <div class="skill-card">
-            <div class="skill-icon-box">
-              <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H8V4h12v12z"/></svg>
-            </div>
-            <h4>Structuring Information Clearly</h4>
-            <p>Bilgiyi analiz edip sade, kullanıcı dostu ve mantıksal bir mimari içinde sunma becerisi.</p>
+  <!-- Specialties Section (Fashion cutouts layout like Slide 4) -->
+  <section id="specialties">
+    <div class="container">
+      <div class="section-header-group">
+        <span class="section-tag">Focus Areas</span>
+        <h2 class="section-title">My Specialties</h2>
+        <div class="section-divider"></div>
+      </div>
+      
+      <div class="specialties-grid reveal">
+        <!-- Specialty 1 -->
+        <div class="specialty-panel">
+          <div class="specialty-frame">
+            <img src="assets/images/specialty_social.png" alt="Social Media Content Outfitted Representation">
           </div>
+          <h3 class="specialty-title">Social Content</h3>
+          <p class="specialty-desc">Görsel anlatı stratejileri, Instagram ızgara yerleşimleri ve estetik post tasarımları.</p>
+          <a href="#portfolio" class="btn btn-secondary">view projects</a>
+        </div>
 
-          <div class="skill-card">
-            <div class="skill-icon-box">
-              <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-            </div>
-            <h4>Basic Website Design & UX Thinking</h4>
-            <p>Arayüzün estetik açıdan sakin olmasının yanında kullanıcı deneyimine (UX) öncelik veren tasarım anlayışı.</p>
+        <!-- Specialty 2 -->
+        <div class="specialty-panel">
+          <div class="specialty-frame">
+            <img src="assets/images/specialty_seo.png" alt="SEO Outfitted Representation">
           </div>
+          <h3 class="specialty-title">SEO & Digital Ad</h3>
+          <p class="specialty-desc">Anahtar kelime stratejileri, Google Analytics entegrasyonu ve dijital kampanya kurulumu.</p>
+          <a href="#certificates" class="btn btn-secondary">view certs</a>
+        </div>
 
-          <div class="skill-card">
-            <div class="skill-icon-box">
-              <svg viewBox="0 0 24 24"><path d="M21 15v4c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-4h2v4h14v-4h2zM5 10h14v2H5zm0-4h14v2H5z"/></svg>
-            </div>
-            <h4>Visual & Written Communication</h4>
-            <p>Fikirleri hem grafik tasarımla hem de akıcı ve ikna edici metin yazarlığı ile görselleştirebilme gücü.</p>
+        <!-- Specialty 3 -->
+        <div class="specialty-panel">
+          <div class="specialty-frame">
+            <img src="assets/images/specialty_branding.png" alt="Employer Branding Outfitted Representation">
           </div>
+          <h3 class="specialty-title">Employer Branding</h3>
+          <p class="specialty-desc">Şirket içi marka algısının güçlendirilmesi ve employer branding içerik üretim süreçleri.</p>
+          <a href="#resume" class="btn btn-secondary">view resume</a>
         </div>
       </div>
     </div>
@@ -195,72 +243,57 @@
   <!-- Portfolio Section -->
   <section id="portfolio">
     <div class="container">
-      <span class="section-tag">Portfolio</span>
-      <h2 class="section-title">My Creative & Strategic <br><span class="highlight">Projects</span></h2>
+      <div class="section-header-group">
+        <span class="section-tag">Creative Work</span>
+        <h2 class="section-title">Selected Campaigns</h2>
+        <div class="section-divider"></div>
+      </div>
       
       <div class="portfolio-grid reveal">
-        <!-- Project Card 1 -->
+        <!-- Card 1 -->
         <div class="portfolio-card" data-project-id="1">
-          <div class="portfolio-img-container">
-            <img src="assets/images/project_campaign.png" alt="de Schouw Campaign Mockup">
-            <div class="portfolio-img-overlay"></div>
+          <div class="portfolio-img-box">
+            <img src="assets/images/project_campaign.png" alt="de Schouw Campaign Image">
           </div>
           <div class="portfolio-info">
-            <div class="portfolio-meta">
-              <span class="portfolio-category">Social Media Branding</span>
-            </div>
-            <h3 class="portfolio-title">Long-Term Campaign (de Schouw)</h3>
-            <p class="portfolio-card-desc">Cultural storytelling on Instagram using tailored grids, styled templates and copy for increased interaction.</p>
-            <span class="portfolio-more-link">
-              Detayları Gör 
-              <svg viewBox="0 0 24 24">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
+            <span class="portfolio-cat">Branding / Social</span>
+            <h3 class="portfolio-name">Long-Term Campaign (de Schouw)</h3>
+            <p class="portfolio-desc">Kültürel anlatıların Instagram grid şablonları ve hikaye içerikleri üzerinden topluluğa ulaştırılması.</p>
+            <span class="portfolio-action-btn">
+              Detayları Gör
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </span>
           </div>
         </div>
 
-        <!-- Project Card 2 -->
+        <!-- Card 2 -->
         <div class="portfolio-card" data-project-id="2">
-          <div class="portfolio-img-container">
-            <img src="assets/images/project_nike.png" alt="Nike Campaign Mockup">
-            <div class="portfolio-img-overlay"></div>
+          <div class="portfolio-img-box">
+            <img src="assets/images/project_nike.png" alt="Nike Eco Campaign Image">
           </div>
           <div class="portfolio-info">
-            <div class="portfolio-meta">
-              <span class="portfolio-category">Sustainable Marketing</span>
-            </div>
-            <h3 class="portfolio-title">Move to Zero (Bloom Over Doom)</h3>
-            <p class="portfolio-card-desc">Nike-inspired eco-campaign addressing global warming aligned with UNSDG Goals 11 & 12.</p>
-            <span class="portfolio-more-link">
-              Detayları Gör 
-              <svg viewBox="0 0 24 24">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
+            <span class="portfolio-cat">Eco / Digital Strategy</span>
+            <h3 class="portfolio-name">Move to Zero (Bloom Over Doom)</h3>
+            <p class="portfolio-desc">Nike sürdürülebilirlik misyonuna uygun olarak UNSDG 11 ve 12 hedeflerine odaklanan akademik reklam planı.</p>
+            <span class="portfolio-action-btn">
+              Detayları Gör
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </span>
           </div>
         </div>
 
-        <!-- Project Card 3 -->
+        <!-- Card 3 -->
         <div class="portfolio-card" data-project-id="3">
-          <div class="portfolio-img-container">
-            <img src="assets/images/project_yoga.png" alt="Yoga Studio Branding">
-            <div class="portfolio-img-overlay"></div>
+          <div class="portfolio-img-box">
+            <img src="assets/images/project_yoga.png" alt="Yoga Brand Identity Image">
           </div>
           <div class="portfolio-info">
-            <div class="portfolio-meta">
-              <span class="portfolio-category">Visual Identity Design</span>
-            </div>
-            <h3 class="portfolio-title">The Yoga Project</h3>
-            <p class="portfolio-card-desc">Minimalist wellness brand design exploration communicating peace through visual harmony and palette structures.</p>
-            <span class="portfolio-more-link">
-              Detayları Gör 
-              <svg viewBox="0 0 24 24">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
+            <span class="portfolio-cat">Visual Design</span>
+            <h3 class="portfolio-name">The Yoga Project</h3>
+            <p class="portfolio-desc">Muted tonlar ve dingin yerleşim şablonları ile bütünsel yoga stüdyosu marka kimliği çalışması.</p>
+            <span class="portfolio-action-btn">
+              Detayları Gör
+              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </span>
           </div>
         </div>
@@ -268,362 +301,369 @@
     </div>
   </section>
 
-  <!-- Resume Section -->
+  <!-- Resume Section (Timelines in folder structures) -->
   <section id="resume">
     <div class="container">
-      <span class="section-tag">Resume</span>
-      <h2 class="section-title">Experience & <br><span class="highlight">Professional Path</span></h2>
+      <div class="section-header-group">
+        <span class="section-tag">Career History</span>
+        <h2 class="section-title">Resume & Skills</h2>
+        <div class="section-divider"></div>
+      </div>
       
       <div class="resume-layout reveal">
-        <!-- Main Timelines -->
-        <div class="resume-timeline-wrapper">
-          <!-- Work Experience Timeline -->
-          <div>
-            <h3 class="resume-timeline-title">Work Experience</h3>
-            <div class="timeline">
-              <!-- Job 1 -->
-              <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">February 2026 - Present (Ends June 2026)</div>
-                <h4 class="timeline-title">HR & Branding Intern</h4>
-                <div class="timeline-institution">Turkcell</div>
-                <div class="timeline-desc">
-                  <ul>
-                    <li>Canva ve CapCut kullanarak işveren markası (employer branding) kampanyaları için özgün sosyal medya içerikleri (gönderi, hikaye, video) üretimi ve düzenlemesi.</li>
-                    <li>Şirket içi iletişim ve çalışan bağlılığı (employee engagement) inisiyatiflerinin desteklenmesi.</li>
-                    <li>Kanallar arası tutarlı marka mesajları iletmek amacıyla departmanlar arası koordineli çalışma.</li>
-                  </ul>
+        <!-- Folder Lists (Left side) -->
+        <div class="resume-folders">
+          <!-- Experience Folder -->
+          <div class="folder-container">
+            <span class="folder-tab" style="background-color: var(--yellow-accent);">Experience</span>
+            <div class="resume-folder-content">
+              <div class="timeline">
+                <!-- Item 1 -->
+                <div class="timeline-item">
+                  <div class="timeline-node"></div>
+                  <div class="timeline-date">February 2026 - Present</div>
+                  <h4 class="timeline-name">HR & Branding Intern</h4>
+                  <div class="timeline-org">Turkcell</div>
+                  <div class="timeline-details">
+                    <ul>
+                      <li>İşveren markası (employer branding) projeleri için Canva ve CapCut kullanarak sosyal medya görsel ve video içerikleri tasarlama.</li>
+                      <li>İç iletişim ve çalışan bağlılığı (employee engagement) faaliyetlerinin koordinasyonu.</li>
+                      <li>Marka bütünlüğünün kanallar arasında sürdürülmesi amacıyla ekipler arası iş birliği.</li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
 
-              <!-- Job 2 -->
-              <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">February 2025 - Present</div>
-                <h4 class="timeline-title">Stock Filler</h4>
-                <div class="timeline-institution">Albert Heijn</div>
-                <div class="timeline-desc">
-                  <ul>
-                    <li>Müşterilere aktif asistanlık ve kesintisiz ürün bulunabilirliğinin sağlanması.</li>
-                    <li>Hızlı ve dinamik operasyonel mağaza ortamında zaman yönetimi.</li>
-                    <li>Ekip çalışması ve problem çözme becerilerinin geliştirilmesi.</li>
-                  </ul>
+                <!-- Item 2 -->
+                <div class="timeline-item">
+                  <div class="timeline-node"></div>
+                  <div class="timeline-date">February 2025 - Present</div>
+                  <h4 class="timeline-name">Stock Filler</h4>
+                  <div class="timeline-org">Albert Heijn</div>
+                  <div class="timeline-details">
+                    <ul>
+                      <li>Dinamik mağaza ortamında müşteri ilişkilerinin ve ürün akışının sürdürülmesi.</li>
+                      <li>Zaman yönetimi ve takım koordinasyonu yetkinlikleri.</li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
 
-              <!-- Job 3 -->
-              <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">2022</div>
-                <h4 class="timeline-title">Cafe Worker</h4>
-                <div class="timeline-institution">Cyprus Local Venues</div>
-                <div class="timeline-desc">
-                  <ul>
-                    <li>Müşteri odaklı, hızlı ve güler yüzlü servis yönetimi.</li>
-                    <li>Ekip içi uyumlu çalışma ve operasyonel aksaklıkların giderilmesi.</li>
-                  </ul>
+                <!-- Item 3 -->
+                <div class="timeline-item">
+                  <div class="timeline-node"></div>
+                  <div class="timeline-date">2022</div>
+                  <h4 class="timeline-name">Cafe Worker</h4>
+                  <div class="timeline-org">Cyprus Local Venues</div>
+                  <div class="timeline-details">
+                    <ul>
+                      <li>Güler yüzlü müşteri ağırlama ve yoğun zamanlarda hızlı sipariş teslimatı.</li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
 
-              <!-- Job 4 -->
-              <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">2021 - 2022</div>
-                <h4 class="timeline-title">Science Exhibitions Volunteer</h4>
-                <div class="timeline-institution">Volunteer Work</div>
-                <div class="timeline-desc">
-                  <ul>
-                    <li>Ziyaretçiler için interaktif bilim sergilerinin kurulum ve sunum süreçlerinin üstlenilmesi.</li>
-                    <li>Topluluk önünde güçlü sunum ve iletişim kabiliyetinin kazanılması.</li>
-                  </ul>
+                <!-- Item 4 -->
+                <div class="timeline-item">
+                  <div class="timeline-node"></div>
+                  <div class="timeline-date">2021 - 2022</div>
+                  <h4 class="timeline-name">Science Exhibitions Volunteer</h4>
+                  <div class="timeline-org">Volunteer Work</div>
+                  <div class="timeline-details">
+                    <ul>
+                      <li>İnteraktif bilim stantlarının kurulması ve ziyaretçilere sunumu.</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Education Timeline -->
-          <div>
-            <h3 class="resume-timeline-title">Education</h3>
-            <div class="timeline">
-              <!-- Edu 1 -->
-              <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">September 2025 - January 2026</div>
-                <h4 class="timeline-title">Digital Marketing Minor</h4>
-                <div class="timeline-institution">Rotterdam Business School</div>
-                <div class="timeline-desc">
-                  <p>Dijital reklam stratejileri, SEO, içerik pazarlaması ve veri analitiği üzerine derinlemesine teorik ve pratik uzmanlaşma programı.</p>
+          <!-- Education Folder -->
+          <div class="folder-container">
+            <span class="folder-tab" style="background-color: var(--secondary-accent); color: white;">Education</span>
+            <div class="resume-folder-content">
+              <div class="timeline">
+                <!-- Edu 1 -->
+                <div class="timeline-item">
+                  <div class="timeline-node"></div>
+                  <div class="timeline-date">September 2025 - January 2026</div>
+                  <h4 class="timeline-name">Digital Marketing Minor</h4>
+                  <div class="timeline-org">Rotterdam Business School</div>
+                  <div class="timeline-details">
+                    <p>Google Analytics veri analizi, SEO yazarlığı, e-posta pazarlama optimizasyonları ve dijital reklam stratejileri.</p>
+                  </div>
                 </div>
-              </div>
-
-              <!-- Edu 2 -->
-              <div class="timeline-item">
-                <div class="timeline-dot"></div>
-                <div class="timeline-date">September 2022 - Present</div>
-                <h4 class="timeline-title">BSc International Business</h4>
-                <div class="timeline-institution">Hogeschool Rotterdam</div>
-                <div class="timeline-desc">
-                  <p><strong>Uzmanlık Alanı:</strong> Organisation & Change Management</p>
-                  <p>Değişim süreçleri yönetimi, organizasyonel davranış ve uluslararası iş geliştirme teorileri odaklı lisans eğitimi.</p>
+                
+                <!-- Edu 2 -->
+                <div class="timeline-item">
+                  <div class="timeline-node"></div>
+                  <div class="timeline-date">September 2022 - Present</div>
+                  <h4 class="timeline-name">BSc International Business</h4>
+                  <div class="timeline-org">Hogeschool Rotterdam</div>
+                  <div class="timeline-details">
+                    <p><strong>Uzmanlık:</strong> Organisation & Change Management</p>
+                    <p>Organizasyonel dönüşüm, stratejik planlama ve uluslararası kurumsal yönetim eğitimi.</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Sidebar Dashboard -->
+        <!-- Sidebar Details Dashboard (Right side) -->
         <div class="resume-sidebar">
-          <!-- Languages Widget -->
-          <div class="sidebar-widget">
-            <h3 class="widget-title">Language Skills</h3>
-            <div class="languages-grid">
-              <!-- Turkish -->
-              <div class="language-item">
-                <div class="lang-info">
-                  <span class="lang-name">Türkçe</span>
-                  <span class="lang-level">Native</span>
+          <!-- Languages Folder -->
+          <div class="folder-container">
+            <span class="folder-tab">Languages</span>
+            <div class="sidebar-folder-body">
+              <h3 class="sidebar-title">Dil Seviyeleri</h3>
+              <div class="lang-list">
+                <!-- Türkçe -->
+                <div class="lang-item">
+                  <span class="lang-name">Türkçe (Native)</span>
+                  <div class="lang-stars">
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                  </div>
                 </div>
-                <div class="lang-dots">
-                  <span class="lang-dot active"></span>
-                  <span class="lang-dot active"></span>
-                  <span class="lang-dot active"></span>
-                  <span class="lang-dot active"></span>
-                  <span class="lang-dot active"></span>
+                <!-- İngilizce -->
+                <div class="lang-item">
+                  <span class="lang-name">English (C1 Professional)</span>
+                  <div class="lang-stars">
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star"></span>
+                  </div>
                 </div>
-              </div>
-              
-              <!-- English -->
-              <div class="language-item">
-                <div class="lang-info">
-                  <span class="lang-name">English</span>
-                  <span class="lang-level">C1 Professional</span>
-                </div>
-                <div class="lang-dots">
-                  <span class="lang-dot active"></span>
-                  <span class="lang-dot active"></span>
-                  <span class="lang-dot active"></span>
-                  <span class="lang-dot active"></span>
-                  <span class="lang-dot"></span>
-                </div>
-              </div>
-
-              <!-- Dutch -->
-              <div class="language-item">
-                <div class="lang-info">
-                  <span class="lang-name">Nederlands</span>
-                  <span class="lang-level">A2.2 Basic</span>
-                </div>
-                <div class="lang-dots">
-                  <span class="lang-dot active"></span>
-                  <span class="lang-dot active"></span>
-                  <span class="lang-dot active"></span>
-                  <span class="lang-dot"></span>
-                  <span class="lang-dot"></span>
+                <!-- Flemenkçe -->
+                <div class="lang-item">
+                  <span class="lang-name">Nederlands (A2.2 Basic)</span>
+                  <div class="lang-stars">
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star"></span>
+                    <span class="lang-star"></span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Skills Badge Widget -->
-          <div class="sidebar-widget">
-            <h3 class="widget-title">Hard & Soft Skills</h3>
-            <div class="skills-badge-list">
-              <span class="skill-badge">Microsoft Office</span>
-              <span class="skill-badge">SPSS Data Tool</span>
-              <span class="skill-badge">Visual Content Design</span>
-              <span class="skill-badge">Video Editing</span>
-              <span class="skill-badge">Social Media Curation</span>
-              <span class="skill-badge">Google Analytics</span>
-              <span class="skill-badge">SEO Strategies</span>
-              <span class="skill-badge">Clear Communication</span>
-              <span class="skill-badge">Adaptability</span>
-              <span class="skill-badge">Team Collaboration</span>
-              <span class="skill-badge">Time Management</span>
-              <span class="skill-badge">Determined Mindset</span>
+          <!-- Tools Folder -->
+          <div class="folder-container">
+            <span class="folder-tab">Toolkit</span>
+            <div class="sidebar-folder-body">
+              <h3 class="sidebar-title">Beceriler & Araçlar</h3>
+              <div class="badges-flex">
+                <span class="retro-badge">Microsoft Office</span>
+                <span class="retro-badge">SPSS Tool</span>
+                <span class="retro-badge">Canva Visuals</span>
+                <span class="retro-badge">CapCut Editing</span>
+                <span class="retro-badge">SEO Copywriting</span>
+                <span class="retro-badge">Google Analytics</span>
+                <span class="retro-badge">Email Marketing</span>
+                <span class="retro-badge">Communication</span>
+                <span class="retro-badge">Adaptability</span>
+                <span class="retro-badge">Collaboration</span>
+                <span class="retro-badge">Time Management</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Career Summary Card -->
-      <div class="resume-summary-card reveal">
-        <p>
-          "Eğitimim ve pratik projelerim aracılığıyla dijital çalışmalara yönelik yapılandırılmış ve düşünceli bir yaklaşım geliştirdim. Hem analitik düşünme hem de yaratıcı karar verme gerektiren projelerde çalışmaktan keyif alıyorum ve uygulamalı deneyim yoluyla sürekli öğrenmeye değer veriyorum. Bu özgeçmiş, dijital ve yaratıcı projelerle ilgili eğitim geçmişimi, becerilerimi ve deneyimlerimi vurgulamaktadır."
-        </p>
       </div>
     </div>
   </section>
 
-  <!-- Certificates Section -->
+  <!-- Certificates Section (Folder Grid layout like Slide 2) -->
   <section id="certificates">
     <div class="container">
-      <span class="section-tag">Credentials</span>
-      <h2 class="section-title">Certificates & <br><span class="highlight">Qualifications</span></h2>
+      <div class="section-header-group">
+        <span class="section-tag">Credentials</span>
+        <h2 class="section-title">Certifications</h2>
+        <div class="section-divider"></div>
+      </div>
       
       <div class="certs-grid reveal">
         <!-- Cert 1 -->
-        <div class="cert-card">
-          <div class="cert-issuer">
-            <div class="issuer-logo">G</div>
-            <span class="issuer-name">Google Analytics</span>
+        <div class="folder-container cert-folder">
+          <span class="folder-tab">Google</span>
+          <div class="cert-issuer-box">
+            <div class="cert-issuer-icon">G</div>
+            <span class="cert-issuer-name">Analytics Academy</span>
           </div>
-          <h3 class="cert-name">Google Analytics Certification</h3>
-          <div class="cert-details">
-            Kanal performans ölçümleri, kullanıcı edinme analitiği ve kitle filtrelemeleri.
-            <div class="cert-code">ID: GA-VERIFIED-9812</div>
+          <h3 class="cert-title">Google Analytics Certification</h3>
+          <div class="cert-body-desc">
+            Veri takibi, kanal performans ölçümleri, kullanıcı analizleri ve özel gösterge panoları.
+            <div class="cert-id">ID: GA-VERIFIED-9812</div>
           </div>
         </div>
 
         <!-- Cert 2 -->
-        <div class="cert-card">
-          <div class="cert-issuer">
-            <div class="issuer-logo" style="background-color: #ff7a59; color: #fff;">H</div>
-            <span class="issuer-name">HubSpot Academy</span>
+        <div class="folder-container cert-folder">
+          <span class="folder-tab" style="background-color: #ff7a59; color: white;">Hubspot</span>
+          <div class="cert-issuer-box">
+            <div class="cert-issuer-icon" style="background-color: #ff7a59; color: white;">H</div>
+            <span class="cert-issuer-name">HubSpot Academy</span>
           </div>
-          <h3 class="cert-name">Digital Advertising Certification</h3>
-          <div class="cert-details">
-            Dijital reklam ağları yönetimi, bütçeleme, hedef kitle eşleştirme ve kampanya ROI analizleri.
-            <div class="cert-code">ID: HUBSPOT-DA-771</div>
+          <h3 class="cert-title">Digital Advertising</h3>
+          <div class="cert-body-desc">
+            Dijital reklam bütçe yönetimi, kampanya kurguları ve ROI hedefleme metrikleri.
+            <div class="cert-id">ID: HUBSPOT-DA-771</div>
           </div>
         </div>
 
         <!-- Cert 3 -->
-        <div class="cert-card">
-          <div class="cert-issuer">
-            <div class="issuer-logo" style="background-color: #ff7a59; color: #fff;">H</div>
-            <span class="issuer-name">HubSpot Academy</span>
+        <div class="folder-container cert-folder">
+          <span class="folder-tab" style="background-color: #ff7a59; color: white;">Hubspot</span>
+          <div class="cert-issuer-box">
+            <div class="cert-issuer-icon" style="background-color: #ff7a59; color: white;">H</div>
+            <span class="cert-issuer-name">HubSpot Academy</span>
           </div>
-          <h3 class="cert-name">Email Marketing Specialist</h3>
-          <div class="cert-details">
-            Müşteri ilişkileri otomasyonu, A/B segmentasyon testleri ve bülten kampanyaları tasarımı.
-            <div class="cert-code">ID: HUBSPOT-EM-605</div>
+          <h3 class="cert-title">Email Marketing</h3>
+          <div class="cert-body-desc">
+            Müşteri ilişkileri otomasyonu, A/B test kurguları ve bülten kampanyası tasarımları.
+            <div class="cert-id">ID: HUBSPOT-EM-605</div>
           </div>
         </div>
 
         <!-- Cert 4 -->
-        <div class="cert-card">
-          <div class="cert-issuer">
-            <div class="issuer-logo">AI</div>
-            <span class="issuer-name">Google / Coursera</span>
+        <div class="folder-container cert-folder">
+          <span class="folder-tab">Coursera</span>
+          <div class="cert-issuer-box">
+            <div class="cert-issuer-icon">AI</div>
+            <span class="cert-issuer-name">Google / Coursera</span>
           </div>
-          <h3 class="cert-name">AI Business Essentials</h3>
-          <div class="cert-details">
-            İş akışlarında üretken yapay zeka entegrasyonu, prompt mühendisliği ve otomasyon süreçleri.
-            <div class="cert-code">ID: G-AI-BUS-883</div>
+          <h3 class="cert-title">AI Business Essentials</h3>
+          <div class="cert-body-desc">
+            Üretken yapay zeka araçları entegrasyonu, prompt mühendisliği ve iş otomasyonları.
+            <div class="cert-id">ID: G-AI-BUS-883</div>
           </div>
         </div>
 
         <!-- Cert 5 -->
-        <div class="cert-card">
-          <div class="cert-issuer">
-            <div class="issuer-logo">R</div>
-            <span class="issuer-name">Rotterdam Business</span>
+        <div class="folder-container cert-folder">
+          <span class="folder-tab" style="background-color: var(--secondary-accent); color: white;">RBS</span>
+          <div class="cert-issuer-box">
+            <div class="cert-issuer-icon">R</div>
+            <span class="cert-issuer-name">Rotterdam Business</span>
           </div>
-          <h3 class="cert-name">Sustainable Marketing Model</h3>
-          <div class="cert-details">
-            Eko-pazarlama sistemleri, yeşil yıkama risk analizleri ve sürdürülebilir ürün döngüleri planlaması.
-            <div class="cert-code">ID: RBS-SUST-402</div>
+          <h3 class="cert-title">Sustainable Marketing Model</h3>
+          <div class="cert-body-desc">
+            Ekolojik pazarlama yöntemleri, yeşil yıkama analizleri ve sürdürülebilir ürün döngüsü planlama.
+            <div class="cert-id">ID: RBS-SUST-402</div>
           </div>
         </div>
 
         <!-- Cert 6 -->
-        <div class="cert-card">
-          <div class="cert-issuer">
-            <div class="issuer-logo">E</div>
-            <span class="issuer-name">Erasmus & RBS</span>
+        <div class="folder-container cert-folder">
+          <span class="folder-tab">Academic</span>
+          <div class="cert-issuer-box">
+            <div class="cert-issuer-icon">E</div>
+            <span class="cert-issuer-name">Erasmus & RBS</span>
           </div>
-          <h3 class="cert-name">Economics and Leadership</h3>
-          <div class="cert-details">
-            Uluslararası makroekonomik eğilimler ve değişim yönetimi liderlik modelleri.
-            <div class="cert-code">ID: ERAS-RBS-2041</div>
+          <h3 class="cert-title">Economics & Leadership</h3>
+          <div class="cert-body-desc">
+            Makroekonomik trend analizleri ve organizasyonel değişim liderliği yaklaşımları.
+            <div class="cert-id">ID: ERAS-RBS-2041</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- Contact Section (Slide 5 style: Polaroid Pile + Retro Form) -->
   <section id="contact">
     <div class="container">
-      <span class="section-tag">Get in Touch</span>
-      <h2 class="section-title">Let's Create Something <br><span class="highlight">Great Together</span></h2>
+      <div class="section-header-group">
+        <span class="section-tag">Let's Connect</span>
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="section-divider"></div>
+      </div>
       
-      <div class="contact-grid reveal">
-        <!-- Direct channels -->
-        <div class="contact-info">
-          <p class="contact-intro">
-            Projeleriniz, marka iş birlikleriniz veya sadece tanışmak için bana aşağıdaki kanallardan ulaşabilirsiniz. Her zaman yeni fikirlere açığım!
-          </p>
+      <div class="contact-layout reveal">
+        <!-- Left Side: Polaroid Collage & Contacts -->
+        <div class="contact-visual">
+          <div class="polaroid-pile">
+            <div class="polaroid-pile-item pile-1">
+              <img src="assets/images/project_yoga.png" alt="Yoga Project Cover">
+              <p>Mindfulness</p>
+            </div>
+            <div class="polaroid-pile-item pile-2">
+              <img src="assets/images/alara_profile.png" alt="Alara Soysan Profile">
+              <p>Let's talk!</p>
+            </div>
+          </div>
           
           <div class="contact-channels">
-            <div class="contact-card">
-              <div class="contact-icon">
+            <a href="mailto:alarasoysan@outlook.com" class="contact-button-card">
+              <div class="contact-card-icon">
                 <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
               </div>
-              <div class="contact-text">
-                <span class="contact-label">E-Posta Gönder</span>
-                <a href="mailto:alarasoysan@outlook.com" class="contact-value">alarasoysan@outlook.com</a>
+              <div class="contact-card-text">
+                <span class="contact-card-label">E-Posta Gönder</span>
+                <span class="contact-card-value">alarasoysan@outlook.com</span>
               </div>
-            </div>
-
-            <div class="contact-card">
-              <div class="contact-icon">
+            </a>
+            <div class="contact-button-card">
+              <div class="contact-card-icon">
                 <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
               </div>
-              <div class="contact-text">
-                <span class="contact-label">Konum</span>
-                <span class="contact-value">Rotterdam, Hollanda</span>
+              <div class="contact-card-text">
+                <span class="contact-card-label">Konum</span>
+                <span class="contact-card-value">Rotterdam, Hollanda</span>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Glassmorphic Form -->
+        <!-- Right Side: Retro Form Container -->
         <div class="contact-form-container">
+          <h3 class="form-title">Say Hello!</h3>
           <form id="contact-form" novalidate>
             <div class="form-row">
               <div class="form-group">
                 <label for="form-name">Adınız Soyadınız *</label>
-                <input type="text" id="form-name" class="form-control" placeholder="Örn. Ahmet Yılmaz" required>
+                <input type="text" id="form-name" class="form-control" placeholder="Ahmet Yılmaz" required>
               </div>
               <div class="form-group">
-                <label for="form-email">E-Posta Adresiniz *</label>
-                <input type="email" id="form-email" class="form-control" placeholder="Örn. ahmet@email.com" required>
+                <label for="form-email">E-Posta *</label>
+                <input type="email" id="form-email" class="form-control" placeholder="ahmet@email.com" required>
               </div>
             </div>
             
             <div class="form-group full-width">
               <label for="form-subject">Konu</label>
-              <input type="text" id="form-subject" class="form-control" placeholder="Nasıl yardımcı olabilirim?">
+              <input type="text" id="form-subject" class="form-control" placeholder="İş birliği veya sorularınız...">
             </div>
 
             <div class="form-group full-width">
               <label for="form-message">Mesajınız *</label>
-              <textarea id="form-message" class="form-control" placeholder="İş birliği veya sorularınızı buraya yazabilirsiniz..." required></textarea>
+              <textarea id="form-message" class="form-control" placeholder="Mesajınızı buraya yazabilirsiniz..." required></textarea>
             </div>
 
             <button type="submit" class="form-submit-btn">
-              Mesajı Gönder
-              <svg viewBox="0 0 24 24">
-                <line x1="22" y1="2" x2="11" y2="13"></line>
-                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-              </svg>
+              Gönder
+              <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
             </button>
           </form>
 
-          <!-- Success Alert Message -->
+          <!-- Form Success Alert Alert -->
           <div class="form-success-alert" id="form-success">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
               <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
-            Harika! Mesajınız başarıyla gönderildi. En kısa sürede dönüş yapacağım.
+            Mesajınız iletildi! En kısa zamanda dönüş yapacağım.
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Interactive Project Detail Overlay Modal (Universal Dynamic Frame) -->
+  <!-- Interactive Project Detail Overlay Modal -->
   <div class="modal-overlay" id="portfolio-modal">
     <div class="modal-content">
       <button class="modal-close-btn" id="modal-close" aria-label="Kapat">
@@ -637,7 +677,7 @@
           <span class="modal-category">Category</span>
           <h3 class="modal-title">Project Title</h3>
         </div>
-        <img class="modal-hero-img" src="" alt="Project mockup image">
+        <img class="modal-hero-img" src="" alt="Project campaign illustration">
         
         <div class="modal-description-section">
           <!-- Text Body -->
@@ -648,7 +688,7 @@
           <!-- Metadata Sidebar -->
           <div class="modal-meta-sidebar">
             <div class="modal-meta-box">
-              <h5>Role / Course</h5>
+              <h5>Role / Context</h5>
               <p class="meta-role">-</p>
             </div>
             <div class="modal-meta-box">
@@ -660,11 +700,11 @@
               <p class="meta-tools">-</p>
             </div>
             <div class="modal-meta-box">
-              <h5>Metric / Focus</h5>
+              <h5>Focus</h5>
               <p class="meta-category">-</p>
             </div>
             <div>
-              <h5 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 700;">Kampanya Kazanımları</h5>
+              <h5 style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 800;">Kazanımlar</h5>
               <div class="modal-goal-badges">
                 <!-- Badges dynamically injected -->
               </div>
@@ -678,13 +718,12 @@
   <!-- Footer Section -->
   <footer>
     <div class="container footer-container">
-      <a href="#hero" class="footer-logo">ALARA <span>SOYSAN</span></a>
-      <p class="footer-copy">© 2026 Alara Soysan. Modern Portfolio Concept.</p>
+      <a href="#hero" class="footer-logo">ALARA <span>SOYSAN.</span></a>
+      <p class="footer-copy">© 2026 Alara Soysan. Vintage Marketing Concept.</p>
     </div>
   </footer>
-  <div class="footer-accent-ribbon"></div>
 
-  <!-- JavaScript Application Logic -->
+  <!-- Javascript Controller -->
   <script src="app.js"></script>
 </body>
 </html>

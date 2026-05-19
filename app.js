@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // 1. Theme Controller (Dark/Light Switch)
 function initTheme() {
   const themeToggle = document.getElementById("theme-toggle");
-  const storedTheme = localStorage.getItem("theme") || "dark";
+  const storedTheme = localStorage.getItem("theme") || "light";
   
   // Set default theme
   document.documentElement.setAttribute("data-theme", storedTheme);
@@ -222,7 +222,7 @@ function initPortfolioModal() {
       goalBadgeContainer.innerHTML = "";
       data.goals.forEach(goal => {
         const badge = document.createElement("span");
-        badge.className = "skill-badge";
+        badge.className = "retro-badge";
         // Special highlighting for UNSDG markers
         if (goal.includes("UNSDG 11")) {
           badge.className = "unsdg-badge goal-11";
