@@ -196,16 +196,16 @@
           </button>
           <div class="lang-dropdown" id="lang-dropdown">
             <div class="lang-option active" id="lang-en" onclick="setLang('en','EN')">
-              <img class="lang-flag-img" src="https://flagcdn.com/w40/gb.png" alt="GB"> <span
-                id="label-en" class="notranslate">English</span>
+              <img class="lang-flag-img" src="https://flagcdn.com/w40/gb.png" alt="GB"> <span id="label-en"
+                class="notranslate">English</span>
             </div>
             <div class="lang-option" id="lang-tr" onclick="setLang('tr','TR')">
-              <img class="lang-flag-img" src="https://flagcdn.com/w40/tr.png" alt="TR"> <span
-                id="label-tr" class="notranslate">Türkçe</span>
+              <img class="lang-flag-img" src="https://flagcdn.com/w40/tr.png" alt="TR"> <span id="label-tr"
+                class="notranslate">Turkish</span>
             </div>
             <div class="lang-option" id="lang-nl" onclick="setLang('nl','NL')">
-              <img class="lang-flag-img" src="https://flagcdn.com/w40/nl.png" alt="NL"> <span
-                id="label-nl" class="notranslate">Nederlands</span>
+              <img class="lang-flag-img" src="https://flagcdn.com/w40/nl.png" alt="NL"> <span id="label-nl"
+                class="notranslate">Dutch</span>
             </div>
           </div>
         </div>
@@ -1043,7 +1043,7 @@
       const cookie = document.cookie.split(';').find(c => c.trim().startsWith('googtrans='));
       let activeLang = 'en';
       let activeLabel = 'EN';
-      
+
       if (cookie) {
         const val = cookie.trim().split('/').pop().trim();
         if (val === 'tr') {
@@ -1054,10 +1054,10 @@
           activeLabel = 'NL';
         }
       }
-      
+
       document.getElementById('lang-current').textContent = activeLabel;
       document.getElementById('lang-btn-flag').src = flagUrls[activeLang];
-      
+
       ['lang-en', 'lang-tr', 'lang-nl'].forEach(id => {
         document.getElementById(id).classList.remove('active');
       });
