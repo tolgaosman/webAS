@@ -157,6 +157,15 @@
       flex-shrink: 0;
       border: 1px solid rgba(0, 0, 0, 0.08);
     }
+
+    #mobile-lang-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      padding: 0 1.5rem;
+      list-style: none;
+    }
   </style>
 
   <!-- CSS Stylesheet -->
@@ -1011,31 +1020,38 @@
       document.getElementById('label-nl').textContent = labels.nl;
 
       // Trigger Google Translate
-      const select = document.querySelector('.goog-te-combo');
-      if (select) {
-        if (langCode === 'en') {
-          // Restore original: pick the blank/English option
+      if (langCode === 'en') {
+        // Clear googtrans cookie for all paths and domains
+        const cookieClean = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+        document.cookie = cookieClean + ' path=/';
+        document.cookie = cookieClean + ' path=/; domain=' + window.location.hostname;
+        document.cookie = cookieClean + ' path=/; domain=.' + window.location.hostname;
+        
+        // Also clear combo value if present
+        const select = document.querySelector('.goog-te-combo');
+        if (select) {
           select.value = '';
           select.dispatchEvent(new Event('change'));
-          // Remove googtrans cookie
-          document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
-          document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
-        } else {
-          select.value = langCode;
-          select.dispatchEvent(new Event('change'));
         }
+        
+        // Reload page to restore original English layout
+        window.location.reload();
+        return;
+      }
+
+      const select = document.querySelector('.goog-te-combo');
+      if (select) {
+        select.value = langCode;
+        select.dispatchEvent(new Event('change'));
+        
         // Re-hide the bar after translation triggers
         setTimeout(hideBanner, 100);
         setTimeout(hideBanner, 500);
         setTimeout(hideBanner, 1500);
       } else {
         // Fallback: cookie + reload
-        if (langCode === 'en') {
-          document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
-          document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
-        } else {
-          document.cookie = 'googtrans=/en/' + langCode + '; path=/; domain=' + window.location.hostname;
-        }
+        document.cookie = 'googtrans=/en/' + langCode + '; path=/; domain=' + window.location.hostname;
+        document.cookie = 'googtrans=/en/' + langCode + '; path=/; domain=.' + window.location.hostname;
         window.location.reload();
       }
     }
