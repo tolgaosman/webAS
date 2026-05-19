@@ -214,7 +214,7 @@ function initPortfolioModal() {
       if (clientLabelValue) {
         clientLabel.innerHTML = clientLabelValue;
       }
-      
+
       if (client) {
         metaClient.innerHTML = client;
       } else if (course) {
@@ -289,7 +289,7 @@ function initContactForm() {
     // Prepare WhatsApp message
     const whatsappText = `İsim: ${name}\nE-posta: ${email}\nMesaj: ${message}`;
     const encodedText = encodeURIComponent(whatsappText);
-    const whatsappUrl = `https://wa.me/+31667924317?text=${encodedText}`;
+    const whatsappUrl = `https://wa.me/+31625632446?text=${encodedText}`;
 
     // Open WhatsApp
     window.open(whatsappUrl, "_blank");
