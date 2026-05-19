@@ -178,21 +178,37 @@
       display: flex !important;
       flex-direction: row !important;
       gap: 0.5rem !important;
-      margin-top: 1.75rem !important;
+      margin-top: 1.5rem !important;
       flex-wrap: nowrap !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
 
     .resume-actions-group .btn {
       flex: 1 1 50% !important;
       width: auto !important;
-      font-size: 0.7rem !important;
-      padding: 0.65rem 0.25rem !important;
-      white-space: nowrap !important;
+      font-size: 0.72rem !important;
+      padding: 0.75rem 0.35rem !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0.4rem !important;
+      text-align: center !important;
+      border-radius: 12px !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    .resume-actions-group .btn span {
+      white-space: normal !important;
+      line-height: 1.15 !important;
+      word-break: break-word !important;
     }
 
     .resume-actions-group .btn svg {
-      width: 14px !important;
-      height: 14px !important;
+      width: 13px !important;
+      height: 13px !important;
+      flex-shrink: 0 !important;
     }
 
     /* Dutch Specific Layout Adjustments */
@@ -211,7 +227,7 @@
   </style>
 
   <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="styles.css?v=1.4">
+  <link rel="stylesheet" href="styles.css?v=1.8">
 </head>
 
 <body>
@@ -293,7 +309,7 @@
       <!-- Hero Headline Details (Right Column) -->
       <div class="hero-content reveal active" style="transition-delay: 0.1s;">
         <div class="hero-title-group">
-          <span class="hero-marketing-label">Dijital Markalama Uzmanı</span>
+          <span class="hero-marketing-label">Dijital Markalama Öğrencisi</span>
           <h1 class="hero-main-title">Pazarlama<br>Portfolyosu</h1>
           <span class="hero-by-line">Alara Soysan Tarafından</span>
         </div>
@@ -519,7 +535,8 @@
           <div class="portfolio-hidden-data visually-hidden">
             <div class="data-category">Social Media Branding</div>
             <div class="data-title">Long-Term Campaign (de Schouw)</div>
-            <div class="data-image notranslate">assets/images/schouw1.jpeg, assets/images/schouw2.jpeg, assets/images/schouw3.jpeg, assets/images/schouw4.jpeg, assets/images/schouw5.jpeg</div>
+            <div class="data-image notranslate">assets/images/schouw1.jpeg, assets/images/schouw2.jpeg,
+              assets/images/schouw3.jpeg, assets/images/schouw4.jpeg, assets/images/schouw5.jpeg</div>
             <div class="data-description">
               <p>This project showcases a long-term social media branding campaign developed for <strong>de
                   Schouw</strong>. The campaign focused on cultural storytelling, utilizing creative visuals and
@@ -807,26 +824,29 @@
                 <span class="retro-badge">Time Management</span>
               </div>
 
-              <!-- Resume Actions: Open and Download CV -->
-              <div class="resume-actions-group" style="display: flex !important; flex-direction: row !important; gap: 0.5rem !important; margin-top: 1.75rem !important; flex-wrap: nowrap !important; width: 100% !important; box-sizing: border-box !important;">
-                <a href="alaraCV.pdf" target="_blank" class="btn btn-secondary" style="flex: 1 1 50% !important; font-size: 0.7rem !important; padding: 0.65rem 0.25rem !important; white-space: nowrap !important; width: auto !important; min-width: 0 !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 0.4rem !important;">
-                  <span>Open Resume</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px !important; height: 14px !important; flex-shrink: 0 !important;">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </a>
-                <a href="alaraCV.pdf" download="Alara_Soysan_CV.pdf" class="btn btn-primary" style="flex: 1 1 50% !important; font-size: 0.7rem !important; padding: 0.65rem 0.25rem !important; white-space: nowrap !important; width: auto !important; min-width: 0 !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 0.4rem !important;">
-                  <span>Download Resume</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 14px !important; height: 14px !important; flex-shrink: 0 !important;">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                </a>
-              </div>
             </div>
+          </div>
+
+          <!-- Resume Actions: Open and Download CV (Outside folders!) -->
+          <div class="resume-actions-group">
+            <a href="alaraCV.pdf" target="_blank" class="btn btn-secondary">
+              <span>Open Resume</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <a href="alaraCV.pdf" download="Alara_Soysan_CV.pdf" class="btn btn-primary">
+              <span>Download Resume</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
@@ -1025,7 +1045,8 @@
   <div class="modal-overlay" id="portfolio-modal">
     <div class="modal-content">
       <button class="modal-close-btn" id="modal-close" aria-label="Kapat">
-        <svg viewBox="0 0 24 24">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
@@ -1148,6 +1169,16 @@
       // Close dropdown
       document.getElementById('lang-dropdown').classList.remove('open');
 
+      // Close mobile menu if open
+      const navMenu = document.getElementById('nav-menu');
+      const hamburger = document.getElementById('hamburger');
+      if (navMenu && navMenu.classList.contains('open')) {
+        navMenu.classList.remove('open');
+        if (hamburger) {
+          hamburger.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`;
+        }
+      }
+
       // Update active state on options
       ['lang-en', 'lang-tr', 'lang-nl'].forEach(id => {
         document.getElementById(id).classList.remove('active');
@@ -1211,7 +1242,7 @@
     // On page load: sync button label, flag, and dropdown option languages from stored cookie
     (function syncLangButton() {
       let cookie = document.cookie.split(';').find(c => c.trim().startsWith('googtrans='));
-      
+
       // If no language cookie is present, default to English (EN)
       if (!cookie) {
         document.cookie = 'googtrans=/tr/en; path=/';

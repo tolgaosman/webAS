@@ -493,6 +493,9 @@ header.scrolled {
   line-height: 1.05;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 .hero-by-line {
@@ -1479,9 +1482,9 @@ footer {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: var(--card-bg);
-  border: 2px solid var(--border-color);
-  color: var(--text-primary);
+  background-color: var(--card-bg) !important;
+  border: 2px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1493,13 +1496,22 @@ footer {
 
 .modal-close-btn:hover {
   transform: scale(1.05);
-  background-color: var(--folder-bg);
+  background-color: var(--folder-bg) !important;
 }
 
 .modal-close-btn svg {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
+  width: 18px !important;
+  height: 18px !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2.5px !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+.modal-close-btn svg line {
+  stroke: currentColor !important;
+  stroke-width: 2.5px !important;
 }
 
 .modal-body {
@@ -1764,7 +1776,7 @@ html[lang="nl"] .skill-sticky h4 {
 /* Responsive Overrides */
 @media (max-width: 1024px) {
   .hero-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 3rem;
     text-align: center;
   }
@@ -1788,7 +1800,7 @@ html[lang="nl"] .skill-sticky h4 {
   }
   
   .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   
   .specialties-grid {
@@ -1799,7 +1811,7 @@ html[lang="nl"] .skill-sticky h4 {
   }
   
   .portfolio-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   
   .resume-layout {
@@ -1808,7 +1820,7 @@ html[lang="nl"] .skill-sticky h4 {
   }
   
   .certs-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   
   .contact-layout {
@@ -1853,7 +1865,7 @@ html[lang="nl"] .skill-sticky h4 {
   }
   
   .hero-main-title {
-    font-size: 3rem;
+    font-size: clamp(2rem, 10vw, 3rem);
   }
   
   .section-title {
