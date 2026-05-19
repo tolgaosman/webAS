@@ -1094,6 +1094,44 @@
       document.getElementById('label-tr').textContent = labels.tr;
       document.getElementById('label-nl').textContent = labels.nl;
     })();
+
+    function handleResponsiveLangSelector() {
+      const langSelector = document.getElementById('lang-selector');
+      const navMenu = document.getElementById('nav-menu');
+      const navActions = document.querySelector('.nav-actions');
+
+      if (!langSelector || !navMenu || !navActions) return;
+
+      if (window.innerWidth <= 768) {
+        let mobileLi = document.getElementById('mobile-lang-wrapper');
+        if (!mobileLi) {
+          mobileLi = document.createElement('li');
+          mobileLi.id = 'mobile-lang-wrapper';
+        }
+        if (mobileLi.firstElementChild !== langSelector) {
+          mobileLi.appendChild(langSelector);
+        }
+        if (navMenu.firstElementChild !== mobileLi) {
+          navMenu.insertBefore(mobileLi, navMenu.firstChild);
+        }
+      } else {
+        const mobileLi = document.getElementById('mobile-lang-wrapper');
+        if (langSelector.parentElement !== navActions) {
+          navActions.appendChild(langSelector);
+        }
+        if (mobileLi && mobileLi.parentNode) {
+          mobileLi.parentNode.removeChild(mobileLi);
+        }
+      }
+    }
+
+    window.addEventListener('resize', handleResponsiveLangSelector);
+    document.addEventListener('DOMContentLoaded', handleResponsiveLangSelector);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', handleResponsiveLangSelector);
+    } else {
+      handleResponsiveLangSelector();
+    }
   </script>
   <script type="text/javascript"
     src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
