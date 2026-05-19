@@ -1775,6 +1775,31 @@ html[lang="nl"] .skill-sticky h4 {
   word-break: normal !important;
 }
 
+/* Dutch Mobile Overrides — long compound words like "Marketingportfolio" */
+@media (max-width: 768px) {
+  html[lang="nl"] .hero-main-title {
+    font-size: clamp(1.2rem, 5.5vw, 2rem) !important;
+  }
+
+  html[lang="nl"] .hero-marketing-label {
+    font-size: 0.65rem !important;
+    letter-spacing: 0.04em !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+  }
+
+  html[lang="nl"] .hero-by-line {
+    font-size: 1.25rem !important;
+  }
+
+  html[lang="nl"] .section-title {
+    font-size: 1.8rem !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+  }
+}
+
 /* Intersection Observer Scroll Reveal */
 .reveal {
   opacity: 0;
@@ -1879,7 +1904,7 @@ html[lang="nl"] .skill-sticky h4 {
   }
   
   .hero-main-title {
-    font-size: clamp(2rem, 10vw, 3rem);
+    font-size: clamp(1.8rem, 8vw, 3rem);
   }
   
   .section-title {
