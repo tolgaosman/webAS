@@ -1316,6 +1316,18 @@ textarea.form-control {
   fill: currentColor;
 }
 
+.whatsapp-btn {
+  background-color: #25D366;
+  border-color: #128C7E;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .whatsapp-btn {
+  background-color: #25D366;
+  border-color: #128C7E;
+  color: #ffffff;
+}
+
 .form-success-alert {
   display: none;
   background-color: var(--secondary-accent);
