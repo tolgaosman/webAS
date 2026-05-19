@@ -3,25 +3,25 @@
 
 /* CSS Variables */
 :root {
-  /* Baby Blue Latte Mode (Default Light Theme - Cloud Vibe) */
-  --bg-color: #f0f7fc;
-  --bg-pattern: #dbeaf4;
+  /* Light Blue & Pink Mode (Default Light Theme) */
+  --bg-color: #f2f7fc;
+  --bg-pattern: #e2edf6;
   --card-bg: #ffffff;
-  --folder-bg: #d2e4f5;
-  --folder-bg-active: #bcd6ef;
-  --text-primary: #1c2c3d;
-  --text-secondary: #455a70;
-  --text-muted: #748c9e;
-  --border-color: #1c2c3d;
+  --folder-bg: #fde4eb;
+  --folder-bg-active: #fac8d4;
+  --text-primary: #1f2933;
+  --text-secondary: #475a6b;
+  --text-muted: #738b9e;
+  --border-color: #1f2933;
   
-  --primary-accent: #3b85c6;       /* Soft Medium Blue */
-  --primary-accent-rgb: 59, 133, 198;
-  --secondary-accent: #76a5af;     /* Sage Sky Blue */
-  --secondary-accent-rgb: 118, 165, 175;
-  --yellow-accent: #e5f2ff;        /* Ultra Light Ice Blue */
+  --primary-accent: #ec829c;       /* Soft bold pink */
+  --primary-accent-rgb: 236, 130, 156;
+  --secondary-accent: #8cb6d4;     /* Muted sky blue */
+  --secondary-accent-rgb: 140, 182, 212;
+  --yellow-accent: #ffdae3;        /* Soft pink highlight */
   
-  --nav-bg: rgba(240, 247, 252, 0.9);
-  --modal-bg: rgba(240, 247, 252, 0.98);
+  --nav-bg: rgba(242, 247, 252, 0.9);
+  --modal-bg: rgba(242, 247, 252, 0.98);
   
   /* Retro Flat Shadows */
   --shadow-retro-sm: 2px 2px 0px var(--border-color);
@@ -34,26 +34,26 @@
   --transition-fast: all 0.15s ease;
 }
 
-/* Midnight Blue Mode (Dark Theme Toggler) */
+/* Dark Navy & Pink Mode (Dark Theme Toggler) */
 [data-theme="dark"] {
-  --bg-color: #111a24;
-  --bg-pattern: #0a1117;
-  --card-bg: #1a2633;
-  --folder-bg: #223245;
-  --folder-bg-active: #2a3e54;
-  --text-primary: #e6f1fa;
-  --text-secondary: #a3c4db;
-  --text-muted: #7394ab;
-  --border-color: #e6f1fa;
+  --bg-color: #1a222e;
+  --bg-pattern: #222d3b;
+  --card-bg: #212c3b;
+  --folder-bg: #402c34;
+  --folder-bg-active: #563945;
+  --text-primary: #fcebef;
+  --text-secondary: #d4bbc2;
+  --text-muted: #a48c94;
+  --border-color: #fcebef;
   
-  --primary-accent: #6eb5eb;       /* Bright Baby Blue */
-  --primary-accent-rgb: 110, 181, 235;
-  --secondary-accent: #8dc1cf;     /* Soft Pastel Sky */
-  --secondary-accent-rgb: 141, 193, 207;
-  --yellow-accent: #2e4359;        /* Medium Slate Blue */
+  --primary-accent: #fca4b7;       /* Pastel Pink */
+  --primary-accent-rgb: 252, 164, 183;
+  --secondary-accent: #a9ccee;     /* Light pastel blue */
+  --secondary-accent-rgb: 169, 204, 238;
+  --yellow-accent: #4d333e;        /* Dark pink tint */
   
-  --nav-bg: rgba(17, 26, 36, 0.9);
-  --modal-bg: rgba(17, 26, 36, 0.98);
+  --nav-bg: rgba(26, 34, 46, 0.9);
+  --modal-bg: rgba(26, 34, 46, 0.98);
   
   --shadow-retro-sm: 2px 2px 0px var(--border-color);
   --shadow-retro-md: 4px 4px 0px var(--border-color);
@@ -188,6 +188,17 @@ header.scrolled {
 
 .logo span {
   color: var(--primary-accent);
+}
+
+.nav-logo-img {
+  max-height: 48px;
+  width: auto;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.logo:hover .nav-logo-img {
+  transform: scale(1.05);
 }
 
 .nav-menu {
@@ -1024,6 +1035,15 @@ header.scrolled {
 
 .cert-folder {
   padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+}
+
+.cert-image {
+  width: 100%;
+  aspect-ratio: 1.414 / 1;
+  object-fit: cover;
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 1rem;
 }
 
 .cert-issuer-box {
