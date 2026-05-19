@@ -191,7 +191,7 @@ header.scrolled {
 }
 
 .nav-logo-img {
-  max-height: 48px;
+  max-height: 60px;
   width: auto;
   display: block;
   transition: transform 0.2s ease;
