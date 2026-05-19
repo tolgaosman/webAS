@@ -645,6 +645,12 @@ header.scrolled {
   align-items: flex-start;
 }
 
+@media (min-width: 1024px) {
+  .skills-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
+
 .skill-sticky {
   background-color: var(--card-bg);
   border: 2px solid var(--border-color);
