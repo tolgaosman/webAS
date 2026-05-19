@@ -15,32 +15,61 @@
 
   <!-- Google Translate: completely hide the toolbar -->
   <style>
-    /* Kill every possible Google Translate top bar */
+    /* Kill every possible Google Translate top bar, iframe, and balloon container */
+    iframe.goog-te-banner-frame,
     .goog-te-banner-frame,
-    .goog-te-banner-frame.skiptranslate,
+    .goog-te-banner,
     .goog-te-balloon-frame,
     #goog-gt-tt,
     .goog-te-ftab-float,
     .goog-te-menu-value:hover,
     .goog-te-gadget-icon,
-    .goog-te-gadget img {
+    .goog-te-gadget img,
+    iframe[id*="container"],
+    iframe[id*="google"],
+    iframe.skiptranslate,
+    .skiptranslate {
       display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      width: 0 !important;
     }
 
-    /* Prevent body from being pushed down by 40px */
-    body {
+    /* Keep the language selector container and its child dropdown visible (since they are custom and inside .skiptranslate sometimes) */
+    #lang-selector,
+    #lang-selector *,
+    #lang-dropdown,
+    #lang-dropdown * {
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      height: auto !important;
+      width: auto !important;
+    }
+    #lang-dropdown {
+      display: none !important; /* Managed by JS .open class */
+    }
+    #lang-dropdown.open {
+      display: block !important;
+    }
+    .lang-dropdown * {
+      display: flex !important;
+    }
+
+    /* Prevent body and html from being pushed down by 40px */
+    html, body {
       top: 0px !important;
       position: static !important;
     }
 
-    body.translated-ltr {
-      margin-top: 0 !important;
+    body.translated-ltr,
+    body.translated-rtl,
+    html.translated-ltr,
+    html.translated-rtl {
+      margin-top: 0px !important;
+      top: 0px !important;
     }
-
-    body.translated-rtl {
-      margin-top: 0 !important;
-    }
-
     /* Hide the widget container completely */
     .goog-te-gadget {
       font-size: 0 !important;
