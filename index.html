@@ -1,35 +1,109 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="light">
+<html lang="en" data-theme="light">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <!-- SEO Meta Tags -->
   <title>Alara Soysan | Marketing & Branding Portfolio</title>
-  <meta name="description" content="Alara Soysan'ın dijital pazarlama, marka yönetimi ve organizasyonel gelişim portfolyosu. Rotterdam İşletme Okulu.">
-  <meta name="keywords" content="Alara Soysan, Portfolyo, Dijital Pazarlama, Rotterdam, Turkcell Stajyer, Sosyal Medya Kampanyası, Retro Portfolyo">
+  <meta name="description"
+    content="Alara Soysan's digital marketing, brand management and organisational development portfolio. Rotterdam Business School.">
+  <meta name="keywords"
+    content="Alara Soysan, Portfolio, Digital Marketing, Rotterdam, Turkcell Intern, Social Media Campaign, Employer Branding">
   <meta name="author" content="Alara Soysan">
-  
+
+  <!-- Google Translate CSS hide banner -->
+  <style>
+    .goog-te-banner-frame, .goog-te-balloon-frame { display: none !important; }
+    body { top: 0 !important; }
+    .goog-te-gadget { font-size: 0 !important; }
+    .goog-te-gadget select { display: none; }
+    /* Language Selector Dropdown */
+    .lang-selector {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--card-bg, #fff);
+      border: 2px solid var(--border-color, #1c2c3d);
+      border-radius: 20px;
+      padding: 0.35rem 0.85rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-primary, #1c2c3d);
+      cursor: pointer;
+      box-shadow: 2px 2px 0px var(--border-color, #1c2c3d);
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .lang-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--border-color, #1c2c3d);
+    }
+    .lang-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--card-bg, #fff);
+      border: 2px solid var(--border-color, #1c2c3d);
+      border-radius: 12px;
+      box-shadow: 3px 3px 0px var(--border-color, #1c2c3d);
+      overflow: hidden;
+      z-index: 2000;
+      min-width: 130px;
+    }
+    .lang-dropdown.open { display: block; }
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary, #1c2c3d);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .lang-option:hover { background: var(--folder-bg, #d2e4f5); }
+    .lang-option.active { background: var(--folder-bg, #d2e4f5); font-weight: 800; }
+    .lang-option .flag { font-size: 1rem; }
+  </style>
+
   <!-- CSS Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
   <!-- Fixed Header & Navigation -->
   <header>
     <div class="nav-container">
+
+      <!-- Logo (Left) -->
       <a href="#hero" class="logo">ALARA <span>SOYSAN.</span></a>
-      
+
       <!-- Mobile Drawer Trigger -->
-      <button class="hamburger" id="hamburger" aria-label="Menüyü Aç">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <button class="hamburger" id="hamburger" aria-label="Open Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
           <line x1="3" y1="12" x2="21" y2="12"></line>
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <line x1="3" y1="18" x2="21" y2="18"></line>
         </svg>
       </button>
 
-      <!-- Navigation Link List -->
+      <!-- Navigation Link List (Centered) -->
       <ul class="nav-menu" id="nav-menu">
         <li><a href="#hero" class="nav-link active">Home</a></li>
         <li><a href="#about" class="nav-link">About Me</a></li>
@@ -39,6 +113,28 @@
         <li><a href="#certificates" class="nav-link">Certificates</a></li>
         <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
+
+      <!-- Right: Language Selector -->
+      <div class="nav-actions">
+        <div class="lang-selector" id="lang-selector">
+          <button class="lang-btn" id="lang-btn" onclick="toggleLangDropdown()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            <span id="lang-current">EN</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="lang-dropdown" id="lang-dropdown">
+            <div class="lang-option active" id="lang-en" onclick="setLang('en','EN','🇬🇧')"><span class="flag">🇬🇧</span> English</div>
+            <div class="lang-option" id="lang-tr" onclick="setLang('tr','TR','🇹🇷')"><span class="flag">🇹🇷</span> Türkçe</div>
+            <div class="lang-option" id="lang-nl" onclick="setLang('nl','NL','🇳🇱')"><span class="flag">🇳🇱</span> Nederlands</div>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -49,12 +145,12 @@
       <div class="hero-visual reveal active">
         <div class="polaroid-frame">
           <div class="polaroid-image-box">
-            <img src="assets/images/alara_profile.jpg" alt="Alara Soysan Portrait">
+            <img src="assets/images/alara_profile.png" alt="Alara Soysan Portrait">
           </div>
-          <div class="polaroid-caption">Alara Soysan, 2026</div>
+          <div class="polaroid-caption">Alara Soysan</div>
         </div>
       </div>
-      
+
       <!-- Hero Headline Details (Right Column) -->
       <div class="hero-content reveal active" style="transition-delay: 0.1s;">
         <div class="hero-title-group">
@@ -62,23 +158,31 @@
           <h1 class="hero-main-title">Marketing<br>Portfolio</h1>
           <span class="hero-by-line">by Alara Soysan</span>
         </div>
-        
+
         <!-- Folder Styled Introductory Box -->
         <div class="folder-container hero-desc-folder">
           <span class="folder-tab">Welcome</span>
           <p>
-            Rotterdam merkezli, Kıbrıs kökenli, Rotterdam İşletme Okulu Uluslararası İşletme 3. sınıf öğrencisiyim. Dijital pazarlama, işveren markası ve sakin estetik tasarımlar geliştiriyorum.
+            Rotterdam merkezli, Kıbrıs kökenli, Rotterdam İşletme Okulu Uluslararası İşletme 3. sınıf öğrencisiyim.
+            Dijital pazarlama, işveren markası ve sakin estetik tasarımlar geliştiriyorum.
           </p>
           <div class="hero-actions">
             <a href="#portfolio" class="btn btn-primary">Portfolyo</a>
             <a href="#contact" class="btn btn-secondary">İletişim</a>
-            
+
             <div class="hero-socials">
-              <a href="https://www.linkedin.com/in/alara-soysan-8a9018247/" target="_blank" rel="noopener" class="social-btn" aria-label="LinkedIn">
-                <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              <a href="https://www.linkedin.com/in/alara-soysan-8a9018247/" target="_blank" rel="noopener"
+                class="social-btn" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                </svg>
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
-                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                </svg>
               </a>
             </div>
           </div>
@@ -95,22 +199,27 @@
         <h2 class="section-title">Clarify & Structure</h2>
         <div class="section-divider"></div>
       </div>
-      
+
       <div class="about-layout reveal">
         <!-- Bio Card (Styled as large Vintage Card) -->
         <div class="folder-container about-bio-card">
           <span class="folder-tab">Biografi</span>
           <p>
-            Merhaba! Ben Alara. 21 yaşında, Kıbrıslı bir Uluslararası İşletme öğrencisiyim. Rotterdam'da yaşıyor, organizasyonel değişim yönetimi ile dijital pazarlama alanlarına odaklanıyorum. Şu anda Turkcell'de İK ve Marka Yönetimi (HR & Branding) stajımı yapmaktayım.
+            Merhaba! Ben Alara. 21 yaşında, Kıbrıslı bir Uluslararası İşletme öğrencisiyim. Rotterdam'da yaşıyor,
+            organizasyonel değişim yönetimi ile dijital pazarlama alanlarına odaklanıyorum. Şu anda Turkcell'de İK ve
+            Marka Yönetimi (HR & Branding) stajımı yapmaktayım.
           </p>
           <p>
-            Fikirleri netleştirmeye, görsel bir düzen oluşturmaya ve tasarımlarda sakin tonlar yakalamaya değer veriyorum. Problem çözme süreçlerine yapıcı yaklaşıyor, kreatif projelerde yapılandırılmış bir sistem kurmaktan keyif alıyorum.
+            Fikirleri netleştirmeye, görsel bir düzen oluşturmaya ve tasarımlarda sakin tonlar yakalamaya değer
+            veriyorum. Problem çözme süreçlerine yapıcı yaklaşıyor, kreatif projelerde yapılandırılmış bir sistem
+            kurmaktan keyif alıyorum.
           </p>
           <p>
-            Bu site; edindiğim dijital birikimi, projelerimi ve estetik anlayışımı paylaştığım kişisel alanımın bir yansımasıdır.
+            Bu site; edindiğim dijital birikimi, projelerimi ve estetik anlayışımı paylaştığım kişisel alanımın bir
+            yansımasıdır.
           </p>
         </div>
-        
+
         <!-- Sidebar Details -->
         <div class="about-sidebar">
           <div class="folder-container about-interests-card">
@@ -118,26 +227,38 @@
             <h3>Hobbies & Interests</h3>
             <div class="hobbies-list">
               <div class="hobby-item">
-                <svg viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 0-3 3v1.077c0 .185-.05.367-.145.525L6.68 11.23a1.5 1.5 0 0 0-.214.77v3a1.5 1.5 0 0 0 1.5 1.5h8.068a1.5 1.5 0 0 0 1.5-1.5v-3c0-.28-.08-.553-.228-.79l-2.072-3.32a.965.965 0 0 1-.154-.513V6a3 3 0 0 0-3-3zm0-2a5 5 0 0 1 5 5v1.272l1.928 3.085A3.5 3.5 0 0 1 20 12v3a3.5 3.5 0 0 1-3.5 3.5H7.5A3.5 3.5 0 0 1 4 15v-3c0-.66.186-1.306.537-1.868L6.61 6.883A3 3 0 0 1 7 5.077V6a5 5 0 0 1 5-5zm0 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 3a3 3 0 0 0-3 3v1.077c0 .185-.05.367-.145.525L6.68 11.23a1.5 1.5 0 0 0-.214.77v3a1.5 1.5 0 0 0 1.5 1.5h8.068a1.5 1.5 0 0 0 1.5-1.5v-3c0-.28-.08-.553-.228-.79l-2.072-3.32a.965.965 0 0 1-.154-.513V6a3 3 0 0 0-3-3zm0-2a5 5 0 0 1 5 5v1.272l1.928 3.085A3.5 3.5 0 0 1 20 12v3a3.5 3.5 0 0 1-3.5 3.5H7.5A3.5 3.5 0 0 1 4 15v-3c0-.66.186-1.306.537-1.868L6.61 6.883A3 3 0 0 1 7 5.077V6a5 5 0 0 1 5-5zm0 18a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
+                </svg>
                 Yoga (Zihinsel Denge)
               </div>
               <div class="hobby-item">
-                <svg viewBox="0 0 24 24"><path d="M18 10h-1.071c-.482-2.288-2.502-4-4.929-4s-4.447 1.712-4.929 4h-1.071c-2.757 0-5 2.243-5 5v1c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2v-1c0-2.757-2.243-5-5-5zm-6-2c1.654 0 3 1.346 3 3h-6c0-1.654 1.346-3 3-3zm6 10h-12c-.552 0-1-.449-1-1v-1c0-1.654 1.346-3 3-3h8c1.654 0 3 1.346 3 3v1c0 .551-.448 1-1 1zm-15 3h18v2h-18z"/></svg>
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M18 10h-1.071c-.482-2.288-2.502-4-4.929-4s-4.447 1.712-4.929 4h-1.071c-2.757 0-5 2.243-5 5v1c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2v-1c0-2.757-2.243-5-5-5zm-6-2c1.654 0 3 1.346 3 3h-6c0-1.654 1.346-3 3-3zm6 10h-12c-.552 0-1-.449-1-1v-1c0-1.654 1.346-3 3-3h8c1.654 0 3 1.346 3 3v1c0 .551-.448 1-1 1zm-15 3h18v2h-18z" />
+                </svg>
                 Yemek Pişirmek (Yaratıcılık)
               </div>
               <div class="hobby-item">
-                <svg viewBox="0 0 24 24"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm1 15.914V14.5c0-.827-.673-1.5-1.5-1.5h-1.895l1.621-1.621A1.493 1.493 0 0 0 12 11c.827 0 1.5-.673 1.5-1.5V5h-3v4.5c0 .276-.224.5-.5.5s-.5-.224-.5-.5V5h-3v4.5a3.5 3.5 0 0 0 3.5 3.5h.395l-1.621 1.621c-.244.244-.374.568-.374.914V17.914A8.016 8.016 0 0 1 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8a8.016 8.016 0 0 1-7 5.914z"/></svg>
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm1 15.914V14.5c0-.827-.673-1.5-1.5-1.5h-1.895l1.621-1.621A1.493 1.493 0 0 0 12 11c.827 0 1.5-.673 1.5-1.5V5h-3v4.5c0 .276-.224.5-.5.5s-.5-.224-.5-.5V5h-3v4.5a3.5 3.5 0 0 0 3.5 3.5h.395l-1.621 1.621c-.244.244-.374.568-.374.914V17.914A8.016 8.016 0 0 1 4 12c0-4.411 3.589-8 8-8s8 3.589 8 8a8.016 8.016 0 0 1-7 5.914z" />
+                </svg>
                 Şarkı Söylemek (İfade Gücü)
               </div>
               <div class="hobby-item">
-                <svg viewBox="0 0 24 24"><path d="M4 4h-4v12h4v-12zm10 2c-2.209 0-4 1.791-4 4s1.791 4 4 4 4-1.791 4-4-1.791-4-4-4zm0 6c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2zm10-8h-8v12h8v-12zm-2 7h-4v-2h4v2z"/></svg>
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M4 4h-4v12h4v-12zm10 2c-2.209 0-4 1.791-4 4s1.791 4 4 4 4-1.791 4-4-1.791-4-4-4zm0 6c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2zm10-8h-8v12h8v-12zm-2 7h-4v-2h4v2z" />
+                </svg>
                 Fotoğrafçılık (Hafıza)
               </div>
             </div>
           </div>
         </div>
       </div>
-      
+
       <!-- Push-pin Sticky Notes Core Skills Grid -->
       <div class="skills-intro-group reveal">
         <h3>Core Skills</h3>
@@ -183,35 +304,38 @@
         <h2 class="section-title">My Specialties</h2>
         <div class="section-divider"></div>
       </div>
-      
+
       <div class="specialties-grid reveal">
         <!-- Specialty 1 -->
         <div class="specialty-panel">
           <div class="specialty-frame">
-            <img src="assets/images/specialty_social.png?v=2" alt="Social Media Content Outfitted Representation">
+            <img src="assets/images/alaraSocial.jpeg" alt="Alara Soysan - Social Content">
           </div>
           <h3 class="specialty-title">Social Content</h3>
-          <p class="specialty-desc">Görsel anlatı stratejileri, Instagram ızgara yerleşimleri ve estetik post tasarımları.</p>
+          <p class="specialty-desc">Görsel anlatı stratejileri, Instagram ızgara yerleşimleri ve estetik post
+            tasarımları.</p>
           <a href="#portfolio" class="btn btn-secondary">view projects</a>
         </div>
 
         <!-- Specialty 2 -->
         <div class="specialty-panel">
           <div class="specialty-frame">
-            <img src="assets/images/specialty_seo.png?v=2" alt="SEO Outfitted Representation">
+            <img src="assets/images/alaraSEO.jpeg" alt="Alara Soysan - SEO & Digital Advertising">
           </div>
           <h3 class="specialty-title">SEO & Digital Ad</h3>
-          <p class="specialty-desc">Anahtar kelime stratejileri, Google Analytics entegrasyonu ve dijital kampanya kurulumu.</p>
+          <p class="specialty-desc">Anahtar kelime stratejileri, Google Analytics entegrasyonu ve dijital kampanya
+            kurulumu.</p>
           <a href="#certificates" class="btn btn-secondary">view certs</a>
         </div>
 
         <!-- Specialty 3 -->
         <div class="specialty-panel">
           <div class="specialty-frame">
-            <img src="assets/images/specialty_branding.png?v=2" alt="Employer Branding Outfitted Representation">
+            <img src="assets/images/alaraBranding.jpeg" alt="Alara Soysan - Employer Branding">
           </div>
           <h3 class="specialty-title">Employer Branding</h3>
-          <p class="specialty-desc">Şirket içi marka algısının güçlendirilmesi ve employer branding içerik üretim süreçleri.</p>
+          <p class="specialty-desc">Şirket içi marka algısının güçlendirilmesi ve employer branding içerik üretim
+            süreçleri.</p>
           <a href="#resume" class="btn btn-secondary">view resume</a>
         </div>
       </div>
@@ -226,7 +350,7 @@
         <h2 class="section-title">Selected Campaigns</h2>
         <div class="section-divider"></div>
       </div>
-      
+
       <div class="portfolio-grid reveal">
         <!-- Card 1 -->
         <div class="portfolio-card" data-project-id="1">
@@ -236,10 +360,14 @@
           <div class="portfolio-info">
             <span class="portfolio-cat">Branding / Social</span>
             <h3 class="portfolio-name">Long-Term Campaign (de Schouw)</h3>
-            <p class="portfolio-desc">Kültürel anlatıların Instagram grid şablonları ve hikaye içerikleri üzerinden topluluğa ulaştırılması.</p>
+            <p class="portfolio-desc">Kültürel anlatıların Instagram grid şablonları ve hikaye içerikleri üzerinden
+              topluluğa ulaştırılması.</p>
             <span class="portfolio-action-btn">
               Detayları Gör
-              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              <svg viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
             </span>
           </div>
         </div>
@@ -252,10 +380,14 @@
           <div class="portfolio-info">
             <span class="portfolio-cat">Eco / Digital Strategy</span>
             <h3 class="portfolio-name">Move to Zero (Bloom Over Doom)</h3>
-            <p class="portfolio-desc">Nike sürdürülebilirlik misyonuna uygun olarak UNSDG 11 ve 12 hedeflerine odaklanan akademik reklam planı.</p>
+            <p class="portfolio-desc">Nike sürdürülebilirlik misyonuna uygun olarak UNSDG 11 ve 12 hedeflerine odaklanan
+              akademik reklam planı.</p>
             <span class="portfolio-action-btn">
               Detayları Gör
-              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              <svg viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
             </span>
           </div>
         </div>
@@ -268,10 +400,14 @@
           <div class="portfolio-info">
             <span class="portfolio-cat">Visual Design</span>
             <h3 class="portfolio-name">The Yoga Project</h3>
-            <p class="portfolio-desc">Muted tonlar ve dingin yerleşim şablonları ile bütünsel yoga stüdyosu marka kimliği çalışması.</p>
+            <p class="portfolio-desc">Muted tonlar ve dingin yerleşim şablonları ile bütünsel yoga stüdyosu marka
+              kimliği çalışması.</p>
             <span class="portfolio-action-btn">
               Detayları Gör
-              <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              <svg viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
             </span>
           </div>
         </div>
@@ -287,7 +423,7 @@
         <h2 class="section-title">Resume & Skills</h2>
         <div class="section-divider"></div>
       </div>
-      
+
       <div class="resume-layout reveal">
         <!-- Folder Lists (Left side) -->
         <div class="resume-folders">
@@ -304,7 +440,8 @@
                   <div class="timeline-org">Turkcell</div>
                   <div class="timeline-details">
                     <ul>
-                      <li>İşveren markası (employer branding) projeleri için Canva ve CapCut kullanarak sosyal medya görsel ve video içerikleri tasarlama.</li>
+                      <li>İşveren markası (employer branding) projeleri için Canva ve CapCut kullanarak sosyal medya
+                        görsel ve video içerikleri tasarlama.</li>
                       <li>İç iletişim ve çalışan bağlılığı (employee engagement) faaliyetlerinin koordinasyonu.</li>
                       <li>Marka bütünlüğünün kanallar arasında sürdürülmesi amacıyla ekipler arası iş birliği.</li>
                     </ul>
@@ -366,10 +503,11 @@
                   <h4 class="timeline-name">Digital Marketing Minor</h4>
                   <div class="timeline-org">Rotterdam Business School</div>
                   <div class="timeline-details">
-                    <p>Google Analytics veri analizi, SEO yazarlığı, e-posta pazarlama optimizasyonları ve dijital reklam stratejileri.</p>
+                    <p>Google Analytics veri analizi, SEO yazarlığı, e-posta pazarlama optimizasyonları ve dijital
+                      reklam stratejileri.</p>
                   </div>
                 </div>
-                
+
                 <!-- Edu 2 -->
                 <div class="timeline-item">
                   <div class="timeline-node"></div>
@@ -464,7 +602,7 @@
         <h2 class="section-title">Certifications</h2>
         <div class="section-divider"></div>
       </div>
-      
+
       <div class="certs-grid reveal">
         <!-- Cert 1 -->
         <div class="folder-container cert-folder">
@@ -561,7 +699,7 @@
         <h2 class="section-title">Get In Touch</h2>
         <div class="section-divider"></div>
       </div>
-      
+
       <div class="contact-layout reveal">
         <!-- Left Side: Polaroid Collage & Contacts -->
         <div class="contact-visual">
@@ -571,15 +709,18 @@
               <p>Mindfulness</p>
             </div>
             <div class="polaroid-pile-item pile-2">
-              <img src="assets/images/alara_profile.jpg" alt="Alara Soysan Profile">
+              <img src="assets/images/alara_profile.png" alt="Alara Soysan Profile">
               <p>Let's talk!</p>
             </div>
           </div>
-          
+
           <div class="contact-channels">
             <a href="mailto:alarasoysan@outlook.com" class="contact-button-card">
               <div class="contact-card-icon">
-                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                </svg>
               </div>
               <div class="contact-card-text">
                 <span class="contact-card-label">E-Posta Gönder</span>
@@ -588,7 +729,10 @@
             </a>
             <div class="contact-button-card">
               <div class="contact-card-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                </svg>
               </div>
               <div class="contact-card-text">
                 <span class="contact-card-label">Konum</span>
@@ -612,7 +756,7 @@
                 <input type="email" id="form-email" class="form-control" placeholder="ahmet@email.com" required>
               </div>
             </div>
-            
+
             <div class="form-group full-width">
               <label for="form-subject">Konu</label>
               <input type="text" id="form-subject" class="form-control" placeholder="İş birliği veya sorularınız...">
@@ -620,12 +764,16 @@
 
             <div class="form-group full-width">
               <label for="form-message">Mesajınız *</label>
-              <textarea id="form-message" class="form-control" placeholder="Mesajınızı buraya yazabilirsiniz..." required></textarea>
+              <textarea id="form-message" class="form-control" placeholder="Mesajınızı buraya yazabilirsiniz..."
+                required></textarea>
             </div>
 
             <button type="submit" class="form-submit-btn">
               Gönder
-              <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+              <svg viewBox="0 0 24 24">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
             </button>
           </form>
 
@@ -656,13 +804,13 @@
           <h3 class="modal-title">Project Title</h3>
         </div>
         <img class="modal-hero-img" src="" alt="Project campaign illustration">
-        
+
         <div class="modal-description-section">
           <!-- Text Body -->
           <div class="modal-desc-text">
             Project description text loaded dynamically...
           </div>
-          
+
           <!-- Metadata Sidebar -->
           <div class="modal-meta-sidebar">
             <div class="modal-meta-box">
@@ -682,7 +830,9 @@
               <p class="meta-category">-</p>
             </div>
             <div>
-              <h5 style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 800;">Kazanımlar</h5>
+              <h5
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 800;">
+                Kazanımlar</h5>
               <div class="modal-goal-badges">
                 <!-- Badges dynamically injected -->
               </div>
@@ -703,5 +853,76 @@
 
   <!-- Javascript Controller -->
   <script src="app.js"></script>
+
+  <!-- Google Translate Hidden Widget -->
+  <div id="google_translate_element" style="display:none;"></div>
+
+  <!-- Google Translate Init -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,tr,nl',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+
+    function toggleLangDropdown() {
+      document.getElementById('lang-dropdown').classList.toggle('open');
+    }
+
+    function setLang(langCode, labelText, flag) {
+      // Close dropdown
+      document.getElementById('lang-dropdown').classList.remove('open');
+
+      // Update active class
+      ['lang-en','lang-tr','lang-nl'].forEach(id => {
+        document.getElementById(id).classList.remove('active');
+      });
+      document.getElementById('lang-' + langCode).classList.add('active');
+
+      // Update button label
+      document.getElementById('lang-current').textContent = labelText;
+
+      // Trigger Google Translate
+      const select = document.querySelector('.goog-te-combo');
+      if (select) {
+        select.value = langCode === 'en' ? '' : langCode;
+        select.dispatchEvent(new Event('change'));
+      } else {
+        // Fallback: change cookie and reload
+        document.cookie = 'googtrans=/en/' + (langCode === 'en' ? 'en' : langCode) + ';path=/;domain=' + window.location.hostname;
+        window.location.reload();
+      }
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      const selector = document.getElementById('lang-selector');
+      if (selector && !selector.contains(e.target)) {
+        document.getElementById('lang-dropdown').classList.remove('open');
+      }
+    });
+
+    // On load: detect stored language and sync button
+    (function syncLangButton() {
+      const cookie = document.cookie.split(';').find(c => c.trim().startsWith('googtrans='));
+      if (cookie) {
+        const val = cookie.split('/').pop().trim();
+        if (val === 'tr') {
+          document.getElementById('lang-current').textContent = 'TR';
+          document.getElementById('lang-tr').classList.add('active');
+          document.getElementById('lang-en').classList.remove('active');
+        } else if (val === 'nl') {
+          document.getElementById('lang-current').textContent = 'NL';
+          document.getElementById('lang-nl').classList.add('active');
+          document.getElementById('lang-en').classList.remove('active');
+        }
+      }
+    })();
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
+
+
 </html>
