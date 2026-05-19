@@ -495,7 +495,6 @@ header.scrolled {
   margin-bottom: 0.5rem;
   overflow-wrap: break-word;
   word-wrap: break-word;
-  word-break: break-word;
 }
 
 .hero-by-line {
@@ -1775,7 +1774,12 @@ html[lang="nl"] .skill-sticky h4 {
   word-break: normal !important;
 }
 
-/* Dutch Mobile Overrides — long compound words like "Marketingportfolio" */
+/* Dutch hero title — shrink so "Marketingportfolio" fits desktop column without breaking */
+html[lang="nl"] .hero-main-title {
+  font-size: clamp(1.8rem, 3.2vw, 3rem) !important;
+}
+
+/* Dutch Mobile Overrides — even smaller for narrow screens */
 @media (max-width: 768px) {
   html[lang="nl"] .hero-main-title {
     font-size: clamp(1.2rem, 5.5vw, 2rem) !important;
@@ -1901,6 +1905,11 @@ html[lang="nl"] .skill-sticky h4 {
   .hamburger {
     display: block;
     z-index: 1000;
+    margin-left: auto;
+  }
+
+  .nav-actions {
+    display: none;
   }
   
   .hero-main-title {
