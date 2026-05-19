@@ -13,18 +13,52 @@
     content="Alara Soysan, Portfolio, Digital Marketing, Rotterdam, Turkcell Intern, Social Media Campaign, Employer Branding">
   <meta name="author" content="Alara Soysan">
 
-  <!-- Google Translate CSS hide banner -->
+  <!-- Google Translate: completely hide the toolbar -->
   <style>
-    .goog-te-banner-frame, .goog-te-balloon-frame { display: none !important; }
-    body { top: 0 !important; }
-    .goog-te-gadget { font-size: 0 !important; }
-    .goog-te-gadget select { display: none; }
+    /* Kill every possible Google Translate top bar */
+    .goog-te-banner-frame,
+    .goog-te-banner-frame.skiptranslate,
+    .goog-te-balloon-frame,
+    #goog-gt-tt,
+    .goog-te-ftab-float,
+    .goog-te-menu-value:hover,
+    .goog-te-gadget-icon,
+    .goog-te-gadget img {
+      display: none !important;
+    }
+
+    /* Prevent body from being pushed down by 40px */
+    body {
+      top: 0px !important;
+      position: static !important;
+    }
+
+    body.translated-ltr {
+      margin-top: 0 !important;
+    }
+
+    body.translated-rtl {
+      margin-top: 0 !important;
+    }
+
+    /* Hide the widget container completely */
+    .goog-te-gadget {
+      font-size: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .goog-te-gadget select {
+      display: none !important;
+    }
+
     /* Language Selector Dropdown */
     .lang-selector {
       position: relative;
       display: flex;
       align-items: center;
     }
+
     .lang-btn {
       display: flex;
       align-items: center;
@@ -44,11 +78,18 @@
       transition: all 0.15s ease;
       white-space: nowrap;
     }
+
     .lang-btn:hover {
       transform: translate(-1px, -1px);
       box-shadow: 3px 3px 0px var(--border-color, #1c2c3d);
     }
-    .lang-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    .lang-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
     .lang-dropdown {
       display: none;
       position: absolute;
@@ -62,7 +103,11 @@
       z-index: 2000;
       min-width: 130px;
     }
-    .lang-dropdown.open { display: block; }
+
+    .lang-dropdown.open {
+      display: block;
+    }
+
     .lang-option {
       display: flex;
       align-items: center;
@@ -75,9 +120,33 @@
       cursor: pointer;
       transition: background 0.15s;
     }
-    .lang-option:hover { background: var(--folder-bg, #d2e4f5); }
-    .lang-option.active { background: var(--folder-bg, #d2e4f5); font-weight: 800; }
-    .lang-option .flag { font-size: 1rem; }
+
+    .lang-option:hover {
+      background: var(--folder-bg, #d2e4f5);
+    }
+
+    .lang-option.active {
+      background: var(--folder-bg, #d2e4f5);
+      font-weight: 800;
+    }
+
+    .lang-flag-img {
+      width: 20px;
+      height: 14px;
+      border-radius: 2px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .lang-btn-flag {
+      width: 18px;
+      height: 13px;
+      border-radius: 2px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
   </style>
 
   <!-- CSS Stylesheet -->
@@ -117,21 +186,27 @@
       <!-- Right: Language Selector -->
       <div class="nav-actions">
         <div class="lang-selector" id="lang-selector">
-          <button class="lang-btn" id="lang-btn" onclick="toggleLangDropdown()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="2" y1="12" x2="22" y2="12"/>
-              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-            </svg>
-            <span id="lang-current">EN</span>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:10px;height:10px">
+          <button class="lang-btn notranslate" id="lang-btn" onclick="toggleLangDropdown()">
+            <img id="lang-btn-flag" class="lang-btn-flag notranslate" src="https://flagcdn.com/w40/gb.png" alt="EN">
+            <span id="lang-current" class="notranslate">EN</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round" style="width:10px;height:10px">
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </button>
           <div class="lang-dropdown" id="lang-dropdown">
-            <div class="lang-option active" id="lang-en" onclick="setLang('en','EN','🇬🇧')"><span class="flag">🇬🇧</span> English</div>
-            <div class="lang-option" id="lang-tr" onclick="setLang('tr','TR','🇹🇷')"><span class="flag">🇹🇷</span> Türkçe</div>
-            <div class="lang-option" id="lang-nl" onclick="setLang('nl','NL','🇳🇱')"><span class="flag">🇳🇱</span> Nederlands</div>
+            <div class="lang-option active" id="lang-en" onclick="setLang('en','EN')">
+              <img class="lang-flag-img" src="https://flagcdn.com/w40/gb.png" alt="GB"> <span
+                id="label-en" class="notranslate">English</span>
+            </div>
+            <div class="lang-option" id="lang-tr" onclick="setLang('tr','TR')">
+              <img class="lang-flag-img" src="https://flagcdn.com/w40/tr.png" alt="TR"> <span
+                id="label-tr" class="notranslate">Türkçe</span>
+            </div>
+            <div class="lang-option" id="lang-nl" onclick="setLang('nl','NL')">
+              <img class="lang-flag-img" src="https://flagcdn.com/w40/nl.png" alt="NL"> <span
+                id="label-nl" class="notranslate">Nederlands</span>
+            </div>
           </div>
         </div>
       </div>
@@ -145,7 +220,7 @@
       <div class="hero-visual reveal active">
         <div class="polaroid-frame">
           <div class="polaroid-image-box">
-            <img src="assets/images/alara_profile.png" alt="Alara Soysan Portrait">
+            <img src="assets/images/ALARA.jpeg" alt="Alara Soysan Portrait">
           </div>
           <div class="polaroid-caption">Alara Soysan</div>
         </div>
@@ -863,65 +938,139 @@
       new google.translate.TranslateElement({
         pageLanguage: 'en',
         includedLanguages: 'en,tr,nl',
-        autoDisplay: false
+        autoDisplay: false,
+        gaTrack: false
       }, 'google_translate_element');
+
+      // Aggressively hide the banner whenever it appears
+      hideBanner();
     }
+
+    function hideBanner() {
+      // Immediately attempt hide
+      const banner = document.querySelector('.goog-te-banner-frame');
+      if (banner) banner.style.setProperty('display', 'none', 'important');
+      document.body.style.setProperty('top', '0px', 'important');
+
+      // Watch for future DOM changes (Google Translate inserts the bar async)
+      const observer = new MutationObserver(function () {
+        const bars = document.querySelectorAll(
+          '.goog-te-banner-frame, .skiptranslate.goog-te-banner-frame, [class*="goog-te-banner"]'
+        );
+        bars.forEach(el => el.style.setProperty('display', 'none', 'important'));
+        document.body.style.setProperty('top', '0px', 'important');
+        document.body.style.setProperty('margin-top', '0px', 'important');
+      });
+      observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+    }
+
+    const langLabels = {
+      en: { en: "English", tr: "Turkish", nl: "Dutch" },
+      tr: { en: "İngilizce", tr: "Türkçe", nl: "Felemenkçe" },
+      nl: { en: "Engels", tr: "Turks", nl: "Nederlands" }
+    };
+
+    const flagUrls = {
+      en: "https://flagcdn.com/w40/gb.png",
+      tr: "https://flagcdn.com/w40/tr.png",
+      nl: "https://flagcdn.com/w40/nl.png"
+    };
 
     function toggleLangDropdown() {
       document.getElementById('lang-dropdown').classList.toggle('open');
     }
 
-    function setLang(langCode, labelText, flag) {
+    function setLang(langCode, labelText) {
       // Close dropdown
       document.getElementById('lang-dropdown').classList.remove('open');
 
-      // Update active class
-      ['lang-en','lang-tr','lang-nl'].forEach(id => {
+      // Update active state on options
+      ['lang-en', 'lang-tr', 'lang-nl'].forEach(id => {
         document.getElementById(id).classList.remove('active');
       });
       document.getElementById('lang-' + langCode).classList.add('active');
 
-      // Update button label
+      // Update button label & flag
       document.getElementById('lang-current').textContent = labelText;
+      document.getElementById('lang-btn-flag').src = flagUrls[langCode];
+
+      // Update translation labels inside dropdown
+      const labels = langLabels[langCode] || langLabels.en;
+      document.getElementById('label-en').textContent = labels.en;
+      document.getElementById('label-tr').textContent = labels.tr;
+      document.getElementById('label-nl').textContent = labels.nl;
 
       // Trigger Google Translate
       const select = document.querySelector('.goog-te-combo');
       if (select) {
-        select.value = langCode === 'en' ? '' : langCode;
-        select.dispatchEvent(new Event('change'));
+        if (langCode === 'en') {
+          // Restore original: pick the blank/English option
+          select.value = '';
+          select.dispatchEvent(new Event('change'));
+          // Remove googtrans cookie
+          document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+          document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
+        } else {
+          select.value = langCode;
+          select.dispatchEvent(new Event('change'));
+        }
+        // Re-hide the bar after translation triggers
+        setTimeout(hideBanner, 100);
+        setTimeout(hideBanner, 500);
+        setTimeout(hideBanner, 1500);
       } else {
-        // Fallback: change cookie and reload
-        document.cookie = 'googtrans=/en/' + (langCode === 'en' ? 'en' : langCode) + ';path=/;domain=' + window.location.hostname;
+        // Fallback: cookie + reload
+        if (langCode === 'en') {
+          document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+          document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + window.location.hostname;
+        } else {
+          document.cookie = 'googtrans=/en/' + langCode + '; path=/; domain=' + window.location.hostname;
+        }
         window.location.reload();
       }
     }
 
     // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
       const selector = document.getElementById('lang-selector');
       if (selector && !selector.contains(e.target)) {
         document.getElementById('lang-dropdown').classList.remove('open');
       }
     });
 
-    // On load: detect stored language and sync button
+    // On page load: sync button label, flag, and dropdown option languages from stored cookie
     (function syncLangButton() {
       const cookie = document.cookie.split(';').find(c => c.trim().startsWith('googtrans='));
+      let activeLang = 'en';
+      let activeLabel = 'EN';
+      
       if (cookie) {
-        const val = cookie.split('/').pop().trim();
+        const val = cookie.trim().split('/').pop().trim();
         if (val === 'tr') {
-          document.getElementById('lang-current').textContent = 'TR';
-          document.getElementById('lang-tr').classList.add('active');
-          document.getElementById('lang-en').classList.remove('active');
+          activeLang = 'tr';
+          activeLabel = 'TR';
         } else if (val === 'nl') {
-          document.getElementById('lang-current').textContent = 'NL';
-          document.getElementById('lang-nl').classList.add('active');
-          document.getElementById('lang-en').classList.remove('active');
+          activeLang = 'nl';
+          activeLabel = 'NL';
         }
       }
+      
+      document.getElementById('lang-current').textContent = activeLabel;
+      document.getElementById('lang-btn-flag').src = flagUrls[activeLang];
+      
+      ['lang-en', 'lang-tr', 'lang-nl'].forEach(id => {
+        document.getElementById(id).classList.remove('active');
+      });
+      document.getElementById('lang-' + activeLang).classList.add('active');
+
+      const labels = langLabels[activeLang];
+      document.getElementById('label-en').textContent = labels.en;
+      document.getElementById('label-tr').textContent = labels.tr;
+      document.getElementById('label-nl').textContent = labels.nl;
     })();
   </script>
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 
 
