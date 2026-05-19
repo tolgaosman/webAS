@@ -263,14 +263,13 @@ function initPortfolioModal() {
 // 5. Contact Form Validation and Success Interaction
 function initContactForm() {
   const form = document.getElementById("contact-form");
-  const successAlert = document.getElementById("form-success");
 
   if (!form) return;
 
   form.addEventListener("submit", (e) => {
     e.preventDefault(); // Prevent real browser page refresh
 
-    // Form inputs validation could go here
+    // Form inputs validation
     const name = document.getElementById("form-name").value;
     const email = document.getElementById("form-email").value;
     const message = document.getElementById("form-message").value;
@@ -280,39 +279,14 @@ function initContactForm() {
       return;
     }
 
-    // Modern Button Loading state simulation
-    const submitBtn = form.querySelector(".form-submit-btn");
-    const originalBtnText = submitBtn.innerHTML;
-    submitBtn.innerHTML = `
-      <svg style="animation: spin 1s linear infinite; width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2;" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
-        <path d="M4 12a8 8 0 018-8v8H4z"></path>
-      </svg> Gönderiliyor...
-    `;
-    submitBtn.disabled = true;
+    // Prepare WhatsApp message
+    const whatsappText = `İsim: ${name}\nE-posta: ${email}\nMesaj: ${message}`;
+    const encodedText = encodeURIComponent(whatsappText);
+    const whatsappUrl = `https://wa.me/3125632446?text=${encodedText}`;
 
-    // Add inline keyframe spin style if not defined
-    if (!document.getElementById("spin-style")) {
-      const style = document.createElement("style");
-      style.id = "spin-style";
-      style.textContent = "@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }";
-      document.head.appendChild(style);
-    }
+    // Open WhatsApp
+    window.open(whatsappUrl, "_blank");
 
-    // Simulate Network Request
-    setTimeout(() => {
-      // Revert button
-      submitBtn.innerHTML = originalBtnText;
-      submitBtn.disabled = false;
-
-      // Show gorgeous success feedback
-      successAlert.classList.add("show");
-      form.reset();
-
-      // Auto-hide alert after 5 seconds
-      setTimeout(() => {
-        successAlert.classList.remove("show");
-      }, 5000);
-    }, 1500);
+    form.reset();
   });
 }

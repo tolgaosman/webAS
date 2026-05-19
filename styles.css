@@ -384,7 +384,7 @@ header.scrolled {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: minmax(380px, 1fr) 1.2fr;
   gap: 4rem;
   align-items: center;
 }

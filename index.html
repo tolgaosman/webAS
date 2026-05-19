@@ -39,7 +39,8 @@
 
 
     /* Prevent body and html from being pushed down by 40px */
-    html, body {
+    html,
+    body {
       top: 0px !important;
       position: static !important;
     }
@@ -51,6 +52,7 @@
       margin-top: 0px !important;
       top: 0px !important;
     }
+
     /* Hide the widget container completely */
     .goog-te-gadget {
       font-size: 0 !important;
@@ -803,13 +805,13 @@
               <p>Mindfulness</p>
             </div>
             <div class="polaroid-pile-item pile-2">
-              <img src="assets/images/alara_profile.png" alt="Alara Soysan Profile">
+              <img src="assets/images/ALARA.jpeg" alt="Alara Soysan Profile">
               <p>Let's talk!</p>
             </div>
           </div>
 
           <div class="contact-channels">
-            <a href="mailto:alarasoysan@outlook.com" class="contact-button-card">
+            <a href="mailto:alarasoysan@gmail.com" class="contact-button-card">
               <div class="contact-card-icon">
                 <svg viewBox="0 0 24 24">
                   <path
@@ -818,7 +820,7 @@
               </div>
               <div class="contact-card-text">
                 <span class="contact-card-label">E-Posta Gönder</span>
-                <span class="contact-card-value">alarasoysan@outlook.com</span>
+                <span class="contact-card-value">alarasoysan@gmail.com</span>
               </div>
             </a>
             <div class="contact-button-card">
@@ -852,11 +854,6 @@
             </div>
 
             <div class="form-group full-width">
-              <label for="form-subject">Konu</label>
-              <input type="text" id="form-subject" class="form-control" placeholder="İş birliği veya sorularınız...">
-            </div>
-
-            <div class="form-group full-width">
               <label for="form-message">Mesajınız *</label>
               <textarea id="form-message" class="form-control" placeholder="Mesajınızı buraya yazabilirsiniz..."
                 required></textarea>
@@ -870,14 +867,6 @@
               </svg>
             </button>
           </form>
-
-          <!-- Form Success Alert Alert -->
-          <div class="form-success-alert" id="form-success">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-              <polyline points="20 6 9 17 4 12"></polyline>
-            </svg>
-            Mesajınız iletildi! En kısa zamanda dönüş yapacağım.
-          </div>
         </div>
       </div>
     </div>
@@ -1026,14 +1015,14 @@
         document.cookie = cookieClean + ' path=/';
         document.cookie = cookieClean + ' path=/; domain=' + window.location.hostname;
         document.cookie = cookieClean + ' path=/; domain=.' + window.location.hostname;
-        
+
         // Also clear combo value if present
         const select = document.querySelector('.goog-te-combo');
         if (select) {
           select.value = '';
           select.dispatchEvent(new Event('change'));
         }
-        
+
         // Reload page to restore original English layout
         window.location.reload();
         return;
@@ -1043,7 +1032,7 @@
       if (select) {
         select.value = langCode;
         select.dispatchEvent(new Event('change'));
-        
+
         // Re-hide the bar after translation triggers
         setTimeout(hideBanner, 100);
         setTimeout(hideBanner, 500);
