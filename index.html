@@ -1167,11 +1167,10 @@
 
       // Trigger Google Translate
       if (langCode === 'tr') {
-        // Clear googtrans cookie for all paths and domains
-        const cookieClean = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
-        document.cookie = cookieClean + ' path=/';
-        document.cookie = cookieClean + ' path=/; domain=' + window.location.hostname;
-        document.cookie = cookieClean + ' path=/; domain=.' + window.location.hostname;
+        // Set googtrans cookie to /tr/tr to persist Turkish choice
+        document.cookie = 'googtrans=/tr/tr; path=/';
+        document.cookie = 'googtrans=/tr/tr; path=/; domain=' + window.location.hostname;
+        document.cookie = 'googtrans=/tr/tr; path=/; domain=.' + window.location.hostname;
 
         // Also clear combo value if present
         const select = document.querySelector('.goog-te-combo');
@@ -1212,7 +1211,17 @@
 
     // On page load: sync button label, flag, and dropdown option languages from stored cookie
     (function syncLangButton() {
-      const cookie = document.cookie.split(';').find(c => c.trim().startsWith('googtrans='));
+      let cookie = document.cookie.split(';').find(c => c.trim().startsWith('googtrans='));
+      
+      // If no language cookie is present, default to English (EN)
+      if (!cookie) {
+        document.cookie = 'googtrans=/tr/en; path=/';
+        document.cookie = 'googtrans=/tr/en; path=/; domain=' + window.location.hostname;
+        document.cookie = 'googtrans=/tr/en; path=/; domain=.' + window.location.hostname;
+        // Re-read or simulate cookie presence
+        cookie = 'googtrans=/tr/en';
+      }
+
       let activeLang = 'tr';
       let activeLabel = 'TR';
 
@@ -1224,6 +1233,9 @@
         } else if (val === 'nl') {
           activeLang = 'nl';
           activeLabel = 'NL';
+        } else if (val === 'tr') {
+          activeLang = 'tr';
+          activeLabel = 'TR';
         }
       }
 
