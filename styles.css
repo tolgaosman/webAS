@@ -5,7 +5,7 @@
 :root {
   /* Light Blue & Pink Mode (Default Light Theme) */
   --bg-color: #f2f7fc;
-  --bg-pattern: #e2edf6;
+  --bg-pattern: #c5d8ea;
   --card-bg: #ffffff;
   --folder-bg: #fde4eb;
   --folder-bg-active: #fac8d4;
@@ -37,7 +37,7 @@
 /* Dark Navy & Pink Mode (Dark Theme Toggler) */
 [data-theme="dark"] {
   --bg-color: #1a222e;
-  --bg-pattern: #222d3b;
+  --bg-pattern: #36475c;
   --card-bg: #212c3b;
   --folder-bg: #402c34;
   --folder-bg-active: #563945;
@@ -87,7 +87,7 @@ html, body {
 
 body {
   background-color: var(--bg-color);
-  background-image: radial-gradient(var(--bg-pattern) 1.5px, transparent 1.5px);
+  background-image: radial-gradient(var(--bg-pattern) 2px, transparent 2px);
   background-size: 24px 24px;
   color: var(--text-primary);
   font-family: var(--font-sans);
