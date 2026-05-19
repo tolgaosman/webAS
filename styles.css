@@ -1717,6 +1717,39 @@ footer {
   background-color: #bf8b2e;
 }
 
+.resume-actions-group {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+}
+
+.resume-actions-group .btn {
+  flex: 1;
+  font-size: 0.7rem;
+  padding: 0.65rem 0.25rem;
+  white-space: nowrap;
+}
+
+.resume-actions-group .btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* Dutch Specific Layout Adjustments */
+html[lang="nl"] .hero-title-group {
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+html[lang="nl"] .skill-sticky {
+  padding: 1.5rem 0.8rem !important;
+}
+
+html[lang="nl"] .skill-sticky h4 {
+  font-size: 0.82rem !important;
+  word-break: normal !important;
+}
+
 /* Intersection Observer Scroll Reveal */
 .reveal {
   opacity: 0;
