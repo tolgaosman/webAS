@@ -242,7 +242,7 @@ function initSecurity() {
   loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const password = document.getElementById("admin-password").value;
-    if (password === "admin123") {
+    if (password === "#asysn03!") {
       sessionStorage.setItem("adminLoggedIn", "true");
       loginWrapper.classList.add("hidden");
       adminMain.classList.remove("hidden");
