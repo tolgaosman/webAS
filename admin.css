@@ -584,13 +584,21 @@
 
 /* Profile image preview styling */
 .profile-upload-group {
-  grid-column: span 2;
+  grid-column: 1 / -1;
   display: flex;
   align-items: center;
   gap: 2rem;
   margin-bottom: 1.5rem;
   border-bottom: 2px dashed var(--border-color);
   padding-bottom: 1.5rem;
+}
+
+.profile-upload-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  flex: 1;
+  width: 100%;
 }
 
 @media (max-width: 600px) {
