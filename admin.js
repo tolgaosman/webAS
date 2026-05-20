@@ -430,7 +430,7 @@ function setupFileUpload(fileInputId, textInputId, callback) {
   });
 }
 
-// ── Carousel thumbnail strip renderer ────────────────────────────────
+// ── Carousel thumbnail strip renderer (with drag-to-reorder) ─────────
 function renderCarouselThumbs(stripId, textInputId) {
   const strip = document.getElementById(stripId);
   const textInput = document.getElementById(textInputId);
@@ -442,33 +442,86 @@ function renderCarouselThumbs(stripId, textInputId) {
     .filter(p => p && !p.includes("Uploading") && !p.includes("Yükleniyor"));
 
   strip.innerHTML = "";
+  if (paths.length === 0) return;
+
+  // Index of the item currently being dragged
+  let dragSrcIdx = null;
+
+  function reorder(fromIdx, toIdx) {
+    const current = textInput.value.split(",").map(p => p.trim()).filter(Boolean);
+    const [moved] = current.splice(fromIdx, 1);
+    current.splice(toIdx, 0, moved);
+    textInput.value = current.join(", ");
+    renderCarouselThumbs(stripId, textInputId);
+  }
 
   paths.forEach((src, idx) => {
     const item = document.createElement("div");
     item.className = "carousel-thumb-item";
+    item.draggable = true;
+    item.title = "Sürükle ile sıralamayı değiştir";
 
+    // Image
     const imgSrc = src.startsWith("http") ? src : "/" + src;
     const img = document.createElement("img");
     img.src = imgSrc;
     img.alt = "";
-    img.onerror = () => {
-      img.onerror = null;
-      img.src = `https://alarasysn.com/${src}`;
-    };
+    img.onerror = () => { img.onerror = null; img.src = `https://alarasysn.com/${src}`; };
 
+    // Order badge (bottom-left)
+    const badge = document.createElement("span");
+    badge.className = "carousel-thumb-order";
+    badge.textContent = idx + 1;
+
+    // Remove button (top-right)
     const removeBtn = document.createElement("button");
     removeBtn.type = "button";
     removeBtn.className = "carousel-thumb-remove";
-    removeBtn.title = "Remove";
+    removeBtn.title = "Kaldır";
     removeBtn.textContent = "×";
-    removeBtn.addEventListener("click", () => {
+    removeBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
       const current = textInput.value.split(",").map(p => p.trim()).filter(Boolean);
       current.splice(idx, 1);
       textInput.value = current.join(", ");
       renderCarouselThumbs(stripId, textInputId);
     });
 
+    // ── Drag events ──
+    item.addEventListener("dragstart", (e) => {
+      dragSrcIdx = idx;
+      e.dataTransfer.effectAllowed = "move";
+      // Slight delay so the ghost image captures the un-faded state
+      setTimeout(() => item.classList.add("dragging"), 0);
+    });
+
+    item.addEventListener("dragend", () => {
+      item.classList.remove("dragging");
+      strip.querySelectorAll(".carousel-thumb-item").forEach(el => el.classList.remove("drag-over"));
+      dragSrcIdx = null;
+    });
+
+    item.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+      if (dragSrcIdx === idx) return;
+      strip.querySelectorAll(".carousel-thumb-item").forEach(el => el.classList.remove("drag-over"));
+      item.classList.add("drag-over");
+    });
+
+    item.addEventListener("dragleave", () => {
+      item.classList.remove("drag-over");
+    });
+
+    item.addEventListener("drop", (e) => {
+      e.preventDefault();
+      item.classList.remove("drag-over");
+      if (dragSrcIdx === null || dragSrcIdx === idx) return;
+      reorder(dragSrcIdx, idx);
+    });
+
     item.appendChild(img);
+    item.appendChild(badge);
     item.appendChild(removeBtn);
     strip.appendChild(item);
   });
