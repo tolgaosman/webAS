@@ -581,3 +581,65 @@
   font-size: 0.78rem;
   line-height: 1.15;
 }
+
+/* Profile image preview styling */
+.profile-upload-group {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px dashed var(--border-color);
+  padding-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .profile-upload-group {
+    grid-column: span 1;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}
+
+.admin-polaroid-preview {
+  background: #ffffff;
+  border: 2px solid var(--border-color);
+  padding: 0.5rem;
+  box-shadow: 4px 4px 0 var(--border-color);
+  width: 120px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  transform: rotate(-2deg);
+  transition: transform 0.2s ease;
+}
+
+.admin-polaroid-preview:hover {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.admin-polaroid-img-box {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  background: #f0f0f0;
+}
+
+.admin-polaroid-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.admin-polaroid-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}

@@ -6,7 +6,8 @@ const DEFAULT_PORTFOLIO_DATA = {
     phone: "+31625632446",
     instagram: "https://instagram.com/alarasoysan",
     linkedin: "https://www.linkedin.com/in/alara-soysan-8a901a243/",
-    cvUrl: "alaraCV.pdf"
+    cvUrl: "alaraCV.pdf",
+    profileImage: "assets/images/ALARA.jpeg"
   },
   coreSkills: [
     { title: "Digital Content", desc: "Görsel ve video tasarımı, sosyal medya kampanyaları ve kreatif içerik planlaması." },
@@ -360,7 +361,7 @@ async function saveData() {
 }
 
 // File upload helper
-function setupFileUpload(fileInputId, textInputId) {
+function setupFileUpload(fileInputId, textInputId, callback) {
   const fileInput = document.getElementById(fileInputId);
   const textInput = document.getElementById(textInputId);
 
@@ -393,6 +394,9 @@ function setupFileUpload(fileInputId, textInputId) {
           const data = await res.json();
           if (data.success) {
             textInput.value = data.url;
+            if (typeof callback === "function") {
+              callback(data.url);
+            }
           } else {
             alert("Upload error: " + (data.error || "Unknown error"));
             textInput.value = originalText;
@@ -489,8 +493,17 @@ function populatePersonalForm() {
   document.getElementById("p-linkedin").value = p.linkedin || "";
   document.getElementById("p-cv").value = p.cvUrl || "";
   
+  const profileImgPath = p.profileImage || "assets/images/ALARA.jpeg";
+  document.getElementById("p-img-path").value = profileImgPath;
+  const previewImg = document.getElementById("p-img-preview");
+  if (previewImg) {
+    previewImg.src = profileImgPath.startsWith('/') ? profileImgPath : '/' + profileImgPath;
+  }
+  
   const cvFile = document.getElementById("p-cv-file");
   if (cvFile) cvFile.value = "";
+  const imgFile = document.getElementById("p-img-file");
+  if (imgFile) imgFile.value = "";
 }
 
 // Core Skills Managers
@@ -770,6 +783,12 @@ window.deleteCert = function(id) {
 function initForms() {
   // Setup file upload handlers
   setupFileUpload("p-cv-file", "p-cv");
+  setupFileUpload("p-img-file", "p-img-path", (url) => {
+    const previewImg = document.getElementById("p-img-preview");
+    if (previewImg) {
+      previewImg.src = url.startsWith('/') ? url : '/' + url;
+    }
+  });
   setupFileUpload("proj-thumbnail-file", "proj-thumbnail");
   setupMultiFileUpload("proj-images-file", "proj-images", "btn-clear-proj-images");
   setupFileUpload("cert-image-file", "cert-image");
@@ -783,6 +802,7 @@ function initForms() {
     portfolioData.personal.instagram = document.getElementById("p-instagram").value;
     portfolioData.personal.linkedin = document.getElementById("p-linkedin").value;
     portfolioData.personal.cvUrl = document.getElementById("p-cv").value;
+    portfolioData.personal.profileImage = document.getElementById("p-img-path").value;
 
     saveData();
     alert("Personal details updated successfully!");

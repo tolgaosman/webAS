@@ -41,6 +41,18 @@ function applyDynamicData() {
   if (portfolioData.personal) {
     const p = portfolioData.personal;
     
+    // Update Profile / Polaroid images
+    if (p.profileImage) {
+      const heroProfileImg = document.querySelector(".polaroid-image-box img");
+      if (heroProfileImg) {
+        heroProfileImg.setAttribute("src", p.profileImage);
+      }
+      const contactProfileImg = document.querySelector(".polaroid-pile-item.pile-2 img");
+      if (contactProfileImg) {
+        contactProfileImg.setAttribute("src", p.profileImage);
+      }
+    }
+    
     // Update CV links
     const cvButtons = document.querySelectorAll(".resume-actions-group a");
     cvButtons.forEach((btn, idx) => {
