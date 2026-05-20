@@ -632,12 +632,30 @@ function renderCoreSkills() {
       <td><strong>${skill.title}</strong></td>
       <td>${skill.desc}</td>
       <td>
-        <button class="btn btn-danger btn-sm" onclick="deleteCoreSkill(${index})">Delete</button>
+        <div style="display:flex;gap:0.4rem;">
+          <button class="btn btn-secondary btn-sm" onclick="editCoreSkill(${index})">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteCoreSkill(${index})">Delete</button>
+        </div>
       </td>
     `;
     tbody.appendChild(tr);
   });
 }
+
+window.editCoreSkill = function (index) {
+  const skill = portfolioData.coreSkills[index];
+  if (!skill) return;
+
+  document.getElementById("new-skill-title").value = skill.title;
+  document.getElementById("new-skill-desc").value = skill.desc;
+  document.getElementById("edit-skill-index").value = index;
+  document.getElementById("skill-submit-btn").textContent = "Save Changes";
+  document.getElementById("skill-cancel-btn").classList.remove("hidden");
+
+  // Scroll form into view
+  document.getElementById("add-skill-form").scrollIntoView({ behavior: "smooth", block: "center" });
+  document.getElementById("new-skill-title").focus();
+};
 
 window.deleteCoreSkill = function (index) {
   if (confirm("Are you sure you want to delete this skill?")) {
@@ -927,16 +945,36 @@ function initForms() {
     alert("Personal details updated successfully!");
   });
 
-  // Add Core Skill
+  // Add / Edit Core Skill
   document.getElementById("add-skill-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    const title = document.getElementById("new-skill-title").value;
-    const desc = document.getElementById("new-skill-desc").value;
+    const title = document.getElementById("new-skill-title").value.trim();
+    const desc = document.getElementById("new-skill-desc").value.trim();
+    const editIdx = document.getElementById("edit-skill-index").value;
 
-    portfolioData.coreSkills.push({ title, desc });
+    if (editIdx !== "") {
+      // Edit mode — update existing skill
+      portfolioData.coreSkills[parseInt(editIdx)] = { title, desc };
+    } else {
+      // Add mode — push new skill
+      portfolioData.coreSkills.push({ title, desc });
+    }
+
     saveData();
     renderCoreSkills();
+
+    // Reset form to add mode
     document.getElementById("add-skill-form").reset();
+    document.getElementById("edit-skill-index").value = "";
+    document.getElementById("skill-submit-btn").textContent = "Add";
+    document.getElementById("skill-cancel-btn").classList.add("hidden");
+  });
+
+  document.getElementById("skill-cancel-btn").addEventListener("click", () => {
+    document.getElementById("add-skill-form").reset();
+    document.getElementById("edit-skill-index").value = "";
+    document.getElementById("skill-submit-btn").textContent = "Add";
+    document.getElementById("skill-cancel-btn").classList.add("hidden");
   });
 
   // Project Editor submit

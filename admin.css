@@ -743,3 +743,28 @@
   pointer-events: none;
   line-height: 1;
 }
+
+/* ── Skills form: single-row layout ─────────────────────────────────── */
+.skill-inline-form {
+  flex-wrap: nowrap !important;
+  align-items: flex-end;
+}
+
+.skill-inline-form .form-group {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.skill-form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  align-self: flex-end;
+  padding-bottom: 2px;
+}
+
+.skill-form-actions .btn {
+  height: 42px;
+  white-space: nowrap;
+}

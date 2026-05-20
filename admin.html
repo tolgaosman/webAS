@@ -134,7 +134,8 @@
         </div>
         
         <div class="skills-manager">
-          <form id="add-skill-form" class="inline-form">
+          <form id="add-skill-form" class="inline-form skill-inline-form">
+            <input type="hidden" id="edit-skill-index" value="">
             <div class="form-group">
               <label for="new-skill-title">Skill Title</label>
               <input type="text" id="new-skill-title" placeholder="e.g. Digital Content Creation" required>
@@ -143,7 +144,10 @@
               <label for="new-skill-desc">Skill Description</label>
               <input type="text" id="new-skill-desc" placeholder="e.g. Social media and video design" required>
             </div>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <div class="skill-form-actions">
+              <button type="submit" class="btn btn-primary" id="skill-submit-btn">Add</button>
+              <button type="button" class="btn btn-secondary hidden" id="skill-cancel-btn">Cancel</button>
+            </div>
           </form>
 
           <div class="list-table-wrapper">
@@ -152,7 +156,7 @@
                 <tr>
                   <th>Skill Title</th>
                   <th>Skill Description</th>
-                  <th width="100">Action</th>
+                  <th width="160">Actions</th>
                 </tr>
               </thead>
               <tbody id="skills-list-body">
