@@ -68,32 +68,29 @@
       <section class="tab-content active" id="tab-personal">
         <form id="personal-form" class="admin-form">
           <div class="form-grid">
-            <!-- Profile Image Upload with Polaroid Preview + Full Name side by side -->
+            <!-- Profile Image Upload with Polaroid Preview -->
             <div class="profile-upload-group">
-              <!-- Left: polaroid stacked above file upload -->
-              <div class="profile-upload-left">
-                <div class="admin-polaroid-preview">
-                  <div class="admin-polaroid-img-box">
-                    <img id="p-img-preview" src="/assets/images/ALARA.jpeg" alt="Profile Preview">
-                  </div>
-                  <span class="admin-polaroid-label">Profile Pic</span>
+              <div class="admin-polaroid-preview">
+                <div class="admin-polaroid-img-box">
+                  <img id="p-img-preview" src="/assets/images/ALARA.jpeg" alt="Profile Preview">
                 </div>
-                <div style="width: 100%; margin-top: 0.75rem;">
-                  <label for="p-img-path">Profile Image</label>
-                  <div class="file-upload-container" style="margin-top: 0.4rem;">
-                    <input type="text" id="p-img-path" class="file-upload-display" placeholder="assets/images/ALARA.jpeg" readonly>
-                    <label class="btn btn-secondary custom-file-upload-btn">
-                      Select Image
-                      <input type="file" id="p-img-file" accept="image/*">
-                    </label>
-                  </div>
+                <span class="admin-polaroid-label">Profile Pic</span>
+              </div>
+              <div style="flex: 1; width: 100%;">
+                <label for="p-img-path">Profile Image</label>
+                <div class="file-upload-container" style="margin-top: 0.5rem;">
+                  <input type="text" id="p-img-path" class="file-upload-display" placeholder="assets/images/ALARA.jpeg" readonly>
+                  <label class="btn btn-secondary custom-file-upload-btn">
+                    Select Image
+                    <input type="file" id="p-img-file" accept="image/*">
+                  </label>
                 </div>
               </div>
-              <!-- Right: Full Name -->
-              <div class="profile-upload-right">
-                <label for="p-name">Full Name</label>
-                <input type="text" id="p-name" required>
-              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="p-name">Full Name</label>
+              <input type="text" id="p-name" required>
             </div>
             <div class="form-group">
               <label for="p-email">Email Address</label>
