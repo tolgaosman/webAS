@@ -232,11 +232,24 @@ function initSecurity() {
   const logoutBtn = document.getElementById("logout-btn");
 
   const isLoggedIn = sessionStorage.getItem("adminLoggedIn") === "true";
+  const path = window.location.pathname;
 
+  // Routing checks
   if (isLoggedIn) {
+    if (path === "/login" || path === "/login/") {
+      window.history.replaceState({}, "", "/admin_panel");
+    }
     loginWrapper.classList.add("hidden");
     adminMain.classList.remove("hidden");
     loadData();
+  } else {
+    if (path === "/admin_panel" || path === "/admin_panel/") {
+      window.history.replaceState({}, "", "/login");
+    } else if (path === "/" || path === "") {
+      window.history.replaceState({}, "", "/login");
+    }
+    loginWrapper.classList.remove("hidden");
+    adminMain.classList.add("hidden");
   }
 
   loginForm.addEventListener("submit", (e) => {
@@ -244,6 +257,7 @@ function initSecurity() {
     const password = document.getElementById("admin-password").value;
     if (password === "#asysn03!") {
       sessionStorage.setItem("adminLoggedIn", "true");
+      window.history.pushState({}, "", "/admin_panel");
       loginWrapper.classList.add("hidden");
       adminMain.classList.remove("hidden");
       loadData();
@@ -254,6 +268,7 @@ function initSecurity() {
 
   logoutBtn.addEventListener("click", () => {
     sessionStorage.removeItem("adminLoggedIn");
+    window.history.pushState({}, "", "/login");
     window.location.reload();
   });
 }
@@ -295,7 +310,7 @@ function initSubTabNavigation() {
 // Data loading and saving
 async function loadData() {
   try {
-    const res = await fetch("portfolio-data.json");
+    const res = await fetch("/portfolio-data.json");
     if (res.ok) {
       portfolioData = await res.json();
     } else {

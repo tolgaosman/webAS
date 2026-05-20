@@ -106,7 +106,7 @@ http.createServer((req, res) => {
     return;
   }
 
-  if (reqPath === '/') {
+  if (reqPath === '/' || reqPath === '/login' || reqPath === '/login/' || reqPath === '/admin_panel' || reqPath === '/admin_panel/') {
     reqPath = '/admin.html';
   }
   
