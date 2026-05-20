@@ -487,13 +487,13 @@ function setupMultiFileUpload(fileInputId, textInputId, clearBtnId) {
 
     const currentClean = originalText.replace(/,\s*Uploading\.\.\./, "").replace(/^Uploading\.\.\./, "").replace(/,\s*Yükleniyor\.\.\./, "").replace(/^Yükleniyor\.\.\./, "");
     const newUrlsStr = uploadedUrls.join(", ");
-    
+
     if (newUrlsStr) {
       textInput.value = currentClean ? `${currentClean}, ${newUrlsStr}` : newUrlsStr;
     } else {
       textInput.value = currentClean;
     }
-    
+
     fileInput.value = "";
   });
 }
@@ -507,7 +507,7 @@ function populatePersonalForm() {
   document.getElementById("p-instagram").value = p.instagram || "";
   document.getElementById("p-linkedin").value = p.linkedin || "";
   document.getElementById("p-cv").value = p.cvUrl || "";
-  
+
   const profileImgPath = p.profileImage || "assets/images/ALARA.jpeg";
   document.getElementById("p-img-path").value = profileImgPath;
   const previewImg = document.getElementById("p-img-preview");
@@ -521,7 +521,7 @@ function populatePersonalForm() {
       };
     }
   }
-  
+
   const cvFile = document.getElementById("p-cv-file");
   if (cvFile) cvFile.value = "";
   const imgFile = document.getElementById("p-img-file");
@@ -546,7 +546,7 @@ function renderCoreSkills() {
   });
 }
 
-window.deleteCoreSkill = function(index) {
+window.deleteCoreSkill = function (index) {
   if (confirm("Are you sure you want to delete this skill?")) {
     portfolioData.coreSkills.splice(index, 1);
     saveData();
@@ -577,7 +577,7 @@ function renderProjects() {
   });
 }
 
-window.openProjectEditor = function(id) {
+window.openProjectEditor = function (id) {
   const modal = document.getElementById("project-editor-modal");
   const form = document.getElementById("project-form");
   form.reset();
@@ -609,7 +609,7 @@ window.openProjectEditor = function(id) {
   modal.classList.remove("hidden");
 };
 
-window.deleteProject = function(id) {
+window.deleteProject = function (id) {
   if (confirm("Are you sure you want to delete this project?")) {
     portfolioData.projects = portfolioData.projects.filter(p => p.id !== id);
     saveData();
@@ -637,7 +637,7 @@ function renderEducation() {
   });
 }
 
-window.deleteEducation = function(index) {
+window.deleteEducation = function (index) {
   if (confirm("Are you sure you want to delete this education entry?")) {
     portfolioData.education.splice(index, 1);
     saveData();
@@ -667,7 +667,7 @@ function renderExperience() {
   });
 }
 
-window.openExpEditor = function(id) {
+window.openExpEditor = function (id) {
   const modal = document.getElementById("exp-editor-modal");
   const form = document.getElementById("exp-form");
   form.reset();
@@ -688,7 +688,7 @@ window.openExpEditor = function(id) {
   modal.classList.remove("hidden");
 };
 
-window.deleteExperience = function(id) {
+window.deleteExperience = function (id) {
   if (confirm("Are you sure you want to delete this experience entry?")) {
     portfolioData.experience = portfolioData.experience.filter(e => e.id !== id);
     saveData();
@@ -718,7 +718,7 @@ function renderLanguages() {
   });
 }
 
-window.deleteLanguage = function(index) {
+window.deleteLanguage = function (index) {
   if (confirm("Are you sure you want to delete this language skill?")) {
     portfolioData.languages.splice(index, 1);
     saveData();
@@ -742,7 +742,7 @@ function renderToolkit() {
   });
 }
 
-window.deleteBadge = function(index) {
+window.deleteBadge = function (index) {
   portfolioData.toolkit.splice(index, 1);
   saveData();
   renderToolkit();
@@ -770,7 +770,7 @@ function renderCertificates() {
   });
 }
 
-window.openCertEditor = function(id) {
+window.openCertEditor = function (id) {
   const modal = document.getElementById("cert-editor-modal");
   const form = document.getElementById("cert-form");
   form.reset();
@@ -793,7 +793,7 @@ window.openCertEditor = function(id) {
   modal.classList.remove("hidden");
 };
 
-window.deleteCert = function(id) {
+window.deleteCert = function (id) {
   if (confirm("Are you sure you want to delete this certificate?")) {
     portfolioData.certificates = portfolioData.certificates.filter(c => c.id !== id);
     saveData();
@@ -998,3 +998,27 @@ function initForms() {
   });
 
 }
+
+// Admin panelinde resmi seçip gönderdiğin butonun fonksiyonu
+const imageInput = document.getElementById('imageInput'); // senin input id'n neyse
+
+imageInput.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+
+  reader.onloadend = () => {
+    // Bu aşamada resim tamamen upuzun bir TEXT dizisine dönüştü!
+    const base64Image = reader.result;
+
+    // Şimdi bu metni backend'e normal bir yazıymış gibi JSON ile gönderiyoruz
+    fetch('/api/portfolio-guncelle', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        isim: "Alara Soysan",
+        resimMetni: base64Image // Resim artık düz bir yazı!
+      })
+    });
+  };
+  reader.readAsDataURL(file);
+});
