@@ -64,6 +64,16 @@ function applyDynamicData() {
       }
     });
 
+    // Update Hero Social links
+    const heroLinkedin = document.querySelector('.hero-socials a[aria-label="LinkedIn"]');
+    if (heroLinkedin && p.linkedin) {
+      heroLinkedin.setAttribute("href", p.linkedin);
+    }
+    const heroInstagram = document.querySelector('.hero-socials a[aria-label="Instagram"]');
+    if (heroInstagram && p.instagram) {
+      heroInstagram.setAttribute("href", p.instagram);
+    }
+
     // Update Instagram and LinkedIn links in contact-channels
     const channelsContainer = document.querySelector(".contact-channels");
     if (channelsContainer) {
