@@ -103,6 +103,7 @@
   border-top-left-radius: 0;
   position: relative;
   z-index: 1;
+  margin-top: 0 !important;
 }
 
 /* Sections and Forms */
