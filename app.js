@@ -61,22 +61,30 @@ function applyDynamicData() {
     
     // Update Profile / Polaroid images
     if (p.profileImage) {
-      // Uploaded images live on the Render server — prefix the URL so they load on GitHub Pages too
-      const imgSrc = p.profileImage.startsWith('http') ? p.profileImage : `${ADMIN_SERVER}/${p.profileImage}`;
       const heroProfileImg = document.querySelector(".polaroid-image-box img");
-      if (heroProfileImg) {
-        heroProfileImg.setAttribute("src", imgSrc);
-      }
       const contactProfileImg = document.querySelector(".polaroid-pile-item.pile-2 img");
-      if (contactProfileImg) {
-        contactProfileImg.setAttribute("src", imgSrc);
-      }
+      
+      const setProfileImg = (imgEl) => {
+        if (!imgEl) return;
+        const relativePath = p.profileImage.startsWith('http') ? p.profileImage : p.profileImage;
+        imgEl.setAttribute("src", relativePath);
+        // Fallback to ADMIN_SERVER if relative fails (e.g. GitHub Pages still building)
+        if (!p.profileImage.startsWith('http')) {
+          imgEl.onerror = () => {
+            imgEl.onerror = null;
+            imgEl.setAttribute("src", `${ADMIN_SERVER}/${p.profileImage}`);
+          };
+        }
+      };
+
+      setProfileImg(heroProfileImg);
+      setProfileImg(contactProfileImg);
     }
     
-    // Update CV links
+    // Update CV links (Load relatively from GitHub Pages primarily, fallback to Admin server handled by server pathing)
     const cvUrl = p.cvUrl
-      ? (p.cvUrl.startsWith('http') ? p.cvUrl : `${ADMIN_SERVER}/${p.cvUrl}`)
-      : `${ADMIN_SERVER}/alaraCV.pdf`;
+      ? (p.cvUrl.startsWith('http') ? p.cvUrl : p.cvUrl)
+      : 'alaraCV.pdf';
     const cvButtons = document.querySelectorAll(".resume-actions-group a");
     cvButtons.forEach((btn, idx) => {
       btn.setAttribute("href", cvUrl);
@@ -224,7 +232,7 @@ function applyDynamicData() {
         card.setAttribute("data-project-id", proj.id);
         card.innerHTML = `
           <div class="portfolio-img-box">
-            <img src="${proj.thumbnail}" alt="${proj.title} Cover Image">
+            <img src="${proj.thumbnail}" alt="${proj.title} Cover Image" onerror="this.onerror=null; this.src='${ADMIN_SERVER}/' + this.getAttribute('src');">
           </div>
           <div class="portfolio-info">
             <span class="portfolio-cat">${proj.category}</span>
@@ -365,7 +373,7 @@ function applyDynamicData() {
 
         card.innerHTML = `
           <span class="folder-tab" ${tabStyle}>${cert.issuer.split(" ")[0]}</span>
-          <img class="cert-image" src="${cert.image}" alt="${cert.title}">
+          <img class="cert-image" src="${cert.image}" alt="${cert.title}" onerror="this.onerror=null; this.src='${ADMIN_SERVER}/' + this.getAttribute('src');">
           <div class="cert-issuer-box">
             <div class="cert-issuer-icon" ${iconStyle}>${cert.letter}</div>
             <span class="cert-issuer-name">${cert.issuer}</span>
@@ -555,6 +563,12 @@ function initPortfolioModal() {
         img.className = "modal-hero-img";
         img.src = imgSrc;
         img.alt = title.replace(/<[^>]*>?/gm, '') + " " + (idx + 1);
+        if (!imgSrc.startsWith('http')) {
+          img.onerror = () => {
+            img.onerror = null;
+            img.src = `${ADMIN_SERVER}/${imgSrc}`;
+          };
+        }
         carouselTrack.appendChild(img);
 
         if (totalSlides > 1) {

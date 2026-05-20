@@ -512,7 +512,14 @@ function populatePersonalForm() {
   document.getElementById("p-img-path").value = profileImgPath;
   const previewImg = document.getElementById("p-img-preview");
   if (previewImg) {
-    previewImg.src = profileImgPath.startsWith('/') ? profileImgPath : '/' + profileImgPath;
+    const relativeUrl = profileImgPath.startsWith('/') ? profileImgPath : '/' + profileImgPath;
+    previewImg.src = relativeUrl;
+    if (!profileImgPath.startsWith('http')) {
+      previewImg.onerror = () => {
+        previewImg.onerror = null;
+        previewImg.src = `https://alarasysn.com/${profileImgPath}`;
+      };
+    }
   }
   
   const cvFile = document.getElementById("p-cv-file");
@@ -555,7 +562,7 @@ function renderProjects() {
   portfolioData.projects.forEach((proj) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td><img src="${proj.thumbnail}" class="project-thumb-preview" alt=""></td>
+      <td><img src="${proj.thumbnail}" onerror="this.onerror=null; this.src='https://alarasysn.com/' + this.getAttribute('src');" class="project-thumb-preview" alt=""></td>
       <td><strong>${proj.title}</strong></td>
       <td><span class="admin-tag" style="background-color: var(--folder-bg);">${proj.category}</span></td>
       <td><span style="font-size: 0.85rem; color: var(--text-muted);">${proj.images.split(",").length} images</span></td>
