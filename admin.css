@@ -101,7 +101,6 @@
   padding: 2.5rem;
   border-top-left-radius: 0;
   position: relative;
-  z-index: 1;
   margin-top: 0 !important;
 }
 
@@ -529,5 +528,50 @@
   
   .resume-manager-tabs {
     flex-wrap: wrap;
+  }
+}
+
+/* Custom File Upload Styling */
+.file-upload-container {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.custom-file-upload-btn {
+  white-space: nowrap;
+  user-select: none;
+}
+
+.custom-file-upload-btn input[type="file"] {
+  display: none !important;
+}
+
+.file-upload-display {
+  flex: 1;
+  min-width: 0; /* crucial for ellipsis */
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.05);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+/* Grid layout utilities */
+.col-span-2 {
+  grid-column: span 2;
+}
+
+@media (max-width: 600px) {
+  .col-span-2 {
+    grid-column: span 1;
   }
 }
