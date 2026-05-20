@@ -1,0 +1,9 @@
+# Runtime data — never overwrite live admin edits
+portfolio-data.json
+
+# Uploaded files (large binaries, generated at runtime)
+assets/uploads/
+
+# Node
+node_modules/
+npm-debug.log*
