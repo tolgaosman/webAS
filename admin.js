@@ -430,11 +430,56 @@ function setupFileUpload(fileInputId, textInputId, callback) {
   });
 }
 
+// ── Carousel thumbnail strip renderer ────────────────────────────────
+function renderCarouselThumbs(stripId, textInputId) {
+  const strip = document.getElementById(stripId);
+  const textInput = document.getElementById(textInputId);
+  if (!strip || !textInput) return;
+
+  const paths = textInput.value
+    .split(",")
+    .map(p => p.trim())
+    .filter(p => p && !p.includes("Uploading") && !p.includes("Yükleniyor"));
+
+  strip.innerHTML = "";
+
+  paths.forEach((src, idx) => {
+    const item = document.createElement("div");
+    item.className = "carousel-thumb-item";
+
+    const imgSrc = src.startsWith("http") ? src : "/" + src;
+    const img = document.createElement("img");
+    img.src = imgSrc;
+    img.alt = "";
+    img.onerror = () => {
+      img.onerror = null;
+      img.src = `https://alarasysn.com/${src}`;
+    };
+
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "carousel-thumb-remove";
+    removeBtn.title = "Remove";
+    removeBtn.textContent = "×";
+    removeBtn.addEventListener("click", () => {
+      const current = textInput.value.split(",").map(p => p.trim()).filter(Boolean);
+      current.splice(idx, 1);
+      textInput.value = current.join(", ");
+      renderCarouselThumbs(stripId, textInputId);
+    });
+
+    item.appendChild(img);
+    item.appendChild(removeBtn);
+    strip.appendChild(item);
+  });
+}
+
 // Multiple file upload helper for project images
 function setupMultiFileUpload(fileInputId, textInputId, clearBtnId) {
   const fileInput = document.getElementById(fileInputId);
   const textInput = document.getElementById(textInputId);
   const clearBtn = document.getElementById(clearBtnId);
+  const stripId = textInputId + "-thumbs";
 
   if (!fileInput || !textInput) return;
 
@@ -442,6 +487,7 @@ function setupMultiFileUpload(fileInputId, textInputId, clearBtnId) {
     clearBtn.addEventListener("click", () => {
       textInput.value = "";
       fileInput.value = "";
+      renderCarouselThumbs(stripId, textInputId);
     });
   }
 
@@ -465,36 +511,30 @@ function setupMultiFileUpload(fileInputId, textInputId, clearBtnId) {
 
         const res = await fetch("/api/upload", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            filename: file.name,
-            fileData: base64Data
-          })
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ filename: file.name, fileData: base64Data })
         });
 
         if (res.ok) {
           const data = await res.json();
-          if (data.success) {
-            uploadedUrls.push(data.url);
-          }
+          if (data.success) uploadedUrls.push(data.url);
         }
       } catch (err) {
         console.error("Error uploading file in batch:", file.name, err);
       }
     }
 
-    const currentClean = originalText.replace(/,\s*Uploading\.\.\./, "").replace(/^Uploading\.\.\./, "").replace(/,\s*Yükleniyor\.\.\./, "").replace(/^Yükleniyor\.\.\./, "");
+    const currentClean = originalText
+      .replace(/,\s*Uploading\.\.\./, "").replace(/^Uploading\.\.\./, "")
+      .replace(/,\s*Yükleniyor\.\.\./, "").replace(/^Yükleniyor\.\.\./, "");
     const newUrlsStr = uploadedUrls.join(", ");
 
-    if (newUrlsStr) {
-      textInput.value = currentClean ? `${currentClean}, ${newUrlsStr}` : newUrlsStr;
-    } else {
-      textInput.value = currentClean;
-    }
+    textInput.value = newUrlsStr
+      ? (currentClean ? `${currentClean}, ${newUrlsStr}` : newUrlsStr)
+      : currentClean;
 
     fileInput.value = "";
+    renderCarouselThumbs(stripId, textInputId);
   });
 }
 
@@ -599,11 +639,15 @@ window.openProjectEditor = function (id) {
     document.getElementById("proj-meta-category").value = proj.metaCategory || "";
     document.getElementById("proj-goals").value = proj.goals || "";
     document.getElementById("proj-achievements").value = (proj.achievements || []).join("\n");
+    // Render existing image thumbnails
+    renderCarouselThumbs("proj-images-thumbs", "proj-images");
 
     document.getElementById("editor-title-label").textContent = "Edit Project";
   } else {
     document.getElementById("proj-id").value = "";
     document.getElementById("editor-title-label").textContent = "Add New Project";
+    // Clear thumbnail strip for new project
+    renderCarouselThumbs("proj-images-thumbs", "proj-images");
   }
 
   modal.classList.remove("hidden");

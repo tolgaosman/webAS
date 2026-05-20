@@ -651,3 +651,60 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
+/* ── Carousel image thumbnail strip ─────────────────────────────────── */
+.carousel-thumb-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  min-height: 0;
+  transition: min-height 0.2s ease;
+}
+
+.carousel-thumb-strip:not(:empty) {
+  min-height: 72px;
+}
+
+.carousel-thumb-item {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-color);
+  box-shadow: 2px 2px 0 var(--border-color);
+  flex-shrink: 0;
+}
+
+.carousel-thumb-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel-thumb-remove {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 18px;
+  height: 18px;
+  background: rgba(220, 30, 30, 0.85);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.carousel-thumb-item:hover .carousel-thumb-remove {
+  opacity: 1;
+}
