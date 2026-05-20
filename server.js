@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 8081;
+const PORT = process.env.PORT || 8081;
 
 const MIME_TYPES = {
   '.html': 'text/html',
@@ -107,7 +107,7 @@ http.createServer((req, res) => {
   }
 
   if (reqPath === '/') {
-    reqPath = '/index.html';
+    reqPath = '/admin.html';
   }
   
   const filePath = path.join(__dirname, reqPath);
