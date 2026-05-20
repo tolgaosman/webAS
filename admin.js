@@ -325,9 +325,11 @@ async function loadData() {
         portfolioData = JSON.parse(localData);
       } catch (err) {
         portfolioData = DEFAULT_PORTFOLIO_DATA;
+        showFallbackWarning();
       }
     } else {
       portfolioData = DEFAULT_PORTFOLIO_DATA;
+      showFallbackWarning();
     }
   }
 
@@ -340,6 +342,19 @@ async function loadData() {
   renderToolkit();
   renderCertificates();
 }
+
+// Function to display fallback data warnings to avoid data loss
+function showFallbackWarning() {
+  const mainEl = document.getElementById("admin-main");
+  if (mainEl && !document.getElementById("fallback-warning")) {
+    const banner = document.createElement("div");
+    banner.id = "fallback-warning";
+    banner.style.cssText = "background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 0.5rem;";
+    banner.innerHTML = `⚠️ <span style="margin-left: 0.25rem;"><strong>Uyarı:</strong> Canlı sunucudan veri yüklenemedi. Şu anda yerel eski şablon verileri yüklendi. Burada değişiklik yapıp kaydetmek canlı verilerinizi sıfırlayabilir!</span>`;
+    mainEl.insertBefore(banner, mainEl.firstChild);
+  }
+}
+
 
 async function saveData() {
   localStorage.setItem("portfolioData", JSON.stringify(portfolioData));

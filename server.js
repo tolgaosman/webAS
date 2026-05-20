@@ -1,6 +1,93 @@
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const path = require('path');
+
+// Helper to push updates to GitHub repository to prevent data loss on ephemeral servers like Render
+function saveToGitHub(filePath, fileContent, isBase64 = false) {
+  const token = process.env.GITHUB_TOKEN;
+  const owner = process.env.GITHUB_OWNER || 'tolgaosman';
+  const repo = process.env.GITHUB_REPO || 'webAS';
+  const branch = process.env.GITHUB_BRANCH || 'main';
+
+  if (!token) {
+    console.warn("GITHUB_TOKEN not configured. Skipping GitHub backup.");
+    return;
+  }
+
+  // Helper to make https requests using standard library
+  function makeRequest(options, data = null) {
+    return new Promise((resolve, reject) => {
+      const req = https.request(options, (res) => {
+        let body = '';
+        res.on('data', chunk => body += chunk);
+        res.on('end', () => {
+          resolve({ statusCode: res.statusCode, body });
+        });
+      });
+      req.on('error', reject);
+      if (data) req.write(data);
+      req.end();
+    });
+  }
+
+  // Step 1: Get SHA of existing file if it exists
+  const getOptions = {
+    hostname: 'api.github.com',
+    path: `/repos/${owner}/${repo}/contents/${filePath}?ref=${branch}`,
+    method: 'GET',
+    headers: {
+      'User-Agent': 'NodeJS-Server',
+      'Authorization': `token ${token}`
+    }
+  };
+
+  makeRequest(getOptions)
+    .then(({ statusCode, body }) => {
+      let sha = undefined;
+      if (statusCode === 200) {
+        try {
+          const fileInfo = JSON.parse(body);
+          sha = fileInfo.sha;
+        } catch (e) {
+          console.error("Error parsing file info from GitHub:", e);
+        }
+      }
+
+      // Step 2: Upload / update file contents
+      const contentBase64 = isBase64 ? fileContent : Buffer.from(fileContent).toString('base64');
+      const putData = JSON.stringify({
+        message: `chore: update ${filePath} via admin panel [skip ci]`,
+        content: contentBase64,
+        sha: sha,
+        branch: branch
+      });
+
+      const putOptions = {
+        hostname: 'api.github.com',
+        path: `/repos/${owner}/${repo}/contents/${filePath}`,
+        method: 'PUT',
+        headers: {
+          'User-Agent': 'NodeJS-Server',
+          'Authorization': `token ${token}`,
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(putData)
+        }
+      };
+
+      return makeRequest(putOptions, putData);
+    })
+    .then(({ statusCode, body }) => {
+      if (statusCode === 200 || statusCode === 201) {
+        console.log(`Successfully committed ${filePath} to GitHub repository.`);
+      } else {
+        console.error(`Failed to commit ${filePath} to GitHub repository. Status: ${statusCode}, Body: ${body}`);
+      }
+    })
+    .catch((err) => {
+      console.error(`Error saving ${filePath} to GitHub:`, err);
+    });
+}
 
 const PORT = process.env.PORT || 8081;
 
@@ -46,6 +133,9 @@ http.createServer((req, res) => {
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify({ error: 'Failed to write portfolio data: ' + err.message }));
           } else {
+            // Backup to GitHub in the background
+            saveToGitHub('portfolio-data.json', JSON.stringify(data, null, 2));
+
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify({ success: true }));
@@ -101,6 +191,9 @@ http.createServer((req, res) => {
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify({ error: 'Failed to save file: ' + err.message }));
           } else {
+            // Backup the uploaded file to GitHub in the background
+            saveToGitHub(`assets/uploads/${uniqueFilename}`, base64Data, true);
+
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify({ 
