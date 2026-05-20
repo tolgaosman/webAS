@@ -262,7 +262,6 @@ function initSecurity() {
 function initTabNavigation() {
   const tabButtons = document.querySelectorAll(".tab-btn");
   const tabContents = document.querySelectorAll(".tab-content");
-  const activeTabLabel = document.getElementById("active-tab-label");
 
   tabButtons.forEach(btn => {
     btn.addEventListener("click", () => {
@@ -272,7 +271,6 @@ function initTabNavigation() {
       btn.classList.add("active");
       const tabId = btn.getAttribute("data-tab");
       document.getElementById(tabId).classList.add("active");
-      activeTabLabel.textContent = btn.textContent;
     });
   });
 }
