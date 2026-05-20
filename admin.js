@@ -248,7 +248,7 @@ function initSecurity() {
       adminMain.classList.remove("hidden");
       loadData();
     } else {
-      alert("Hatalı şifre! Lütfen tekrar deneyin.");
+      alert("Incorrect password! Please try again.");
     }
   });
 
@@ -323,14 +323,10 @@ async function loadData() {
   renderLanguages();
   renderToolkit();
   renderCertificates();
-  updateJsonPreview();
 }
 
-async function saveData(updatePreview = true) {
+async function saveData() {
   localStorage.setItem("portfolioData", JSON.stringify(portfolioData));
-  if (updatePreview) {
-    updateJsonPreview();
-  }
 
   try {
     const res = await fetch("/api/save-portfolio-data", {
@@ -360,7 +356,7 @@ function setupFileUpload(fileInputId, textInputId) {
     if (!file) return;
 
     const originalText = textInput.value;
-    textInput.value = "Yükleniyor...";
+    textInput.value = "Uploading...";
 
     const reader = new FileReader();
     reader.onload = async () => {
@@ -383,16 +379,16 @@ function setupFileUpload(fileInputId, textInputId) {
           if (data.success) {
             textInput.value = data.url;
           } else {
-            alert("Yükleme hatası: " + (data.error || "Bilinmeyen hata"));
+            alert("Upload error: " + (data.error || "Unknown error"));
             textInput.value = originalText;
           }
         } else {
-          alert("Yükleme başarısız. Durum kodu: " + res.status);
+          alert("Upload failed. Status code: " + res.status);
           textInput.value = originalText;
         }
       } catch (err) {
         console.error("Error uploading file", err);
-        alert("Dosya yüklenirken hata oluştu.");
+        alert("An error occurred while uploading file.");
         textInput.value = originalText;
       }
     };
@@ -420,7 +416,7 @@ function setupMultiFileUpload(fileInputId, textInputId, clearBtnId) {
     if (files.length === 0) return;
 
     const originalText = textInput.value;
-    textInput.value = originalText ? originalText + ", Yükleniyor..." : "Yükleniyor...";
+    textInput.value = originalText ? originalText + ", Uploading..." : "Uploading...";
 
     const uploadedUrls = [];
 
@@ -455,7 +451,7 @@ function setupMultiFileUpload(fileInputId, textInputId, clearBtnId) {
       }
     }
 
-    const currentClean = originalText.replace(/,\s*Yükleniyor\.\.\./, "").replace(/^Yükleniyor\.\.\./, "");
+    const currentClean = originalText.replace(/,\s*Uploading\.\.\./, "").replace(/^Uploading\.\.\./, "").replace(/,\s*Yükleniyor\.\.\./, "").replace(/^Yükleniyor\.\.\./, "");
     const newUrlsStr = uploadedUrls.join(", ");
     
     if (newUrlsStr) {
@@ -493,7 +489,7 @@ function renderCoreSkills() {
       <td><strong>${skill.title}</strong></td>
       <td>${skill.desc}</td>
       <td>
-        <button class="btn btn-danger btn-sm" onclick="deleteCoreSkill(${index})">Sil</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteCoreSkill(${index})">Delete</button>
       </td>
     `;
     tbody.appendChild(tr);
@@ -501,7 +497,7 @@ function renderCoreSkills() {
 }
 
 window.deleteCoreSkill = function(index) {
-  if (confirm("Bu yeteneği silmek istediğinize emin misiniz?")) {
+  if (confirm("Are you sure you want to delete this skill?")) {
     portfolioData.coreSkills.splice(index, 1);
     saveData();
     renderCoreSkills();
@@ -519,11 +515,11 @@ function renderProjects() {
       <td><img src="${proj.thumbnail}" class="project-thumb-preview" alt=""></td>
       <td><strong>${proj.title}</strong></td>
       <td><span class="admin-tag" style="background-color: var(--folder-bg);">${proj.category}</span></td>
-      <td><span style="font-size: 0.85rem; color: var(--text-muted);">${proj.images.split(",").length} görsel</span></td>
+      <td><span style="font-size: 0.85rem; color: var(--text-muted);">${proj.images.split(",").length} images</span></td>
       <td>
         <div style="display: flex; gap: 0.5rem;">
-          <button class="btn btn-secondary btn-sm" onclick="openProjectEditor('${proj.id}')">Düzenle</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteProject('${proj.id}')">Sil</button>
+          <button class="btn btn-secondary btn-sm" onclick="openProjectEditor('${proj.id}')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteProject('${proj.id}')">Delete</button>
         </div>
       </td>
     `;
@@ -554,17 +550,17 @@ window.openProjectEditor = function(id) {
     document.getElementById("proj-goals").value = proj.goals || "";
     document.getElementById("proj-achievements").value = (proj.achievements || []).join("\n");
 
-    document.getElementById("editor-title-label").textContent = "Proje Düzenle";
+    document.getElementById("editor-title-label").textContent = "Edit Project";
   } else {
     document.getElementById("proj-id").value = "";
-    document.getElementById("editor-title-label").textContent = "Yeni Proje Ekle";
+    document.getElementById("editor-title-label").textContent = "Add New Project";
   }
 
   modal.classList.remove("hidden");
 };
 
 window.deleteProject = function(id) {
-  if (confirm("Bu projeyi silmek istediğinize emin misiniz?")) {
+  if (confirm("Are you sure you want to delete this project?")) {
     portfolioData.projects = portfolioData.projects.filter(p => p.id !== id);
     saveData();
     renderProjects();
@@ -584,7 +580,7 @@ function renderEducation() {
       <td>${edu.degree}</td>
       <td><span style="font-size: 0.85rem;">${edu.desc}</span></td>
       <td>
-        <button class="btn btn-danger btn-sm" onclick="deleteEducation(${index})">Sil</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteEducation(${index})">Delete</button>
       </td>
     `;
     tbody.appendChild(tr);
@@ -592,7 +588,7 @@ function renderEducation() {
 }
 
 window.deleteEducation = function(index) {
-  if (confirm("Bu eğitim kaydını silmek istediğinize emin misiniz?")) {
+  if (confirm("Are you sure you want to delete this education entry?")) {
     portfolioData.education.splice(index, 1);
     saveData();
     renderEducation();
@@ -612,8 +608,8 @@ function renderExperience() {
       <td>${exp.company}</td>
       <td>
         <div style="display: flex; gap: 0.5rem;">
-          <button class="btn btn-secondary btn-sm" onclick="openExpEditor('${exp.id}')">Düzenle</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteExperience('${exp.id}')">Sil</button>
+          <button class="btn btn-secondary btn-sm" onclick="openExpEditor('${exp.id}')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteExperience('${exp.id}')">Delete</button>
         </div>
       </td>
     `;
@@ -643,7 +639,7 @@ window.openExpEditor = function(id) {
 };
 
 window.deleteExperience = function(id) {
-  if (confirm("Bu deneyim kaydını silmek istediğinize emin misiniz?")) {
+  if (confirm("Are you sure you want to delete this experience entry?")) {
     portfolioData.experience = portfolioData.experience.filter(e => e.id !== id);
     saveData();
     renderExperience();
@@ -665,7 +661,7 @@ function renderLanguages() {
       <td><strong>${lang.name}</strong></td>
       <td style="color: var(--primary-accent); font-size: 1.1rem;">${starsHtml}</td>
       <td>
-        <button class="btn btn-danger btn-sm" onclick="deleteLanguage(${index})">Sil</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteLanguage(${index})">Delete</button>
       </td>
     `;
     tbody.appendChild(tr);
@@ -673,7 +669,7 @@ function renderLanguages() {
 }
 
 window.deleteLanguage = function(index) {
-  if (confirm("Bu dil bilgisini silmek istediğinize emin misiniz?")) {
+  if (confirm("Are you sure you want to delete this language skill?")) {
     portfolioData.languages.splice(index, 1);
     saveData();
     renderLanguages();
@@ -715,8 +711,8 @@ function renderCertificates() {
       <td>${cert.validity}</td>
       <td>
         <div style="display: flex; gap: 0.5rem;">
-          <button class="btn btn-secondary btn-sm" onclick="openCertEditor('${cert.id}')">Düzenle</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteCert('${cert.id}')">Sil</button>
+          <button class="btn btn-secondary btn-sm" onclick="openCertEditor('${cert.id}')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteCert('${cert.id}')">Delete</button>
         </div>
       </td>
     `;
@@ -748,7 +744,7 @@ window.openCertEditor = function(id) {
 };
 
 window.deleteCert = function(id) {
-  if (confirm("Bu sertifikayı silmek istediğinize emin misiniz?")) {
+  if (confirm("Are you sure you want to delete this certificate?")) {
     portfolioData.certificates = portfolioData.certificates.filter(c => c.id !== id);
     saveData();
     renderCertificates();
@@ -774,7 +770,7 @@ function initForms() {
     portfolioData.personal.cvUrl = document.getElementById("p-cv").value;
 
     saveData();
-    alert("Kişisel bilgiler başarıyla güncellendi!");
+    alert("Personal details updated successfully!");
   });
 
   // Add Core Skill
@@ -944,25 +940,4 @@ function initForms() {
     document.getElementById("cert-editor-modal").classList.add("hidden");
   });
 
-  // Download & Copy JSON
-  document.getElementById("btn-download-json").addEventListener("click", () => {
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(portfolioData, null, 2));
-    const downloadAnchor = document.createElement("a");
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", "portfolio-data.json");
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-  });
-
-  document.getElementById("btn-copy-json").addEventListener("click", () => {
-    const textarea = document.getElementById("json-preview");
-    textarea.select();
-    document.execCommand("copy");
-    alert("JSON verisi panoya kopyalandı!");
-  });
-}
-
-function updateJsonPreview() {
-  document.getElementById("json-preview").value = JSON.stringify(portfolioData, null, 2);
 }
