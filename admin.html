@@ -92,11 +92,11 @@
             <div class="form-group">
               <label for="p-cv">Özgeçmiş Dosyası (PDF Yükle)</label>
               <div class="file-upload-container">
+                <input type="text" id="p-cv" class="file-upload-display" placeholder="Yüklenen dosya yolu" readonly>
                 <label class="btn btn-secondary custom-file-upload-btn">
                   Dosya Seç
                   <input type="file" id="p-cv-file" accept=".pdf">
                 </label>
-                <input type="text" id="p-cv" class="file-upload-display" placeholder="Yüklenen dosya yolu" readonly>
               </div>
             </div>
           </div>
@@ -190,22 +190,22 @@
                   <div class="form-group col-span-2">
                     <label for="proj-thumbnail">Thumbnail (Görsel Yükle)</label>
                     <div class="file-upload-container">
+                      <input type="text" id="proj-thumbnail" class="file-upload-display" placeholder="Görsel yolu" readonly>
                       <label class="btn btn-secondary custom-file-upload-btn">
                         Görsel Seç
                         <input type="file" id="proj-thumbnail-file" accept="image/*">
                       </label>
-                      <input type="text" id="proj-thumbnail" class="file-upload-display" placeholder="Görsel yolu" readonly>
                     </div>
                   </div>
                   <div class="form-group col-span-2">
                     <label for="proj-images">Carousel Resimleri (Çoklu Seçim)</label>
                     <div class="file-upload-container">
+                      <input type="text" id="proj-images" class="file-upload-display" placeholder="Yüklenen görsel yolları" readonly>
                       <label class="btn btn-secondary custom-file-upload-btn">
                         Görseller Seç
                         <input type="file" id="proj-images-file" accept="image/*" multiple>
                       </label>
                       <button type="button" class="btn btn-secondary" id="btn-clear-proj-images">Temizle</button>
-                      <input type="text" id="proj-images" class="file-upload-display" placeholder="Yüklenen görsel yolları" readonly>
                     </div>
                   </div>
                 </div>
@@ -471,11 +471,11 @@
                     <div class="form-group col-span-2">
                       <label for="cert-image">Sertifika Görseli Yükle</label>
                       <div class="file-upload-container">
+                        <input type="text" id="cert-image" class="file-upload-display" placeholder="Görsel yolu" readonly>
                         <label class="btn btn-secondary custom-file-upload-btn">
                           Görsel Seç
                           <input type="file" id="cert-image-file" accept="image/*">
                         </label>
-                        <input type="text" id="cert-image" class="file-upload-display" placeholder="Görsel yolu" readonly>
                       </div>
                     </div>
                     <div class="form-group">
