@@ -559,6 +559,22 @@ function initPortfolioModal() {
       totalSlides = images.length;
 
       images.forEach((imgSrc, idx) => {
+        // Each slide: wrapper div with blurred bg + sharp foreground image
+        const slide = document.createElement("div");
+        slide.className = "carousel-slide";
+
+        const resolvedSrc = (!imgSrc.startsWith('http') && !imgSrc.startsWith('/assets/uploads/'))
+          ? imgSrc
+          : imgSrc;
+
+        // Blurred background layer
+        const bgImg = document.createElement("img");
+        bgImg.className = "carousel-slide-bg";
+        bgImg.src = imgSrc;
+        bgImg.setAttribute("aria-hidden", "true");
+        bgImg.onerror = () => { bgImg.onerror = null; bgImg.src = `${ADMIN_SERVER}/${imgSrc}`; };
+
+        // Sharp foreground image
         const img = document.createElement("img");
         img.className = "modal-hero-img";
         img.src = imgSrc;
@@ -566,10 +582,14 @@ function initPortfolioModal() {
         if (!imgSrc.startsWith('http')) {
           img.onerror = () => {
             img.onerror = null;
+            bgImg.src = `${ADMIN_SERVER}/${imgSrc}`;
             img.src = `${ADMIN_SERVER}/${imgSrc}`;
           };
         }
-        carouselTrack.appendChild(img);
+
+        slide.appendChild(bgImg);
+        slide.appendChild(img);
+        carouselTrack.appendChild(slide);
 
         if (totalSlides > 1) {
           const dot = document.createElement("span");

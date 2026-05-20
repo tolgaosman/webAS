@@ -59,8 +59,8 @@ const DEFAULT_PORTFOLIO_DATA = {
       id: "project-3",
       title: "Student Yoga Studio",
       category: "CAMPUS ENGAGEMENT",
-      thumbnail: "assets/images/project_yoga.png",
-      images: "assets/images/project_yoga.png, assets/images/yogaProject/kapak.jpeg",
+      thumbnail: "assets/images/yogaProject/kapak.jpeg",
+      images: "assets/images/yogaProject/kapak.jpeg, assets/images/yogaProject/anaSayfa.jpeg, assets/images/yogaProject/aboutMe.jpeg, assets/images/yogaProject/aciklama.jpeg, assets/images/yogaProject/post.jpeg",
       description: "Hogeschool Rotterdam kampüsünde öğrencilerin iyi olma hallerini (well-being) desteklemek için kurulan yoga stüdyosunun iletişim ve tanıtım projesi.",
       metaRole: "Project Coordinator",
       metaClientLabel: "SPONSOR",
@@ -745,15 +745,34 @@ function renderEducation() {
       <td>${edu.degree}</td>
       <td><span style="font-size: 0.85rem;">${edu.desc}</span></td>
       <td>
-        <button class="btn btn-danger btn-sm" onclick="deleteEducation(${index})">Delete</button>
+        <div style="display:flex;gap:0.4rem;">
+          <button class="btn btn-secondary btn-sm" onclick="editEducation(${index})">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteEducation(${index})">Delete</button>
+        </div>
       </td>
     `;
     tbody.appendChild(tr);
   });
 }
 
+window.editEducation = function (index) {
+  const edu = portfolioData.education[index];
+  if (!edu) return;
+
+  document.getElementById("edu-date").value = edu.date;
+  document.getElementById("edu-school").value = edu.school;
+  document.getElementById("edu-degree").value = edu.degree;
+  document.getElementById("edu-desc").value = edu.desc;
+  document.getElementById("edit-edu-index").value = index;
+  document.getElementById("edu-submit-btn").textContent = "Save Changes";
+  document.getElementById("edu-cancel-btn").classList.remove("hidden");
+
+  document.getElementById("education-form").scrollIntoView({ behavior: "smooth", block: "center" });
+  document.getElementById("edu-date").focus();
+};
+
 window.deleteEducation = function (index) {
-  if (confirm("Are you sure you want to delete this education entry?")) {
+  if (confirm("Delete this education entry?")) {
     portfolioData.education.splice(index, 1);
     saveData();
     renderEducation();
@@ -826,15 +845,32 @@ function renderLanguages() {
       <td><strong>${lang.name}</strong></td>
       <td style="color: var(--primary-accent); font-size: 1.1rem;">${starsHtml}</td>
       <td>
-        <button class="btn btn-danger btn-sm" onclick="deleteLanguage(${index})">Delete</button>
+        <div style="display:flex;gap:0.4rem;">
+          <button class="btn btn-secondary btn-sm" onclick="editLanguage(${index})">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteLanguage(${index})">Delete</button>
+        </div>
       </td>
     `;
     tbody.appendChild(tr);
   });
 }
 
+window.editLanguage = function (index) {
+  const lang = portfolioData.languages[index];
+  if (!lang) return;
+
+  document.getElementById("lang-name").value = lang.name;
+  document.getElementById("lang-stars").value = lang.stars;
+  document.getElementById("edit-lang-index").value = index;
+  document.getElementById("lang-submit-btn").textContent = "Save Changes";
+  document.getElementById("lang-cancel-btn").classList.remove("hidden");
+
+  document.getElementById("language-form").scrollIntoView({ behavior: "smooth", block: "center" });
+  document.getElementById("lang-name").focus();
+};
+
 window.deleteLanguage = function (index) {
-  if (confirm("Are you sure you want to delete this language skill?")) {
+  if (confirm("Delete this language?")) {
     portfolioData.languages.splice(index, 1);
     saveData();
     renderLanguages();
@@ -1027,18 +1063,35 @@ function initForms() {
     document.getElementById("project-editor-modal").classList.add("hidden");
   });
 
-  // Education form submit
+  // Education form: Add / Edit
   document.getElementById("education-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    const date = document.getElementById("edu-date").value;
-    const school = document.getElementById("edu-school").value;
-    const degree = document.getElementById("edu-degree").value;
-    const desc = document.getElementById("edu-desc").value;
+    const date = document.getElementById("edu-date").value.trim();
+    const school = document.getElementById("edu-school").value.trim();
+    const degree = document.getElementById("edu-degree").value.trim();
+    const desc = document.getElementById("edu-desc").value.trim();
+    const editIdx = document.getElementById("edit-edu-index").value;
 
-    portfolioData.education.push({ date, school, degree, desc });
+    if (editIdx !== "") {
+      portfolioData.education[parseInt(editIdx)] = { date, school, degree, desc };
+    } else {
+      portfolioData.education.push({ date, school, degree, desc });
+    }
+
     saveData();
     renderEducation();
+
     document.getElementById("education-form").reset();
+    document.getElementById("edit-edu-index").value = "";
+    document.getElementById("edu-submit-btn").textContent = "Add";
+    document.getElementById("edu-cancel-btn").classList.add("hidden");
+  });
+
+  document.getElementById("edu-cancel-btn").addEventListener("click", () => {
+    document.getElementById("education-form").reset();
+    document.getElementById("edit-edu-index").value = "";
+    document.getElementById("edu-submit-btn").textContent = "Add";
+    document.getElementById("edu-cancel-btn").classList.add("hidden");
   });
 
   // Experience Editor submit
@@ -1075,16 +1128,33 @@ function initForms() {
     document.getElementById("exp-editor-modal").classList.add("hidden");
   });
 
-  // Language form submit
+  // Language form: Add / Edit
   document.getElementById("language-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    const name = document.getElementById("lang-name").value;
+    const name = document.getElementById("lang-name").value.trim();
     const stars = parseInt(document.getElementById("lang-stars").value);
+    const editIdx = document.getElementById("edit-lang-index").value;
 
-    portfolioData.languages.push({ name, stars });
+    if (editIdx !== "") {
+      portfolioData.languages[parseInt(editIdx)] = { name, stars };
+    } else {
+      portfolioData.languages.push({ name, stars });
+    }
+
     saveData();
     renderLanguages();
+
     document.getElementById("language-form").reset();
+    document.getElementById("edit-lang-index").value = "";
+    document.getElementById("lang-submit-btn").textContent = "Add";
+    document.getElementById("lang-cancel-btn").classList.add("hidden");
+  });
+
+  document.getElementById("lang-cancel-btn").addEventListener("click", () => {
+    document.getElementById("language-form").reset();
+    document.getElementById("edit-lang-index").value = "";
+    document.getElementById("lang-submit-btn").textContent = "Add";
+    document.getElementById("lang-cancel-btn").classList.add("hidden");
   });
 
   // Toolkit form submit
@@ -1133,27 +1203,3 @@ function initForms() {
   });
 
 }
-
-// Admin panelinde resmi seçip gönderdiğin butonun fonksiyonu
-const imageInput = document.getElementById('imageInput'); // senin input id'n neyse
-
-imageInput.addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  const reader = new FileReader();
-
-  reader.onloadend = () => {
-    // Bu aşamada resim tamamen upuzun bir TEXT dizisine dönüştü!
-    const base64Image = reader.result;
-
-    // Şimdi bu metni backend'e normal bir yazıymış gibi JSON ile gönderiyoruz
-    fetch('/api/portfolio-guncelle', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        isim: "Alara Soysan",
-        resimMetni: base64Image // Resim artık düz bir yazı!
-      })
-    });
-  };
-  reader.readAsDataURL(file);
-});

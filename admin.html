@@ -300,7 +300,8 @@
 
         <!-- Sub-tab: Education -->
         <div class="sub-tab-content active" id="sub-education">
-          <form id="education-form" class="inline-form">
+          <form id="education-form" class="inline-form skill-inline-form">
+            <input type="hidden" id="edit-edu-index" value="">
             <div class="form-group">
               <label for="edu-date">Date Range</label>
               <input type="text" id="edu-date" placeholder="e.g. 2021 - Present" required>
@@ -317,7 +318,10 @@
               <label for="edu-desc">Short Description</label>
               <input type="text" id="edu-desc" placeholder="e.g. Focus: Digital Marketing" required>
             </div>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <div class="skill-form-actions">
+              <button type="submit" class="btn btn-primary" id="edu-submit-btn">Add</button>
+              <button type="button" class="btn btn-secondary hidden" id="edu-cancel-btn">Cancel</button>
+            </div>
           </form>
 
           <div class="list-table-wrapper">
@@ -328,7 +332,7 @@
                   <th>School</th>
                   <th>Degree</th>
                   <th>Description</th>
-                  <th width="100">Action</th>
+                  <th width="160">Actions</th>
                 </tr>
               </thead>
               <tbody id="education-list-body">
@@ -404,7 +408,8 @@
 
         <!-- Sub-tab: Languages -->
         <div class="sub-tab-content" id="sub-languages">
-          <form id="language-form" class="inline-form">
+          <form id="language-form" class="inline-form skill-inline-form">
+            <input type="hidden" id="edit-lang-index" value="">
             <div class="form-group">
               <label for="lang-name">Language & Level</label>
               <input type="text" id="lang-name" placeholder="e.g. English (C2 Professional)" required>
@@ -413,7 +418,10 @@
               <label for="lang-stars">Star Level (1 - 5)</label>
               <input type="number" id="lang-stars" min="1" max="5" value="5" required>
             </div>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <div class="skill-form-actions">
+              <button type="submit" class="btn btn-primary" id="lang-submit-btn">Add</button>
+              <button type="button" class="btn btn-secondary hidden" id="lang-cancel-btn">Cancel</button>
+            </div>
           </form>
 
           <div class="list-table-wrapper">
@@ -422,7 +430,7 @@
                 <tr>
                   <th>Language & Level</th>
                   <th>Star Rating</th>
-                  <th width="100">Action</th>
+                  <th width="160">Actions</th>
                 </tr>
               </thead>
               <tbody id="languages-list-body">
@@ -437,12 +445,14 @@
           <div class="admin-info-box">
             <p>Add or remove toolkit skill badges.</p>
           </div>
-          <form id="toolkit-form" class="inline-form">
+          <form id="toolkit-form" class="inline-form skill-inline-form">
             <div class="form-group">
               <label for="new-badge">Add New Badge</label>
               <input type="text" id="new-badge" placeholder="e.g. Microsoft Office" required>
             </div>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <div class="skill-form-actions">
+              <button type="submit" class="btn btn-primary">Add</button>
+            </div>
           </form>
 
           <div class="badges-manager-flex" id="toolkit-badges-list">
