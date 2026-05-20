@@ -18,6 +18,18 @@ const MIME_TYPES = {
 };
 
 http.createServer((req, res) => {
+  // CORS – allow the main portfolio site to read data from this server
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  // Handle pre-flight OPTIONS request
+  if (req.method === 'OPTIONS') {
+    res.statusCode = 204;
+    res.end();
+    return;
+  }
+
   // Normalize request url and remove query params
   let reqPath = req.url.split('?')[0];
 

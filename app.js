@@ -11,7 +11,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 // Global portfolioData variable
 let portfolioData = null;
 
+// The Render admin server is the single source of truth for portfolio data.
+// The main site (GitHub Pages) fetches from there so admin changes are live immediately.
+const ADMIN_SERVER = "https://alarasysn-admin.onrender.com";
+
 async function loadDynamicData() {
+  // 1. Try the Render admin server (works from both alarasysn.com and locally)
+  try {
+    const res = await fetch(`${ADMIN_SERVER}/portfolio-data.json`);
+    if (res.ok) {
+      portfolioData = await res.json();
+      applyDynamicData();
+      return;
+    }
+  } catch (e) {
+    console.log("Could not reach Render server, trying relative path.", e);
+  }
+
+  // 2. Relative path fallback (local dev server)
   try {
     const res = await fetch("portfolio-data.json");
     if (res.ok) {
@@ -20,9 +37,10 @@ async function loadDynamicData() {
       return;
     }
   } catch (e) {
-    console.log("Failed to fetch server data, trying localStorage fallback.", e);
+    console.log("Relative fetch also failed, trying localStorage.", e);
   }
 
+  // 3. Last resort: localStorage
   const localData = localStorage.getItem("portfolioData");
   if (localData) {
     try {
@@ -43,23 +61,26 @@ function applyDynamicData() {
     
     // Update Profile / Polaroid images
     if (p.profileImage) {
+      // Uploaded images live on the Render server — prefix the URL so they load on GitHub Pages too
+      const imgSrc = p.profileImage.startsWith('http') ? p.profileImage : `${ADMIN_SERVER}/${p.profileImage}`;
       const heroProfileImg = document.querySelector(".polaroid-image-box img");
       if (heroProfileImg) {
-        heroProfileImg.setAttribute("src", p.profileImage);
+        heroProfileImg.setAttribute("src", imgSrc);
       }
       const contactProfileImg = document.querySelector(".polaroid-pile-item.pile-2 img");
       if (contactProfileImg) {
-        contactProfileImg.setAttribute("src", p.profileImage);
+        contactProfileImg.setAttribute("src", imgSrc);
       }
     }
     
     // Update CV links
+    const cvUrl = p.cvUrl
+      ? (p.cvUrl.startsWith('http') ? p.cvUrl : `${ADMIN_SERVER}/${p.cvUrl}`)
+      : `${ADMIN_SERVER}/alaraCV.pdf`;
     const cvButtons = document.querySelectorAll(".resume-actions-group a");
     cvButtons.forEach((btn, idx) => {
-      if (idx === 0) {
-        btn.setAttribute("href", p.cvUrl || "alaraCV.pdf");
-      } else {
-        btn.setAttribute("href", p.cvUrl || "alaraCV.pdf");
+      btn.setAttribute("href", cvUrl);
+      if (idx !== 0) {
         btn.setAttribute("download", p.cvUrl ? p.cvUrl.split('/').pop() : "Alara_Soysan_CV.pdf");
       }
     });
