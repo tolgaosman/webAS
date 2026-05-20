@@ -12,25 +12,25 @@ document.addEventListener("DOMContentLoaded", async () => {
 let portfolioData = null;
 
 async function loadDynamicData() {
-  const localData = localStorage.getItem("portfolioData");
-  if (localData) {
-    try {
-      portfolioData = JSON.parse(localData);
-      applyDynamicData();
-      return;
-    } catch (e) {
-      console.warn("Failed to parse localStorage portfolioData", e);
-    }
-  }
-
   try {
     const res = await fetch("portfolio-data.json");
     if (res.ok) {
       portfolioData = await res.json();
       applyDynamicData();
+      return;
     }
   } catch (e) {
-    console.log("No dynamic config file found, running on static fallback.");
+    console.log("Failed to fetch server data, trying localStorage fallback.", e);
+  }
+
+  const localData = localStorage.getItem("portfolioData");
+  if (localData) {
+    try {
+      portfolioData = JSON.parse(localData);
+      applyDynamicData();
+    } catch (e) {
+      console.warn("Failed to parse localStorage portfolioData", e);
+    }
   }
 }
 

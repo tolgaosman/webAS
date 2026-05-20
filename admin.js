@@ -293,17 +293,26 @@ function initSubTabNavigation() {
 }
 
 // Data loading and saving
-function loadData() {
-  const localData = localStorage.getItem("portfolioData");
-  if (localData) {
-    try {
-      portfolioData = JSON.parse(localData);
-    } catch (e) {
+async function loadData() {
+  try {
+    const res = await fetch("portfolio-data.json");
+    if (res.ok) {
+      portfolioData = await res.json();
+    } else {
+      throw new Error("Server returned error status: " + res.status);
+    }
+  } catch (e) {
+    console.warn("Failed to fetch from server, falling back to localStorage", e);
+    const localData = localStorage.getItem("portfolioData");
+    if (localData) {
+      try {
+        portfolioData = JSON.parse(localData);
+      } catch (err) {
+        portfolioData = DEFAULT_PORTFOLIO_DATA;
+      }
+    } else {
       portfolioData = DEFAULT_PORTFOLIO_DATA;
     }
-  } else {
-    portfolioData = DEFAULT_PORTFOLIO_DATA;
-    saveData(false); // save default configuration to storage
   }
 
   populatePersonalForm();
@@ -317,11 +326,146 @@ function loadData() {
   updateJsonPreview();
 }
 
-function saveData(updatePreview = true) {
+async function saveData(updatePreview = true) {
   localStorage.setItem("portfolioData", JSON.stringify(portfolioData));
   if (updatePreview) {
     updateJsonPreview();
   }
+
+  try {
+    const res = await fetch("/api/save-portfolio-data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(portfolioData)
+    });
+    if (!res.ok) {
+      console.error("Failed to save data to server");
+    }
+  } catch (e) {
+    console.error("Error saving data to server", e);
+  }
+}
+
+// File upload helper
+function setupFileUpload(fileInputId, textInputId) {
+  const fileInput = document.getElementById(fileInputId);
+  const textInput = document.getElementById(textInputId);
+
+  if (!fileInput || !textInput) return;
+
+  fileInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const originalText = textInput.value;
+    textInput.value = "Yükleniyor...";
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const payload = {
+          filename: file.name,
+          fileData: reader.result
+        };
+
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success) {
+            textInput.value = data.url;
+          } else {
+            alert("Yükleme hatası: " + (data.error || "Bilinmeyen hata"));
+            textInput.value = originalText;
+          }
+        } else {
+          alert("Yükleme başarısız. Durum kodu: " + res.status);
+          textInput.value = originalText;
+        }
+      } catch (err) {
+        console.error("Error uploading file", err);
+        alert("Dosya yüklenirken hata oluştu.");
+        textInput.value = originalText;
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// Multiple file upload helper for project images
+function setupMultiFileUpload(fileInputId, textInputId, clearBtnId) {
+  const fileInput = document.getElementById(fileInputId);
+  const textInput = document.getElementById(textInputId);
+  const clearBtn = document.getElementById(clearBtnId);
+
+  if (!fileInput || !textInput) return;
+
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      textInput.value = "";
+      fileInput.value = "";
+    });
+  }
+
+  fileInput.addEventListener("change", async (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    const originalText = textInput.value;
+    textInput.value = originalText ? originalText + ", Yükleniyor..." : "Yükleniyor...";
+
+    const uploadedUrls = [];
+
+    for (const file of files) {
+      try {
+        const base64Data = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            filename: file.name,
+            fileData: base64Data
+          })
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success) {
+            uploadedUrls.push(data.url);
+          }
+        }
+      } catch (err) {
+        console.error("Error uploading file in batch:", file.name, err);
+      }
+    }
+
+    const currentClean = originalText.replace(/,\s*Yükleniyor\.\.\./, "").replace(/^Yükleniyor\.\.\./, "");
+    const newUrlsStr = uploadedUrls.join(", ");
+    
+    if (newUrlsStr) {
+      textInput.value = currentClean ? `${currentClean}, ${newUrlsStr}` : newUrlsStr;
+    } else {
+      textInput.value = currentClean;
+    }
+    
+    fileInput.value = "";
+  });
 }
 
 // Personal Form Logic
@@ -333,6 +477,9 @@ function populatePersonalForm() {
   document.getElementById("p-instagram").value = p.instagram || "";
   document.getElementById("p-linkedin").value = p.linkedin || "";
   document.getElementById("p-cv").value = p.cvUrl || "";
+  
+  const cvFile = document.getElementById("p-cv-file");
+  if (cvFile) cvFile.value = "";
 }
 
 // Core Skills Managers
@@ -610,6 +757,12 @@ window.deleteCert = function(id) {
 
 // Forms Submission Setup
 function initForms() {
+  // Setup file upload handlers
+  setupFileUpload("p-cv-file", "p-cv");
+  setupFileUpload("proj-thumbnail-file", "proj-thumbnail");
+  setupMultiFileUpload("proj-images-file", "proj-images", "btn-clear-proj-images");
+  setupFileUpload("cert-image-file", "cert-image");
+
   // Personal form submission
   document.getElementById("personal-form").addEventListener("submit", (e) => {
     e.preventDefault();

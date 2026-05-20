@@ -90,8 +90,11 @@
               <input type="url" id="p-linkedin">
             </div>
             <div class="form-group">
-              <label for="p-cv">Özgeçmiş Dosyası (alaraCV.pdf)</label>
-              <input type="text" id="p-cv" required>
+              <label for="p-cv">Özgeçmiş Dosyası (PDF Yükle)</label>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <input type="file" id="p-cv-file" accept=".pdf" style="flex: 1;">
+                <input type="text" id="p-cv" placeholder="Yüklenen dosya yolu" readonly style="width: 250px; background-color: var(--folder-bg);">
+              </div>
             </div>
           </div>
           <button type="submit" class="btn btn-primary">Bilgileri Güncelle</button>
@@ -182,12 +185,19 @@
                     <input type="text" id="proj-category" required placeholder="Örn: SOCIAL MEDIA STRATEGY">
                   </div>
                   <div class="form-group">
-                    <label for="proj-thumbnail">Thumbnail (Görsel Yolu)</label>
-                    <input type="text" id="proj-thumbnail" required placeholder="assets/images/schouwKapak.jpeg">
+                    <label for="proj-thumbnail">Thumbnail (Görsel Yükle)</label>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                      <input type="file" id="proj-thumbnail-file" accept="image/*" style="flex: 1;">
+                      <input type="text" id="proj-thumbnail" placeholder="Görsel yolu" readonly style="width: 180px; background-color: var(--folder-bg);">
+                    </div>
                   </div>
                   <div class="form-group">
-                    <label for="proj-images">Carousel Resimleri (Virgülle ayırarak birden fazla resim girebilirsiniz)</label>
-                    <input type="text" id="proj-images" required placeholder="assets/images/schouw1.jpeg, assets/images/schouw2.jpeg">
+                    <label for="proj-images">Carousel Resimleri (Çoklu Seçim)</label>
+                    <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
+                      <input type="file" id="proj-images-file" accept="image/*" multiple style="flex: 1;">
+                      <button type="button" class="btn btn-secondary" id="btn-clear-proj-images" style="padding: 0.5rem 1rem;">Temizle</button>
+                    </div>
+                    <input type="text" id="proj-images" placeholder="Yüklenen görsel yolları" readonly style="background-color: var(--folder-bg);">
                   </div>
                 </div>
 
@@ -450,8 +460,11 @@
                       <input type="text" id="cert-issuer-letter" maxlength="1" required placeholder="Örn: H">
                     </div>
                     <div class="form-group">
-                      <label for="cert-image">Sertifika Görseli (Görsel Yolu)</label>
-                      <input type="text" id="cert-image" required placeholder="assets/images/cert1.jpeg">
+                      <label for="cert-image">Sertifika Görseli Yükle</label>
+                      <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="file" id="cert-image-file" accept="image/*" style="flex: 1;">
+                        <input type="text" id="cert-image" placeholder="Görsel yolu" readonly style="width: 150px; background-color: var(--folder-bg);">
+                      </div>
                     </div>
                     <div class="form-group">
                       <label for="cert-validity">Geçerlilik Tarihi</label>

@@ -20,6 +20,92 @@ const MIME_TYPES = {
 http.createServer((req, res) => {
   // Normalize request url and remove query params
   let reqPath = req.url.split('?')[0];
+
+  // API Endpoints
+  if (req.method === 'POST' && reqPath === '/api/save-portfolio-data') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      try {
+        const data = JSON.parse(body);
+        fs.writeFile(path.join(__dirname, 'portfolio-data.json'), JSON.stringify(data, null, 2), 'utf8', (err) => {
+          if (err) {
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ error: 'Failed to write portfolio data: ' + err.message }));
+          } else {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ success: true }));
+          }
+        });
+      } catch (e) {
+        res.statusCode = 400;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ error: 'Invalid JSON data: ' + e.message }));
+      }
+    });
+    return;
+  }
+
+  if (req.method === 'POST' && reqPath === '/api/upload') {
+    let body = '';
+    req.on('data', chunk => { body += chunk; });
+    req.on('end', () => {
+      try {
+        const payload = JSON.parse(body);
+        const { filename, fileData } = payload;
+        
+        if (!filename || !fileData) {
+          res.statusCode = 400;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ error: 'Missing filename or fileData' }));
+          return;
+        }
+
+        const allowedExts = ['.png', '.jpg', '.jpeg', '.gif', '.pdf', '.svg'];
+        const ext = path.extname(filename).toLowerCase();
+        if (!allowedExts.includes(ext)) {
+          res.statusCode = 400;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ error: 'File type not allowed' }));
+          return;
+        }
+
+        const uploadDir = path.join(__dirname, 'assets', 'uploads');
+        if (!fs.existsSync(uploadDir)) {
+          fs.mkdirSync(uploadDir, { recursive: true });
+        }
+
+        const safeFilename = path.basename(filename).replace(/[^a-zA-Z0-9.-]/g, '_');
+        const uniqueFilename = `${Date.now()}_${safeFilename}`;
+        const targetPath = path.join(uploadDir, uniqueFilename);
+
+        const base64Data = fileData.replace(/^data:.*;base64,/, "");
+        
+        fs.writeFile(targetPath, base64Data, 'base64', (err) => {
+          if (err) {
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ error: 'Failed to save file: ' + err.message }));
+          } else {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ 
+              success: true, 
+              url: `assets/uploads/${uniqueFilename}` 
+            }));
+          }
+        });
+      } catch (e) {
+        res.statusCode = 400;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ error: 'Invalid JSON request: ' + e.message }));
+      }
+    });
+    return;
+  }
+
   if (reqPath === '/') {
     reqPath = '/index.html';
   }
