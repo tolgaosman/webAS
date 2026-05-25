@@ -422,12 +422,26 @@ function renderCarouselThumbs(stripId, textInputId) {
     item.draggable = true;
     item.title = "Sürükle ile sıralamayı değiştir";
 
-    // Image
-    const imgSrc = src.startsWith("http") ? src : "/" + src;
+    // Image — use blob preview cache for newly-browsed files,
+    // otherwise try relative path with a clean placeholder fallback (no broken icon)
     const img = document.createElement("img");
-    img.src = imgSrc;
     img.alt = "";
-    img.onerror = () => { img.onerror = null; img.src = `https://alarasysn.com/${src}`; };
+    if (src.startsWith("blob:") || src.startsWith("data:") || src.startsWith("http")) {
+      img.src = src;
+    } else if (typeof blobPreviewCache !== 'undefined' && blobPreviewCache && blobPreviewCache[src]) {
+      // Use cached blob data URL for instant preview
+      img.src = blobPreviewCache[src];
+    } else {
+      img.src = "/" + src;
+      img.onerror = () => {
+        img.onerror = null;
+        // Show a neutral placeholder instead of a broken icon
+        img.style.objectFit = "contain";
+        img.style.background = "var(--folder-bg, #2a2a3a)";
+        img.style.padding = "8px";
+        img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23888'%3E%3Cpath d='M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z'/%3E%3C/svg%3E";
+      };
+    }
 
     // Order badge (bottom-left)
     const badge = document.createElement("span");
@@ -868,10 +882,13 @@ function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, cal
     
     textInput.value = localPath;
     if (typeof callback === "function") {
-      callback(localPath);
+      callback(localPath, file);
     }
   });
 }
+
+// Blob preview cache: maps "assets/images/filename.jpg" -> "blob:..." for current session
+const blobPreviewCache = {};
 
 function setupOfflineMultiFileUpload(fileInputId, textInputId) {
   const fileInput = document.getElementById(fileInputId);
@@ -885,25 +902,34 @@ function setupOfflineMultiFileUpload(fileInputId, textInputId) {
     if (files.length === 0) return;
 
     const originalText = textInput.value;
-    const uploadedUrls = [];
+    const newPaths = [];
+    let loadedCount = 0;
 
     for (const file of files) {
       const safeFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
       const localPath = `assets/images/${safeFilename}`;
-      uploadedUrls.push(localPath);
+      newPaths.push(localPath);
+
+      // Generate blob URL for instant preview (no network request needed)
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        blobPreviewCache[localPath] = ev.target.result;
+        loadedCount++;
+        if (loadedCount === files.length) {
+          // All blobs ready — update text field and re-render strip
+          const currentClean = textInput.value
+            .replace(/,\s*Uploading\.\.\./, "").replace(/^Uploading\.\.\./, "")
+            .replace(/,\s*Yükleniyor\.\.\./, "").replace(/^Yükleniyor\.\.\./, "");
+          const newUrlsStr = newPaths.join(", ");
+          textInput.value = newUrlsStr
+            ? (currentClean ? `${currentClean}, ${newUrlsStr}` : newUrlsStr)
+            : currentClean;
+          fileInput.value = "";
+          renderCarouselThumbs(stripId, textInputId);
+        }
+      };
+      reader.readAsDataURL(file);
     }
-
-    const currentClean = originalText
-      .replace(/,\s*Uploading\.\.\./, "").replace(/^Uploading\.\.\./, "")
-      .replace(/,\s*Yükleniyor\.\.\./, "").replace(/^Yükleniyor\.\.\./, "");
-    const newUrlsStr = uploadedUrls.join(", ");
-
-    textInput.value = newUrlsStr
-      ? (currentClean ? `${currentClean}, ${newUrlsStr}` : newUrlsStr)
-      : currentClean;
-
-    fileInput.value = "";
-    renderCarouselThumbs(stripId, textInputId);
   });
 }
 
@@ -911,10 +937,13 @@ function setupOfflineMultiFileUpload(fileInputId, textInputId) {
 function initForms() {
   // Setup offline file browse handlers
   setupOfflineFileUpload("p-cv-file", "p-cv", "assets/docs/");
-  setupOfflineFileUpload("p-img-file", "p-img-path", "assets/images/", (url) => {
+  setupOfflineFileUpload("p-img-file", "p-img-path", "assets/images/", (url, file) => {
     const previewImg = document.getElementById("p-img-preview");
-    if (previewImg) {
-      previewImg.src = url.startsWith('/') ? url : '/' + url;
+    if (previewImg && file) {
+      // Use FileReader for instant local preview without a network request
+      const reader = new FileReader();
+      reader.onload = (ev) => { previewImg.src = ev.target.result; };
+      reader.readAsDataURL(file);
     }
   });
   setupOfflineFileUpload("proj-thumbnail-file", "proj-thumbnail", "assets/images/");
