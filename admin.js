@@ -852,8 +852,76 @@ window.deleteCert = function (id) {
   }
 };
 
+// Offline file browse helper (no Firebase upload)
+function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, callback) {
+  const fileInput = document.getElementById(fileInputId);
+  const textInput = document.getElementById(textInputId);
+
+  if (!fileInput || !textInput) return;
+
+  fileInput.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Use a clean version of the filename
+    const safeFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const localPath = `${defaultPathPrefix}${safeFilename}`;
+    
+    textInput.value = localPath;
+    if (typeof callback === "function") {
+      callback(localPath);
+    }
+  });
+}
+
+function setupOfflineMultiFileUpload(fileInputId, textInputId) {
+  const fileInput = document.getElementById(fileInputId);
+  const textInput = document.getElementById(textInputId);
+  const stripId = textInputId + "-thumbs";
+
+  if (!fileInput || !textInput) return;
+
+  fileInput.addEventListener("change", (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length === 0) return;
+
+    const originalText = textInput.value;
+    const uploadedUrls = [];
+
+    for (const file of files) {
+      const safeFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+      const localPath = `assets/images/${safeFilename}`;
+      uploadedUrls.push(localPath);
+    }
+
+    const currentClean = originalText
+      .replace(/,\s*Uploading\.\.\./, "").replace(/^Uploading\.\.\./, "")
+      .replace(/,\s*Yükleniyor\.\.\./, "").replace(/^Yükleniyor\.\.\./, "");
+    const newUrlsStr = uploadedUrls.join(", ");
+
+    textInput.value = newUrlsStr
+      ? (currentClean ? `${currentClean}, ${newUrlsStr}` : newUrlsStr)
+      : currentClean;
+
+    fileInput.value = "";
+    renderCarouselThumbs(stripId, textInputId);
+  });
+}
+
 // Forms Submission Setup
 function initForms() {
+  // Setup offline file browse handlers
+  setupOfflineFileUpload("p-cv-file", "p-cv", "assets/docs/");
+  setupOfflineFileUpload("p-img-file", "p-img-path", "assets/images/", (url) => {
+    const previewImg = document.getElementById("p-img-preview");
+    if (previewImg) {
+      previewImg.src = url.startsWith('/') ? url : '/' + url;
+    }
+  });
+  setupOfflineFileUpload("proj-thumbnail-file", "proj-thumbnail", "assets/images/");
+  setupOfflineMultiFileUpload("proj-images-file", "proj-images");
+  setupOfflineFileUpload("cert-image-file", "cert-image", "assets/images/");
+
   // Setup manual clear button for carousel images
   const clearBtn = document.getElementById("btn-clear-proj-images");
   if (clearBtn) {
