@@ -852,74 +852,46 @@ window.deleteCert = function (id) {
   }
 };
 
-// File upload helper using Firebase Storage
-function setupFileUpload(fileInputId, textInputId, callback) {
+// Offline file browse helper (no Firebase upload)
+function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, callback) {
   const fileInput = document.getElementById(fileInputId);
   const textInput = document.getElementById(textInputId);
 
   if (!fileInput || !textInput) return;
 
-  fileInput.addEventListener("change", async (e) => {
+  fileInput.addEventListener("change", (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const originalText = textInput.value;
-    textInput.value = "Uploading...";
-
-    try {
-      const uniqueFilename = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-      const storageRef = ref(storage, `uploads/${uniqueFilename}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
-
-      textInput.value = downloadURL;
-      if (typeof callback === "function") {
-        callback(downloadURL);
-      }
-    } catch (err) {
-      console.error("Error uploading file to Firebase Storage", err);
-      alert("Upload failed: " + err.message);
-      textInput.value = originalText;
+    // Use a clean version of the filename
+    const safeFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const localPath = `${defaultPathPrefix}${safeFilename}`;
+    
+    textInput.value = localPath;
+    if (typeof callback === "function") {
+      callback(localPath);
     }
   });
 }
 
-// Multiple file upload helper for project images using Firebase Storage
-function setupMultiFileUpload(fileInputId, textInputId, clearBtnId) {
+function setupOfflineMultiFileUpload(fileInputId, textInputId) {
   const fileInput = document.getElementById(fileInputId);
   const textInput = document.getElementById(textInputId);
-  const clearBtn = document.getElementById(clearBtnId);
   const stripId = textInputId + "-thumbs";
 
   if (!fileInput || !textInput) return;
 
-  if (clearBtn) {
-    clearBtn.addEventListener("click", () => {
-      textInput.value = "";
-      fileInput.value = "";
-      renderCarouselThumbs(stripId, textInputId);
-    });
-  }
-
-  fileInput.addEventListener("change", async (e) => {
+  fileInput.addEventListener("change", (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
 
     const originalText = textInput.value;
-    textInput.value = originalText ? originalText + ", Uploading..." : "Uploading...";
-
     const uploadedUrls = [];
 
     for (const file of files) {
-      try {
-        const uniqueFilename = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-        const storageRef = ref(storage, `uploads/${uniqueFilename}`);
-        const snapshot = await uploadBytes(storageRef, file);
-        const downloadURL = await getDownloadURL(snapshot.ref);
-        uploadedUrls.push(downloadURL);
-      } catch (err) {
-        console.error("Error uploading file in batch:", file.name, err);
-      }
+      const safeFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+      const localPath = `assets/images/${safeFilename}`;
+      uploadedUrls.push(localPath);
     }
 
     const currentClean = originalText
@@ -938,17 +910,26 @@ function setupMultiFileUpload(fileInputId, textInputId, clearBtnId) {
 
 // Forms Submission Setup
 function initForms() {
-  // Setup file upload handlers (Firebase)
-  setupFileUpload("p-cv-file", "p-cv");
-  setupFileUpload("p-img-file", "p-img-path", (url) => {
+  // Setup offline file browse handlers
+  setupOfflineFileUpload("p-cv-file", "p-cv", "assets/docs/");
+  setupOfflineFileUpload("p-img-file", "p-img-path", "assets/images/", (url) => {
     const previewImg = document.getElementById("p-img-preview");
     if (previewImg) {
       previewImg.src = url.startsWith('/') ? url : '/' + url;
     }
   });
-  setupFileUpload("proj-thumbnail-file", "proj-thumbnail");
-  setupMultiFileUpload("proj-images-file", "proj-images", "btn-clear-proj-images");
-  setupFileUpload("cert-image-file", "cert-image");
+  setupOfflineFileUpload("proj-thumbnail-file", "proj-thumbnail", "assets/images/");
+  setupOfflineMultiFileUpload("proj-images-file", "proj-images");
+  setupOfflineFileUpload("cert-image-file", "cert-image", "assets/images/");
+
+  // Setup manual clear button for carousel images
+  const clearBtn = document.getElementById("btn-clear-proj-images");
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      document.getElementById("proj-images").value = "";
+      renderCarouselThumbs("proj-images-thumbs", "proj-images");
+    });
+  }
 
   // Personal form submission
   document.getElementById("personal-form").addEventListener("submit", (e) => {
