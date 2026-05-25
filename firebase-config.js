@@ -6,12 +6,12 @@ import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-aut
 // TODO: Replace these placeholder credentials with your actual Firebase Configuration.
 // You can get these details from your Firebase Console -> Project Settings -> General -> Web App.
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyCXrqW0VXXseVKOiygXYA5At6aZiqIH5dM",
+  authDomain: "alaraportfolio-e750c.firebaseapp.com",
+  projectId: "alaraportfolio-e750c",
+  storageBucket: "alaraportfolio-e750c.firebasestorage.app",
+  messagingSenderId: "862474406851",
+  appId: "1:862474406851:web:3ad852f76c3422b15dcb76"
 };
 
 // Initialize Firebase
