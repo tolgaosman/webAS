@@ -519,9 +519,10 @@ function populatePersonalForm() {
   document.getElementById("p-img-path").value = profileImgPath;
   const previewImg = document.getElementById("p-img-preview");
   if (previewImg) {
-    const relativeUrl = profileImgPath.startsWith('/') ? profileImgPath : '/' + profileImgPath;
+    const isAbsolute = profileImgPath.startsWith('http://') || profileImgPath.startsWith('https://');
+    const relativeUrl = isAbsolute ? profileImgPath : (profileImgPath.startsWith('/') ? profileImgPath : '/' + profileImgPath);
     previewImg.src = relativeUrl;
-    if (!profileImgPath.startsWith('http')) {
+    if (!isAbsolute) {
       previewImg.onerror = () => {
         previewImg.onerror = null;
         previewImg.src = `https://alarasysn.com/${profileImgPath}`;
