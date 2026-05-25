@@ -849,6 +849,9 @@ window.deleteCert = function (id) {
     portfolioData.certificates = portfolioData.certificates.filter(c => c.id !== id);
     saveData();
     renderCertificates();
+  }
+};
+
 // File upload helper using Firebase Storage
 function setupFileUpload(fileInputId, textInputId, callback) {
   const fileInput = document.getElementById(fileInputId);
