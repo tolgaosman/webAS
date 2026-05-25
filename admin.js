@@ -1,6 +1,7 @@
-import { db, auth } from "./firebase-config.js";
+import { db, auth, storage } from "./firebase-config.js";
 import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 // Default portfolio data to match the website's initial state
 const DEFAULT_PORTFOLIO_DATA = {
@@ -865,7 +866,7 @@ window.deleteCert = function (id) {
   }
 };
 
-// Offline file browse helper (no Firebase upload)
+// File upload helper (Firebase Storage)
 // prefixInputId: optional id of an <input> whose value overrides defaultPathPrefix at runtime
 function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, callback, prefixInputId) {
   const fileInput = document.getElementById(fileInputId);
@@ -873,29 +874,49 @@ function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, cal
 
   if (!fileInput || !textInput) return;
 
-  fileInput.addEventListener("change", (e) => {
+  fileInput.addEventListener("change", async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    // Read custom prefix from the prefix input if provided
     const prefixEl = prefixInputId ? document.getElementById(prefixInputId) : null;
     const prefix = (prefixEl && prefixEl.value.trim()) ? prefixEl.value.trim() : defaultPathPrefix;
-
-    // Use a clean version of the filename
     const safeFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-    const localPath = `${prefix}${safeFilename}`;
+    const storagePath = `${prefix}${safeFilename}`;
+
+    const originalText = textInput.value;
+    textInput.value = "Yükleniyor...";
     
-    textInput.value = localPath;
-    if (typeof callback === "function") {
-      callback(localPath, file);
+    try {
+      const storageRef = ref(storage, storagePath);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on('state_changed', 
+        (snapshot) => {}, 
+        (error) => {
+          console.error("Upload error:", error);
+          alert("Görsel yüklenemedi. Storage kurallarını kontrol edin.");
+          textInput.value = originalText;
+        }, 
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          textInput.value = downloadURL;
+          if (typeof callback === "function") {
+            callback(downloadURL, file);
+          }
+        }
+      );
+    } catch (err) {
+      console.error("Storage error:", err);
+      textInput.value = originalText;
     }
+    
+    fileInput.value = "";
   });
 }
 
 // Blob preview cache: maps "assets/images/filename.jpg" -> "blob:..." for current session
 const blobPreviewCache = {};
 
-// prefixInputId: optional id of an <input> whose value overrides "assets/images/" at runtime
 function setupOfflineMultiFileUpload(fileInputId, textInputId, prefixInputId) {
   const fileInput = document.getElementById(fileInputId);
   const textInput = document.getElementById(textInputId);
@@ -903,42 +924,60 @@ function setupOfflineMultiFileUpload(fileInputId, textInputId, prefixInputId) {
 
   if (!fileInput || !textInput) return;
 
-  fileInput.addEventListener("change", (e) => {
+  fileInput.addEventListener("change", async (e) => {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
 
-    // Read custom prefix from the prefix input if provided
+    const originalText = textInput.value;
+    const currentClean = originalText
+      .replace(/,\s*Uploading\.\.\./, "").replace(/^Uploading\.\.\./, "")
+      .replace(/,\s*Yükleniyor\.\.\./, "").replace(/^Yükleniyor\.\.\./, "");
+
     const prefixEl = prefixInputId ? document.getElementById(prefixInputId) : null;
     const prefix = (prefixEl && prefixEl.value.trim()) ? prefixEl.value.trim() : "assets/images/";
 
-    const newPaths = [];
-    let loadedCount = 0;
+    textInput.value = currentClean ? `${currentClean}, Yükleniyor...` : "Yükleniyor...";
+    const newUrls = [];
+    
+    const uploadPromises = files.map(file => {
+      return new Promise((resolve, reject) => {
+        const safeFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
+        const storagePath = `${prefix}${safeFilename}`;
+        const storageRef = ref(storage, storagePath);
+        
+        // Cache blob for instant preview
+        const reader = new FileReader();
+        reader.onload = (ev) => { blobPreviewCache[storagePath] = ev.target.result; };
+        reader.readAsDataURL(file);
 
-    for (const file of files) {
-      const safeFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-      const localPath = `${prefix}${safeFilename}`;
-      newPaths.push(localPath);
-
-      // Generate blob URL for instant preview (no network request needed)
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        blobPreviewCache[localPath] = ev.target.result;
-        loadedCount++;
-        if (loadedCount === files.length) {
-          // All blobs ready — update text field and re-render strip
-          const currentClean = textInput.value
-            .replace(/,\s*Uploading\.\.\./, "").replace(/^Uploading\.\.\./, "")
-            .replace(/,\s*Yükleniyor\.\.\./, "").replace(/^Yükleniyor\.\.\./, "");
-          const newUrlsStr = newPaths.join(", ");
-          textInput.value = newUrlsStr
-            ? (currentClean ? `${currentClean}, ${newUrlsStr}` : newUrlsStr)
-            : currentClean;
-          fileInput.value = "";
-          renderCarouselThumbs(stripId, textInputId);
-        }
-      };
-      reader.readAsDataURL(file);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+        uploadTask.on('state_changed', 
+          null, 
+          (error) => {
+            console.error("Error uploading file", file.name, error);
+            resolve(null);
+          }, 
+          async () => {
+            const url = await getDownloadURL(uploadTask.snapshot.ref);
+            newUrls.push(url);
+            resolve(url);
+          }
+        );
+      });
+    });
+    
+    await Promise.all(uploadPromises);
+    
+    if (newUrls.length > 0) {
+      const newUrlsStr = newUrls.join(", ");
+      textInput.value = currentClean ? `${currentClean}, ${newUrlsStr}` : newUrlsStr;
+    } else {
+      alert("Görseller yüklenemedi.");
+      textInput.value = currentClean;
     }
+    renderCarouselThumbs(stripId, textInputId);
+    
+    fileInput.value = "";
   });
 }
 
