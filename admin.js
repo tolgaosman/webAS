@@ -866,7 +866,8 @@ window.deleteCert = function (id) {
 };
 
 // Offline file browse helper (no Firebase upload)
-function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, callback) {
+// prefixInputId: optional id of an <input> whose value overrides defaultPathPrefix at runtime
+function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, callback, prefixInputId) {
   const fileInput = document.getElementById(fileInputId);
   const textInput = document.getElementById(textInputId);
 
@@ -876,9 +877,13 @@ function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, cal
     const file = e.target.files[0];
     if (!file) return;
 
+    // Read custom prefix from the prefix input if provided
+    const prefixEl = prefixInputId ? document.getElementById(prefixInputId) : null;
+    const prefix = (prefixEl && prefixEl.value.trim()) ? prefixEl.value.trim() : defaultPathPrefix;
+
     // Use a clean version of the filename
     const safeFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-    const localPath = `${defaultPathPrefix}${safeFilename}`;
+    const localPath = `${prefix}${safeFilename}`;
     
     textInput.value = localPath;
     if (typeof callback === "function") {
@@ -890,7 +895,8 @@ function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, cal
 // Blob preview cache: maps "assets/images/filename.jpg" -> "blob:..." for current session
 const blobPreviewCache = {};
 
-function setupOfflineMultiFileUpload(fileInputId, textInputId) {
+// prefixInputId: optional id of an <input> whose value overrides "assets/images/" at runtime
+function setupOfflineMultiFileUpload(fileInputId, textInputId, prefixInputId) {
   const fileInput = document.getElementById(fileInputId);
   const textInput = document.getElementById(textInputId);
   const stripId = textInputId + "-thumbs";
@@ -901,13 +907,16 @@ function setupOfflineMultiFileUpload(fileInputId, textInputId) {
     const files = Array.from(e.target.files);
     if (files.length === 0) return;
 
-    const originalText = textInput.value;
+    // Read custom prefix from the prefix input if provided
+    const prefixEl = prefixInputId ? document.getElementById(prefixInputId) : null;
+    const prefix = (prefixEl && prefixEl.value.trim()) ? prefixEl.value.trim() : "assets/images/";
+
     const newPaths = [];
     let loadedCount = 0;
 
     for (const file of files) {
       const safeFilename = file.name.replace(/[^a-zA-Z0-9.-]/g, '_');
-      const localPath = `assets/images/${safeFilename}`;
+      const localPath = `${prefix}${safeFilename}`;
       newPaths.push(localPath);
 
       // Generate blob URL for instant preview (no network request needed)
@@ -946,8 +955,8 @@ function initForms() {
       reader.readAsDataURL(file);
     }
   });
-  setupOfflineFileUpload("proj-thumbnail-file", "proj-thumbnail", "assets/images/");
-  setupOfflineMultiFileUpload("proj-images-file", "proj-images");
+  setupOfflineFileUpload("proj-thumbnail-file", "proj-thumbnail", "assets/images/", null, "proj-thumbnail-prefix");
+  setupOfflineMultiFileUpload("proj-images-file", "proj-images", "proj-images-prefix");
   setupOfflineFileUpload("cert-image-file", "cert-image", "assets/images/");
 
   // Setup manual clear button for carousel images

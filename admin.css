@@ -748,7 +748,6 @@
   line-height: 1;
 }
 
-/* ── Skills / Education / Language form: single-row action buttons ── */
 .skill-form-actions {
   display: flex;
   flex-direction: column;
@@ -762,3 +761,43 @@
   height: 42px;
   white-space: nowrap;
 }
+
+/* ── Path prefix row for custom folder selection ── */
+.path-prefix-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.path-prefix-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.path-prefix-input {
+  flex: 1 1 160px;
+  min-width: 120px;
+  max-width: 260px;
+  padding: 0.45rem 0.7rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+.path-prefix-input:focus {
+  border-color: var(--primary-accent);
+  box-shadow: var(--shadow-retro-sm);
+}
+
