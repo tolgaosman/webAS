@@ -887,9 +887,25 @@ function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, cal
     const originalText = textInput.value;
     textInput.value = "Yükleniyor...";
     
+    // Disable submit button in the parent form during upload
+    const form = textInput.closest("form");
+    const submitBtn = form ? form.querySelector("button[type='submit']") : null;
+    let originalSubmitText = "";
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      originalSubmitText = submitBtn.textContent;
+      submitBtn.textContent = "Yükleniyor...";
+    }
+
     try {
       const storageRef = ref(storage, storagePath);
       const uploadTask = uploadBytesResumable(storageRef, file);
+
+      // Instant local preview
+      if (typeof callback === "function") {
+        const localUrl = URL.createObjectURL(file);
+        callback(localUrl, file);
+      }
 
       uploadTask.on('state_changed', 
         (snapshot) => {}, 
@@ -897,10 +913,19 @@ function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, cal
           console.error("Upload error:", error);
           alert("Görsel yüklenemedi. Storage kurallarını kontrol edin.");
           textInput.value = originalText;
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalSubmitText;
+          }
         }, 
         async () => {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           textInput.value = downloadURL;
+          textInput.dispatchEvent(new Event("input"));
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalSubmitText;
+          }
           if (typeof callback === "function") {
             callback(downloadURL, file);
           }
@@ -909,6 +934,10 @@ function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, cal
     } catch (err) {
       console.error("Storage error:", err);
       textInput.value = originalText;
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalSubmitText;
+      }
     }
     
     fileInput.value = "";
@@ -938,6 +967,17 @@ function setupOfflineMultiFileUpload(fileInputId, textInputId, prefixInputId) {
     const prefix = (prefixEl && prefixEl.value.trim()) ? prefixEl.value.trim() : "assets/images/";
 
     textInput.value = currentClean ? `${currentClean}, Yükleniyor...` : "Yükleniyor...";
+    
+    // Disable submit button in the parent form during upload
+    const form = textInput.closest("form");
+    const submitBtn = form ? form.querySelector("button[type='submit']") : null;
+    let originalSubmitText = "";
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      originalSubmitText = submitBtn.textContent;
+      submitBtn.textContent = "Yükleniyor...";
+    }
+
     const newUrls = [];
     
     const uploadPromises = files.map(file => {
@@ -948,7 +988,10 @@ function setupOfflineMultiFileUpload(fileInputId, textInputId, prefixInputId) {
         
         // Cache blob for instant preview
         const reader = new FileReader();
-        reader.onload = (ev) => { blobPreviewCache[storagePath] = ev.target.result; };
+        reader.onload = (ev) => { 
+          blobPreviewCache[storagePath] = ev.target.result;
+          renderCarouselThumbs(stripId, textInputId);
+        };
         reader.readAsDataURL(file);
 
         const uploadTask = uploadBytesResumable(storageRef, file);
@@ -972,10 +1015,17 @@ function setupOfflineMultiFileUpload(fileInputId, textInputId, prefixInputId) {
     if (newUrls.length > 0) {
       const newUrlsStr = newUrls.join(", ");
       textInput.value = currentClean ? `${currentClean}, ${newUrlsStr}` : newUrlsStr;
+      textInput.dispatchEvent(new Event("input"));
     } else {
       alert("Görseller yüklenemedi.");
       textInput.value = currentClean;
     }
+    
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalSubmitText;
+    }
+    
     renderCarouselThumbs(stripId, textInputId);
     
     fileInput.value = "";
@@ -988,16 +1038,26 @@ function initForms() {
   setupOfflineFileUpload("p-cv-file", "p-cv", "assets/docs/");
   setupOfflineFileUpload("p-img-file", "p-img-path", "assets/images/", (url, file) => {
     const previewImg = document.getElementById("p-img-preview");
-    if (previewImg && file) {
-      // Use FileReader for instant local preview without a network request
-      const reader = new FileReader();
-      reader.onload = (ev) => { previewImg.src = ev.target.result; };
-      reader.readAsDataURL(file);
+    if (previewImg) {
+      previewImg.src = url;
     }
   });
   setupOfflineFileUpload("proj-thumbnail-file", "proj-thumbnail", "assets/images/", null, "proj-thumbnail-prefix");
   setupOfflineMultiFileUpload("proj-images-file", "proj-images", "proj-images-prefix");
   setupOfflineFileUpload("cert-image-file", "cert-image", "assets/images/");
+
+  // Sync manual text changes in profile image input with the polaroid preview
+  const pImgPath = document.getElementById("p-img-path");
+  if (pImgPath) {
+    pImgPath.addEventListener("input", (e) => {
+      const val = e.target.value.trim();
+      const previewImg = document.getElementById("p-img-preview");
+      if (previewImg && val && val !== "Yükleniyor...") {
+        const isAbsolute = val.startsWith('http://') || val.startsWith('https://');
+        previewImg.src = isAbsolute ? val : (val.startsWith('/') ? val : '/' + val);
+      }
+    });
+  }
 
   // Setup manual clear button for carousel images
   const clearBtn = document.getElementById("btn-clear-proj-images");
@@ -1011,13 +1071,19 @@ function initForms() {
   // Personal form submission
   document.getElementById("personal-form").addEventListener("submit", (e) => {
     e.preventDefault();
+    const profileImgVal = document.getElementById("p-img-path").value;
+    if (profileImgVal === "Yükleniyor...") {
+      alert("Lütfen görsel yüklemesinin tamamlanmasını bekleyin.");
+      return;
+    }
+
     portfolioData.personal.name = document.getElementById("p-name").value;
     portfolioData.personal.email = document.getElementById("p-email").value;
     portfolioData.personal.phone = document.getElementById("p-phone").value;
     portfolioData.personal.instagram = document.getElementById("p-instagram").value;
     portfolioData.personal.linkedin = document.getElementById("p-linkedin").value;
     portfolioData.personal.cvUrl = document.getElementById("p-cv").value;
-    portfolioData.personal.profileImage = document.getElementById("p-img-path").value;
+    portfolioData.personal.profileImage = profileImgVal;
 
     saveData();
     alert("Personal details updated successfully!");
