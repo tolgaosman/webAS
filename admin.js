@@ -1,3 +1,8 @@
+import { db, storage, auth } from "./firebase-config.js";
+import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
 // Default portfolio data to match the website's initial state
 const DEFAULT_PORTFOLIO_DATA = {
   personal: {
@@ -225,52 +230,55 @@ function initTheme() {
   }
 }
 
-// Security Check (simple PIN protection)
+// Security Check (Firebase Authentication)
 function initSecurity() {
   const loginWrapper = document.getElementById("login-wrapper");
   const loginForm = document.getElementById("login-form");
   const adminMain = document.getElementById("admin-main");
   const logoutBtn = document.getElementById("logout-btn");
 
-  const isLoggedIn = sessionStorage.getItem("adminLoggedIn") === "true";
-  const path = window.location.pathname;
-
-  // Routing checks
-  if (isLoggedIn) {
-    if (path === "/login" || path === "/login/") {
-      window.history.replaceState({}, "", "/admin_panel");
-    }
-    loginWrapper.classList.add("hidden");
-    adminMain.classList.remove("hidden");
-    loadData();
-  } else {
-    if (path === "/admin_panel" || path === "/admin_panel/") {
-      window.history.replaceState({}, "", "/login");
-    } else if (path === "/" || path === "") {
-      window.history.replaceState({}, "", "/login");
-    }
-    loginWrapper.classList.remove("hidden");
-    adminMain.classList.add("hidden");
-  }
-
-  loginForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const password = document.getElementById("admin-password").value;
-    if (password === "#asysn03!") {
-      sessionStorage.setItem("adminLoggedIn", "true");
-      window.history.pushState({}, "", "/admin_panel");
+  // Track Firebase auth state
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
       loginWrapper.classList.add("hidden");
       adminMain.classList.remove("hidden");
       loadData();
     } else {
-      alert("Incorrect password! Please try again.");
+      loginWrapper.classList.remove("hidden");
+      adminMain.classList.add("hidden");
     }
   });
 
-  logoutBtn.addEventListener("click", () => {
-    sessionStorage.removeItem("adminLoggedIn");
-    window.history.pushState({}, "", "/login");
-    window.location.reload();
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const password = document.getElementById("admin-password").value;
+    const email = document.getElementById("admin-email").value;
+
+    // Show loading state
+    const submitBtn = loginForm.querySelector("button[type='submit']");
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Logging in...";
+    submitBtn.disabled = true;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      console.error("Login failed:", err);
+      alert("Incorrect password or login failed! Error: " + err.message);
+    } finally {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
+  });
+
+  logoutBtn.addEventListener("click", async () => {
+    try {
+      await signOut(auth);
+      window.location.reload();
+    } catch (err) {
+      console.error("Error signing out:", err);
+      window.location.reload();
+    }
   });
 }
 
@@ -311,14 +319,27 @@ function initSubTabNavigation() {
 // Data loading and saving
 async function loadData() {
   try {
-    const res = await fetch("/portfolio-data.json");
-    if (res.ok) {
-      portfolioData = await res.json();
+    const docRef = doc(db, "portfolio", "data");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      portfolioData = docSnap.data();
     } else {
-      throw new Error("Server returned error status: " + res.status);
+      console.log("No data found in Firestore. Seeding from local files...");
+      try {
+        const res = await fetch("/portfolio-data.json");
+        if (res.ok) {
+          portfolioData = await res.json();
+        } else {
+          portfolioData = DEFAULT_PORTFOLIO_DATA;
+        }
+      } catch (err) {
+        portfolioData = DEFAULT_PORTFOLIO_DATA;
+      }
+      // Seed Firestore with the initial data
+      await setDoc(docRef, portfolioData);
     }
   } catch (e) {
-    console.warn("Failed to fetch from server, falling back to localStorage", e);
+    console.warn("Failed to fetch from Firestore, falling back to localStorage", e);
     const localData = localStorage.getItem("portfolioData");
     if (localData) {
       try {
@@ -360,73 +381,44 @@ async function saveData() {
   localStorage.setItem("portfolioData", JSON.stringify(portfolioData));
 
   try {
-    const res = await fetch("/api/save-portfolio-data", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(portfolioData)
-    });
-    if (!res.ok) {
-      console.error("Failed to save data to server");
-    }
+    const docRef = doc(db, "portfolio", "data");
+    await setDoc(docRef, portfolioData);
+    console.log("Successfully saved data to Firestore");
   } catch (e) {
-    console.error("Error saving data to server", e);
+    console.error("Error saving data to Firestore", e);
+    alert("Error saving data to Firebase: " + e.message);
   }
 }
 
-// File upload helper
+// File upload helper using Firebase Storage
 function setupFileUpload(fileInputId, textInputId, callback) {
   const fileInput = document.getElementById(fileInputId);
   const textInput = document.getElementById(textInputId);
 
   if (!fileInput || !textInput) return;
 
-  fileInput.addEventListener("change", (e) => {
+  fileInput.addEventListener("change", async (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
     const originalText = textInput.value;
     textInput.value = "Uploading...";
 
-    const reader = new FileReader();
-    reader.onload = async () => {
-      try {
-        const payload = {
-          filename: file.name,
-          fileData: reader.result
-        };
+    try {
+      const uniqueFilename = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+      const storageRef = ref(storage, `uploads/${uniqueFilename}`);
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(snapshot.ref);
 
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(payload)
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          if (data.success) {
-            textInput.value = data.url;
-            if (typeof callback === "function") {
-              callback(data.url);
-            }
-          } else {
-            alert("Upload error: " + (data.error || "Unknown error"));
-            textInput.value = originalText;
-          }
-        } else {
-          alert("Upload failed. Status code: " + res.status);
-          textInput.value = originalText;
-        }
-      } catch (err) {
-        console.error("Error uploading file", err);
-        alert("An error occurred while uploading file.");
-        textInput.value = originalText;
+      textInput.value = downloadURL;
+      if (typeof callback === "function") {
+        callback(downloadURL);
       }
-    };
-    reader.readAsDataURL(file);
+    } catch (err) {
+      console.error("Error uploading file to Firebase Storage", err);
+      alert("Upload failed: " + err.message);
+      textInput.value = originalText;
+    }
   });
 }
 
@@ -527,7 +519,7 @@ function renderCarouselThumbs(stripId, textInputId) {
   });
 }
 
-// Multiple file upload helper for project images
+// Multiple file upload helper for project images using Firebase Storage
 function setupMultiFileUpload(fileInputId, textInputId, clearBtnId) {
   const fileInput = document.getElementById(fileInputId);
   const textInput = document.getElementById(textInputId);
@@ -555,23 +547,11 @@ function setupMultiFileUpload(fileInputId, textInputId, clearBtnId) {
 
     for (const file of files) {
       try {
-        const base64Data = await new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ filename: file.name, fileData: base64Data })
-        });
-
-        if (res.ok) {
-          const data = await res.json();
-          if (data.success) uploadedUrls.push(data.url);
-        }
+        const uniqueFilename = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+        const storageRef = ref(storage, `uploads/${uniqueFilename}`);
+        const snapshot = await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(snapshot.ref);
+        uploadedUrls.push(downloadURL);
       } catch (err) {
         console.error("Error uploading file in batch:", file.name, err);
       }

@@ -41,14 +41,18 @@
       <span class="folder-tab">Security Entry</span>
       <div class="login-body">
         <h2>Admin Login</h2>
-        <p class="login-subtitle">Please enter your administrator password.</p>
+        <p class="login-subtitle">Please enter your administrator email and password.</p>
         <form id="login-form">
+          <div class="form-group">
+            <label for="admin-email">Email</label>
+            <input type="email" id="admin-email" placeholder="admin@example.com" required>
+          </div>
           <div class="form-group">
             <label for="admin-password">Password</label>
             <input type="password" id="admin-password" placeholder="••••••••" required>
           </div>
           <button type="submit" class="btn btn-primary full-width">Login</button>
-          <p class="login-tip">Your administrator password is active.</p>
+          <p class="login-tip">Your administrator credentials are active.</p>
         </form>
       </div>
     </div>
@@ -543,7 +547,7 @@
   </main>
 
   <!-- Admin Panel Scripts -->
-  <script src="/admin.js"></script>
+  <script type="module" src="/admin.js"></script>
 </body>
 
 </html>

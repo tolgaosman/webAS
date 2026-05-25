@@ -1,3 +1,6 @@
+import { db } from "./firebase-config.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
 // Document Ready Initialization
 document.addEventListener("DOMContentLoaded", async () => {
   initTheme();
@@ -11,21 +14,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 // Global portfolioData variable
 let portfolioData = null;
 
-// The Render admin server is the single source of truth for portfolio data.
-// The main site (GitHub Pages) fetches from there so admin changes are live immediately.
-const ADMIN_SERVER = "https://alarasysn-admin.onrender.com";
-
 async function loadDynamicData() {
-  // 1. Try the Render admin server (works from both alarasysn.com and locally)
+  // 1. Try Firebase Firestore (Primary source of truth)
   try {
-    const res = await fetch(`${ADMIN_SERVER}/portfolio-data.json`);
-    if (res.ok) {
-      portfolioData = await res.json();
+    const docRef = doc(db, "portfolio", "data");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      portfolioData = docSnap.data();
       applyDynamicData();
       return;
     }
   } catch (e) {
-    console.log("Could not reach Render server, trying relative path.", e);
+    console.log("Could not reach Firebase Firestore, trying local/fallback options.", e);
   }
 
   // 2. Relative path fallback (local dev server)
@@ -40,7 +40,7 @@ async function loadDynamicData() {
     console.log("Relative fetch also failed, trying localStorage.", e);
   }
 
-  // 3. Last resort: localStorage
+  // 4. Last resort: localStorage
   const localData = localStorage.getItem("portfolioData");
   if (localData) {
     try {
@@ -68,20 +68,13 @@ function applyDynamicData() {
         if (!imgEl) return;
         const relativePath = p.profileImage.startsWith('http') ? p.profileImage : p.profileImage;
         imgEl.setAttribute("src", relativePath);
-        // Fallback to ADMIN_SERVER if relative fails (e.g. GitHub Pages still building)
-        if (!p.profileImage.startsWith('http')) {
-          imgEl.onerror = () => {
-            imgEl.onerror = null;
-            imgEl.setAttribute("src", `${ADMIN_SERVER}/${p.profileImage}`);
-          };
-        }
       };
 
       setProfileImg(heroProfileImg);
       setProfileImg(contactProfileImg);
     }
     
-    // Update CV links (Load relatively from GitHub Pages primarily, fallback to Admin server handled by server pathing)
+    // Update CV links
     const cvUrl = p.cvUrl
       ? (p.cvUrl.startsWith('http') ? p.cvUrl : p.cvUrl)
       : 'alaraCV.pdf';
@@ -232,7 +225,7 @@ function applyDynamicData() {
         card.setAttribute("data-project-id", proj.id);
         card.innerHTML = `
           <div class="portfolio-img-box">
-            <img src="${proj.thumbnail}" alt="${proj.title} Cover Image" onerror="this.onerror=null; this.src='${ADMIN_SERVER}/' + this.getAttribute('src');">
+            <img src="${proj.thumbnail}" alt="${proj.title} Cover Image">
           </div>
           <div class="portfolio-info">
             <span class="portfolio-cat">${proj.category}</span>
@@ -373,7 +366,7 @@ function applyDynamicData() {
 
         card.innerHTML = `
           <span class="folder-tab" ${tabStyle}>${cert.issuer.split(" ")[0]}</span>
-          <img class="cert-image" src="${cert.image}" alt="${cert.title}" onerror="this.onerror=null; this.src='${ADMIN_SERVER}/' + this.getAttribute('src');">
+          <img class="cert-image" src="${cert.image}" alt="${cert.title}">
           <div class="cert-issuer-box">
             <div class="cert-issuer-icon" ${iconStyle}>${cert.letter}</div>
             <span class="cert-issuer-name">${cert.issuer}</span>
