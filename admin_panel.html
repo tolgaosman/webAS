@@ -90,13 +90,7 @@
                 </div>
                 <div class="form-group">
                   <label for="p-img-path">Profile Image</label>
-                  <div class="file-upload-container">
-                    <input type="text" id="p-img-path" class="file-upload-display" placeholder="assets/images/ALARA.jpeg" readonly>
-                    <label class="btn btn-secondary custom-file-upload-btn">
-                      Select Image
-                      <input type="file" id="p-img-file" accept="image/*">
-                    </label>
-                  </div>
+                  <input type="text" id="p-img-path" placeholder="e.g. assets/images/ALARA.jpeg">
                 </div>
               </div>
             </div>
@@ -118,13 +112,7 @@
             </div>
             <div class="form-group">
               <label for="p-cv">Resume File (PDF Upload)</label>
-              <div class="file-upload-container">
-                <input type="text" id="p-cv" class="file-upload-display" placeholder="Uploaded file path" readonly>
-                <label class="btn btn-secondary custom-file-upload-btn">
-                  Select File
-                  <input type="file" id="p-cv-file" accept=".pdf">
-                </label>
-              </div>
+              <input type="text" id="p-cv" placeholder="e.g. assets/docs/AlaraSoysan_CV.pdf">
             </div>
           </div>
           <button type="submit" class="btn btn-primary">Update Details</button>
@@ -220,22 +208,12 @@
                   </div>
                   <div class="form-group col-span-2">
                     <label for="proj-thumbnail">Thumbnail (Upload Image)</label>
-                    <div class="file-upload-container">
-                      <input type="text" id="proj-thumbnail" class="file-upload-display" placeholder="Image path" readonly>
-                      <label class="btn btn-secondary custom-file-upload-btn">
-                        Select Image
-                        <input type="file" id="proj-thumbnail-file" accept="image/*">
-                      </label>
-                    </div>
+                    <input type="text" id="proj-thumbnail" placeholder="e.g. assets/images/project1.jpg">
                   </div>
                   <div class="form-group col-span-2">
                     <label for="proj-images">Carousel Images (Multiple Selection)</label>
                     <div class="file-upload-container">
-                      <input type="text" id="proj-images" class="file-upload-display" placeholder="Uploaded image paths" readonly>
-                      <label class="btn btn-secondary custom-file-upload-btn">
-                        Select Images
-                        <input type="file" id="proj-images-file" accept="image/*" multiple>
-                      </label>
+                      <input type="text" id="proj-images" placeholder="Comma separated image paths">
                       <button type="button" class="btn btn-secondary" id="btn-clear-proj-images">Clear</button>
                     </div>
                     <!-- Thumbnail preview strip -->
@@ -513,13 +491,7 @@
                     </div>
                     <div class="form-group col-span-2">
                       <label for="cert-image">Upload Certificate Image</label>
-                      <div class="file-upload-container">
-                        <input type="text" id="cert-image" class="file-upload-display" placeholder="Image path" readonly>
-                        <label class="btn btn-secondary custom-file-upload-btn">
-                          Select Image
-                          <input type="file" id="cert-image-file" accept="image/*">
-                        </label>
-                      </div>
+                      <input type="text" id="cert-image" placeholder="e.g. assets/images/cert1.jpeg">
                     </div>
                     <div class="form-group">
                       <label for="cert-validity">Validity Date</label>

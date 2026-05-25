@@ -390,37 +390,7 @@ async function saveData() {
   }
 }
 
-// File upload helper using Firebase Storage
-function setupFileUpload(fileInputId, textInputId, callback) {
-  const fileInput = document.getElementById(fileInputId);
-  const textInput = document.getElementById(textInputId);
 
-  if (!fileInput || !textInput) return;
-
-  fileInput.addEventListener("change", async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const originalText = textInput.value;
-    textInput.value = "Uploading...";
-
-    try {
-      const uniqueFilename = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-      const storageRef = ref(storage, `uploads/${uniqueFilename}`);
-      const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
-
-      textInput.value = downloadURL;
-      if (typeof callback === "function") {
-        callback(downloadURL);
-      }
-    } catch (err) {
-      console.error("Error uploading file to Firebase Storage", err);
-      alert("Upload failed: " + err.message);
-      textInput.value = originalText;
-    }
-  });
-}
 
 // ── Carousel thumbnail strip renderer (with drag-to-reorder) ─────────
 function renderCarouselThumbs(stripId, textInputId) {
@@ -519,57 +489,7 @@ function renderCarouselThumbs(stripId, textInputId) {
   });
 }
 
-// Multiple file upload helper for project images using Firebase Storage
-function setupMultiFileUpload(fileInputId, textInputId, clearBtnId) {
-  const fileInput = document.getElementById(fileInputId);
-  const textInput = document.getElementById(textInputId);
-  const clearBtn = document.getElementById(clearBtnId);
-  const stripId = textInputId + "-thumbs";
 
-  if (!fileInput || !textInput) return;
-
-  if (clearBtn) {
-    clearBtn.addEventListener("click", () => {
-      textInput.value = "";
-      fileInput.value = "";
-      renderCarouselThumbs(stripId, textInputId);
-    });
-  }
-
-  fileInput.addEventListener("change", async (e) => {
-    const files = Array.from(e.target.files);
-    if (files.length === 0) return;
-
-    const originalText = textInput.value;
-    textInput.value = originalText ? originalText + ", Uploading..." : "Uploading...";
-
-    const uploadedUrls = [];
-
-    for (const file of files) {
-      try {
-        const uniqueFilename = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-        const storageRef = ref(storage, `uploads/${uniqueFilename}`);
-        const snapshot = await uploadBytes(storageRef, file);
-        const downloadURL = await getDownloadURL(snapshot.ref);
-        uploadedUrls.push(downloadURL);
-      } catch (err) {
-        console.error("Error uploading file in batch:", file.name, err);
-      }
-    }
-
-    const currentClean = originalText
-      .replace(/,\s*Uploading\.\.\./, "").replace(/^Uploading\.\.\./, "")
-      .replace(/,\s*Yükleniyor\.\.\./, "").replace(/^Yükleniyor\.\.\./, "");
-    const newUrlsStr = uploadedUrls.join(", ");
-
-    textInput.value = newUrlsStr
-      ? (currentClean ? `${currentClean}, ${newUrlsStr}` : newUrlsStr)
-      : currentClean;
-
-    fileInput.value = "";
-    renderCarouselThumbs(stripId, textInputId);
-  });
-}
 
 // Personal Form Logic
 function populatePersonalForm() {
@@ -934,17 +854,14 @@ window.deleteCert = function (id) {
 
 // Forms Submission Setup
 function initForms() {
-  // Setup file upload handlers
-  setupFileUpload("p-cv-file", "p-cv");
-  setupFileUpload("p-img-file", "p-img-path", (url) => {
-    const previewImg = document.getElementById("p-img-preview");
-    if (previewImg) {
-      previewImg.src = url.startsWith('/') ? url : '/' + url;
-    }
-  });
-  setupFileUpload("proj-thumbnail-file", "proj-thumbnail");
-  setupMultiFileUpload("proj-images-file", "proj-images", "btn-clear-proj-images");
-  setupFileUpload("cert-image-file", "cert-image");
+  // Setup manual clear button for carousel images
+  const clearBtn = document.getElementById("btn-clear-proj-images");
+  if (clearBtn) {
+    clearBtn.addEventListener("click", () => {
+      document.getElementById("proj-images").value = "";
+      renderCarouselThumbs("proj-images-thumbs", "proj-images");
+    });
+  }
 
   // Personal form submission
   document.getElementById("personal-form").addEventListener("submit", (e) => {
