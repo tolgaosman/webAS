@@ -397,6 +397,26 @@
   text-align: center;
 }
 
+.forgot-password-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.forgot-password-link {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  transition: var(--transition-fast);
+}
+
+.forgot-password-link:hover {
+  color: var(--primary-accent);
+  text-decoration: underline;
+}
+
 /* Export / JSON area */
 .export-container {
   display: flex;

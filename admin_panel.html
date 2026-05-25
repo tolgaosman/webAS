@@ -39,7 +39,9 @@
   <div class="login-wrapper" id="login-wrapper">
     <div class="folder-container login-card">
       <span class="folder-tab">Security Entry</span>
-      <div class="login-body">
+      
+      <!-- Login Body -->
+      <div class="login-body" id="login-form-body">
         <h2>Admin Login</h2>
         <p class="login-subtitle">Please enter your administrator email and password.</p>
         <form id="login-form">
@@ -51,10 +53,31 @@
             <label for="admin-password">Password</label>
             <input type="password" id="admin-password" placeholder="••••••••" required>
           </div>
+          <div class="forgot-password-container">
+            <a href="#" id="forgot-password-link" class="forgot-password-link">Şifremi Unuttum</a>
+          </div>
           <button type="submit" class="btn btn-primary full-width">Login</button>
           <p class="login-tip">Your administrator credentials are active.</p>
         </form>
       </div>
+
+      <!-- Forgot Password Body -->
+      <div class="login-body hidden" id="reset-password-body">
+        <h2>Reset Password</h2>
+        <p class="login-subtitle">Enter your administrator email to receive a password reset link.</p>
+        <form id="reset-password-form">
+          <div class="form-group">
+            <label for="reset-email">Email</label>
+            <input type="email" id="reset-email" placeholder="admin@example.com" required>
+          </div>
+          <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
+            <button type="button" id="btn-back-to-login" class="btn btn-secondary" style="flex: 1;">Back</button>
+            <button type="submit" class="btn btn-primary" style="flex: 1.5;">Send Reset Link</button>
+          </div>
+          <p class="login-tip">Check your inbox for further instructions.</p>
+        </form>
+      </div>
+
     </div>
   </div>
 

@@ -1,6 +1,6 @@
 import { db, auth, storage } from "./firebase-config.js";
 import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
 // Default portfolio data to match the website's initial state
@@ -237,6 +237,13 @@ function initSecurity() {
   const adminMain = document.getElementById("admin-main");
   const logoutBtn = document.getElementById("logout-btn");
 
+  // Forgot password elements
+  const forgotPasswordLink = document.getElementById("forgot-password-link");
+  const loginFormBody = document.getElementById("login-form-body");
+  const resetPasswordBody = document.getElementById("reset-password-body");
+  const backToLoginBtn = document.getElementById("btn-back-to-login");
+  const resetPasswordForm = document.getElementById("reset-password-form");
+
   // Track Firebase auth state
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -270,6 +277,55 @@ function initSecurity() {
       submitBtn.disabled = false;
     }
   });
+
+  // Toggle to Reset Password Mode
+  if (forgotPasswordLink && loginFormBody && resetPasswordBody) {
+    forgotPasswordLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      // Sync the email from login form if already typed
+      const loginEmail = document.getElementById("admin-email").value;
+      if (loginEmail) {
+        document.getElementById("reset-email").value = loginEmail;
+      }
+      loginFormBody.classList.add("hidden");
+      resetPasswordBody.classList.remove("hidden");
+    });
+  }
+
+  // Toggle back to Login Mode
+  if (backToLoginBtn && loginFormBody && resetPasswordBody) {
+    backToLoginBtn.addEventListener("click", () => {
+      resetPasswordBody.classList.add("hidden");
+      loginFormBody.classList.remove("hidden");
+    });
+  }
+
+  // Send Password Reset Email via Firebase
+  if (resetPasswordForm) {
+    resetPasswordForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("reset-email").value;
+
+      const submitBtn = resetPasswordForm.querySelector("button[type='submit']");
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = "Sending...";
+      submitBtn.disabled = true;
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        alert("Şifre sıfırlama e-postası başarıyla gönderildi! Lütfen gelen kutunuzu kontrol edin.");
+        // Go back to login mode automatically
+        resetPasswordBody.classList.add("hidden");
+        loginFormBody.classList.remove("hidden");
+      } catch (err) {
+        console.error("Password reset failed:", err);
+        alert("Şifre sıfırlama e-postası gönderilemedi! Hata: " + err.message);
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
+    });
+  }
 
   logoutBtn.addEventListener("click", async () => {
     try {
