@@ -936,14 +936,31 @@ function setupOfflineFileUpload(fileInputId, textInputId, defaultPathPrefix, cal
       const storageRef = ref(storage, storagePath);
       const uploadTask = uploadBytesResumable(storageRef, file);
 
+      let uploadFinished = false;
+      // Timeout: if upload doesn't complete in 30s, it's likely blocked by App Check / CSP
+      const timeoutId = setTimeout(() => {
+        if (!uploadFinished) {
+          uploadFinished = true;
+          console.error("Upload timed out after 30s — likely blocked by App Check or CSP.");
+          alert("Yükleme zaman aşımına uğradı. Firebase App Check ayarlarını ve tarayıcı konsolunu kontrol edin.");
+          textInput.value = originalText;
+        }
+      }, 30000);
+
       uploadTask.on('state_changed', 
         (snapshot) => {}, 
         (error) => {
+          if (uploadFinished) return;
+          uploadFinished = true;
+          clearTimeout(timeoutId);
           console.error("Upload error:", error);
           alert("Görsel yüklenemedi. Storage kurallarını kontrol edin.");
           textInput.value = originalText;
         }, 
         async () => {
+          if (uploadFinished) return;
+          uploadFinished = true;
+          clearTimeout(timeoutId);
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           textInput.value = downloadURL;
           if (typeof callback === "function") {
@@ -997,13 +1014,28 @@ function setupOfflineMultiFileUpload(fileInputId, textInputId, prefixInputId) {
         reader.readAsDataURL(file);
 
         const uploadTask = uploadBytesResumable(storageRef, file);
+        let finished = false;
+        const timeoutId = setTimeout(() => {
+          if (!finished) {
+            finished = true;
+            console.error("Multi-file upload timed out for:", file.name);
+            resolve(null);
+          }
+        }, 30000);
+
         uploadTask.on('state_changed', 
           null, 
           (error) => {
+            if (finished) return;
+            finished = true;
+            clearTimeout(timeoutId);
             console.error("Error uploading file", file.name, error);
             resolve(null);
           }, 
           async () => {
+            if (finished) return;
+            finished = true;
+            clearTimeout(timeoutId);
             const url = await getDownloadURL(uploadTask.snapshot.ref);
             newUrls.push(url);
             resolve(url);
