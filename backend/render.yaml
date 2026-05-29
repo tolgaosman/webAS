@@ -1,0 +1,32 @@
+# Render Deployment Configuration
+# This file tells Render how to build and run the backend.
+
+services:
+  - type: web
+    name: portfolio-api
+    runtime: node
+    region: frankfurt  # EU region, closest to Netherlands
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "4000"
+      - key: JWT_SECRET
+        generateValue: true  # Auto-generate a secure random value
+      - key: FIREBASE_SERVICE_ACCOUNT_JSON
+        sync: false  # Set manually in Render dashboard
+      - key: FIREBASE_WEB_API_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: "https://alarasoysan.com,https://www.alarasoysan.com"
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: DISCORD_WEBHOOK_URL
+        sync: false
+      - key: RESET_TOKEN_EXPIRY_MINUTES
+        value: "30"
+      - key: FAILED_LOGIN_ALERT_THRESHOLD
+        value: "5"

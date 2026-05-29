@@ -1,0 +1,22 @@
+# Environment variables (NEVER commit)
+.env
+.env.local
+.env.production
+
+# Firebase service account key
+serviceAccountKey.json
+*-firebase-adminsdk-*.json
+
+# Build output
+dist/
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db

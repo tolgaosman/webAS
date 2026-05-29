@@ -2,9 +2,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check.js";
 
-// TODO: Replace these placeholder credentials with your actual Firebase Configuration.
-// You can get these details from your Firebase Console -> Project Settings -> General -> Web App.
+// Firebase Configuration (Public config, secured via Database/Storage Rules)
 const firebaseConfig = {
   apiKey: "AIzaSyCXrqW0VXXseVKOiygXYA5At6aZiqIH5dM",
   authDomain: "alaraportfolio-e750c.firebaseapp.com",
@@ -16,6 +16,15 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase App Check (reCAPTCHA v3 integration)
+// Protects the app from bot traffic, curl requests, and API abuse
+self.FIREBASE_APPCHECK_DEBUG_TOKEN = true; // Allows local debugging on localhost
+initializeAppCheck(app, {
+  provider: new ReCaptchaV3Provider("6LcmiAItAAAAAEn68HCQE7hZWSFIOSw17-7_cu7-"),
+  isTokenAutoRefreshEnabled: true
+});
+
 const db = getFirestore(app);
 const auth = getAuth(app);
 const storage = getStorage(app);

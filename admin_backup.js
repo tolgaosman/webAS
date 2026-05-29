@@ -2,8 +2,8 @@ import { db, auth, storage } from "./firebase-config.js";
 import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-import { escapeHtml, sanitizeUrl, sanitizeImgSrc } from "./sanitize.js";
 
+// Default portfolio data to match the website's initial state
 const DEFAULT_PORTFOLIO_DATA = {
   personal: {
     name: "Alara Soysan",
@@ -237,6 +237,7 @@ function initSecurity() {
   const adminMain = document.getElementById("admin-main");
   const logoutBtn = document.getElementById("logout-btn");
 
+  // Forgot password elements
   const forgotPasswordLink = document.getElementById("forgot-password-link");
   const loginFormBody = document.getElementById("login-form-body");
   const resetPasswordBody = document.getElementById("reset-password-body");
@@ -260,6 +261,7 @@ function initSecurity() {
     const password = document.getElementById("admin-password").value;
     const email = document.getElementById("admin-email").value;
 
+    // Show loading state
     const submitBtn = loginForm.querySelector("button[type='submit']");
     const originalText = submitBtn.textContent;
     submitBtn.textContent = "Logging in...";
@@ -269,23 +271,28 @@ function initSecurity() {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       console.error("Login failed:", err);
-      alert("Hata: " + err.message);
+      alert("Incorrect password or login failed! Error: " + err.message);
     } finally {
       submitBtn.textContent = originalText;
       submitBtn.disabled = false;
     }
   });
 
+  // Toggle to Reset Password Mode
   if (forgotPasswordLink && loginFormBody && resetPasswordBody) {
     forgotPasswordLink.addEventListener("click", (e) => {
       e.preventDefault();
+      // Sync the email from login form if already typed
       const loginEmail = document.getElementById("admin-email").value;
-      if (loginEmail) document.getElementById("reset-email").value = loginEmail;
+      if (loginEmail) {
+        document.getElementById("reset-email").value = loginEmail;
+      }
       loginFormBody.classList.add("hidden");
       resetPasswordBody.classList.remove("hidden");
     });
   }
 
+  // Toggle back to Login Mode
   if (backToLoginBtn && loginFormBody && resetPasswordBody) {
     backToLoginBtn.addEventListener("click", () => {
       resetPasswordBody.classList.add("hidden");
@@ -293,6 +300,7 @@ function initSecurity() {
     });
   }
 
+  // Send Password Reset Email via Firebase
   if (resetPasswordForm) {
     resetPasswordForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -306,11 +314,12 @@ function initSecurity() {
       try {
         await sendPasswordResetEmail(auth, email);
         alert("Şifre sıfırlama e-postası başarıyla gönderildi! Lütfen gelen kutunuzu kontrol edin.");
+        // Go back to login mode automatically
         resetPasswordBody.classList.add("hidden");
         loginFormBody.classList.remove("hidden");
       } catch (err) {
         console.error("Password reset failed:", err);
-        alert("Hata: " + err.message);
+        alert("Şifre sıfırlama e-postası gönderilemedi! Hata: " + err.message);
       } finally {
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
@@ -363,7 +372,7 @@ function initSubTabNavigation() {
   });
 }
 
-// Data loading and saving via direct Firebase SDK
+// Data loading and saving
 async function loadData() {
   try {
     const docRef = doc(db, "portfolio", "data");
@@ -382,6 +391,7 @@ async function loadData() {
       } catch (err) {
         portfolioData = DEFAULT_PORTFOLIO_DATA;
       }
+      // Seed Firestore with the initial data
       await setDoc(docRef, portfolioData);
     }
   } catch (e) {
@@ -410,6 +420,7 @@ async function loadData() {
   renderCertificates();
 }
 
+// Function to display fallback data warnings to avoid data loss
 function showFallbackWarning() {
   const mainEl = document.getElementById("admin-main");
   if (mainEl && !document.getElementById("fallback-warning")) {
@@ -421,6 +432,7 @@ function showFallbackWarning() {
   }
 }
 
+
 async function saveData() {
   localStorage.setItem("portfolioData", JSON.stringify(portfolioData));
 
@@ -430,7 +442,7 @@ async function saveData() {
     console.log("Successfully saved data to Firestore");
   } catch (e) {
     console.error("Error saving data to Firestore", e);
-    alert("Firebase'e veri kaydedilirken hata oluştu: " + e.message);
+    alert("Error saving data to Firebase: " + e.message);
   }
 }
 
@@ -588,8 +600,8 @@ function renderCoreSkills() {
   portfolioData.coreSkills.forEach((skill, index) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td><strong>${escapeHtml(skill.title)}</strong></td>
-      <td>${escapeHtml(skill.desc)}</td>
+      <td><strong>${skill.title}</strong></td>
+      <td>${skill.desc}</td>
       <td>
         <div style="display:flex;gap:0.4rem;">
           <button class="btn btn-secondary btn-sm" onclick="editCoreSkill(${index})">Edit</button>
@@ -631,16 +643,15 @@ function renderProjects() {
 
   portfolioData.projects.forEach((proj) => {
     const tr = document.createElement("tr");
-    const safeThumb = sanitizeImgSrc(proj.thumbnail);
     tr.innerHTML = `
-      <td><img src="${safeThumb}" onerror="this.onerror=null; this.src='https://alarasysn.com/' + this.getAttribute('src');" class="project-thumb-preview" alt=""></td>
-      <td><strong>${escapeHtml(proj.title)}</strong></td>
-      <td><span class="admin-tag" style="background-color: var(--folder-bg);">${escapeHtml(proj.category)}</span></td>
+      <td><img src="${proj.thumbnail}" onerror="this.onerror=null; this.src='https://alarasysn.com/' + this.getAttribute('src');" class="project-thumb-preview" alt=""></td>
+      <td><strong>${proj.title}</strong></td>
+      <td><span class="admin-tag" style="background-color: var(--folder-bg);">${proj.category}</span></td>
       <td><span style="font-size: 0.85rem; color: var(--text-muted);">${proj.images.split(",").length} images</span></td>
       <td>
         <div style="display: flex; gap: 0.5rem;">
-          <button class="btn btn-secondary btn-sm" onclick="openProjectEditor('${escapeHtml(proj.id)}')">Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteProject('${escapeHtml(proj.id)}')">Delete</button>
+          <button class="btn btn-secondary btn-sm" onclick="openProjectEditor('${proj.id}')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteProject('${proj.id}')">Delete</button>
         </div>
       </td>
     `;
@@ -700,10 +711,10 @@ function renderEducation() {
   portfolioData.education.forEach((edu, index) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${escapeHtml(edu.date)}</td>
-      <td><strong>${escapeHtml(edu.school)}</strong></td>
-      <td>${escapeHtml(edu.degree)}</td>
-      <td><span style="font-size: 0.85rem;">${escapeHtml(edu.desc)}</span></td>
+      <td>${edu.date}</td>
+      <td><strong>${edu.school}</strong></td>
+      <td>${edu.degree}</td>
+      <td><span style="font-size: 0.85rem;">${edu.desc}</span></td>
       <td>
         <div style="display:flex;gap:0.4rem;">
           <button class="btn btn-secondary btn-sm" onclick="editEducation(${index})">Edit</button>
@@ -747,13 +758,13 @@ function renderExperience() {
   portfolioData.experience.forEach((exp) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${escapeHtml(exp.date)}</td>
-      <td><strong>${escapeHtml(exp.role)}</strong></td>
-      <td>${escapeHtml(exp.company)}</td>
+      <td>${exp.date}</td>
+      <td><strong>${exp.role}</strong></td>
+      <td>${exp.company}</td>
       <td>
         <div style="display: flex; gap: 0.5rem;">
-          <button class="btn btn-secondary btn-sm" onclick="openExpEditor('${escapeHtml(exp.id)}')">Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteExperience('${escapeHtml(exp.id)}')">Delete</button>
+          <button class="btn btn-secondary btn-sm" onclick="openExpEditor('${exp.id}')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteExperience('${exp.id}')">Delete</button>
         </div>
       </td>
     `;
@@ -802,7 +813,7 @@ function renderLanguages() {
       starsHtml += i < lang.stars ? "★" : "☆";
     }
     tr.innerHTML = `
-      <td><strong>${escapeHtml(lang.name)}</strong></td>
+      <td><strong>${lang.name}</strong></td>
       <td style="color: var(--primary-accent); font-size: 1.1rem;">${starsHtml}</td>
       <td>
         <div style="display:flex;gap:0.4rem;">
@@ -846,7 +857,7 @@ function renderToolkit() {
     const badgeEl = document.createElement("span");
     badgeEl.className = "badge-editable";
     badgeEl.innerHTML = `
-      <span>${escapeHtml(badge)}</span>
+      <span>${badge}</span>
       <button class="remove-badge-btn" onclick="deleteBadge(${index})">×</button>
     `;
     container.appendChild(badgeEl);
@@ -867,13 +878,13 @@ function renderCertificates() {
   portfolioData.certificates.forEach((cert) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td><strong>${escapeHtml(cert.title)}</strong></td>
-      <td>${escapeHtml(cert.issuer)}</td>
-      <td>${escapeHtml(cert.validity)}</td>
+      <td><strong>${cert.title}</strong></td>
+      <td>${cert.issuer}</td>
+      <td>${cert.validity}</td>
       <td>
         <div style="display: flex; gap: 0.5rem;">
-          <button class="btn btn-secondary btn-sm" onclick="openCertEditor('${escapeHtml(cert.id)}')">Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteCert('${escapeHtml(cert.id)}')">Delete</button>
+          <button class="btn btn-secondary btn-sm" onclick="openCertEditor('${cert.id}')">Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteCert('${cert.id}')">Delete</button>
         </div>
       </td>
     `;
