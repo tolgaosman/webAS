@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://translate.google.com https://translate.googleapis.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' http://localhost:4000 https://your-render-app-url.onrender.com https://www.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebasestorage.googleapis.com https://translate.googleapis.com;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://translate.google.com https://translate.googleapis.com https://translate-pa.googleapis.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com https://www.gstatic.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' http://localhost:4000 https://your-render-app-url.onrender.com https://www.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://firebasestorage.googleapis.com https://translate.googleapis.com https://translate-pa.googleapis.com;">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="browserLogo.png">
@@ -1157,6 +1157,35 @@
       nl: "https://flagcdn.com/w40/nl.png"
     };
 
+    // Set googtrans cookie on all relevant domains/paths
+    function setGoogTransCookie(value) {
+      var host = window.location.hostname;
+      document.cookie = 'googtrans=' + value + '; path=/';
+      if (host && host !== 'localhost' && host !== '127.0.0.1') {
+        document.cookie = 'googtrans=' + value + '; path=/; domain=' + host;
+        document.cookie = 'googtrans=' + value + '; path=/; domain=.' + host;
+      }
+    }
+
+    // Delete/expire the googtrans cookie to restore original language
+    function clearGoogTransCookie() {
+      var host = window.location.hostname;
+      var exp = '; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+      document.cookie = 'googtrans=' + exp;
+      if (host && host !== 'localhost' && host !== '127.0.0.1') {
+        document.cookie = 'googtrans=' + exp + '; domain=' + host;
+        document.cookie = 'googtrans=' + exp + '; domain=.' + host;
+      }
+    }
+
+    // Read active language from googtrans cookie
+    function getCurrentLangFromCookie() {
+      var c = document.cookie.split(';').find(function(x) { return x.trim().startsWith('googtrans='); });
+      if (!c) return 'tr';
+      var val = c.trim().split('/').pop().trim();
+      return (val === 'en' || val === 'nl') ? val : 'tr';
+    }
+
     function toggleLangDropdown() {
       document.getElementById('lang-dropdown').classList.toggle('open');
     }
@@ -1166,65 +1195,27 @@
       document.getElementById('lang-dropdown').classList.remove('open');
 
       // Close mobile menu if open
-      const navMenu = document.getElementById('nav-menu');
-      const hamburger = document.getElementById('hamburger');
+      var navMenu = document.getElementById('nav-menu');
+      var hamburger = document.getElementById('hamburger');
       if (navMenu && navMenu.classList.contains('open')) {
         navMenu.classList.remove('open');
         if (hamburger) {
-          hamburger.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>`;
+          hamburger.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
         }
       }
 
-      // Update active state on options
-      ['lang-en', 'lang-tr', 'lang-nl'].forEach(id => {
-        document.getElementById(id).classList.remove('active');
-      });
-      document.getElementById('lang-' + langCode).classList.add('active');
+      // Already on this language — do nothing
+      if (langCode === getCurrentLangFromCookie()) return;
 
-      // Update button label & flag
-      document.getElementById('lang-current').textContent = labelText;
-      document.getElementById('lang-btn-flag').src = flagUrls[langCode];
-
-      // Update translation labels inside dropdown
-      const labels = langLabels[langCode] || langLabels.en;
-      document.getElementById('label-en').textContent = labels.en;
-      document.getElementById('label-tr').textContent = labels.tr;
-      document.getElementById('label-nl').textContent = labels.nl;
-
-      // Trigger Google Translate
       if (langCode === 'tr') {
-        // Set googtrans cookie to /tr/tr to persist Turkish choice
-        document.cookie = 'googtrans=/tr/tr; path=/';
-        document.cookie = 'googtrans=/tr/tr; path=/; domain=' + window.location.hostname;
-        document.cookie = 'googtrans=/tr/tr; path=/; domain=.' + window.location.hostname;
-
-        // Also clear combo value if present
-        const select = document.querySelector('.goog-te-combo');
-        if (select) {
-          select.value = '';
-          select.dispatchEvent(new Event('change'));
-        }
-
-        // Reload page to restore original Turkish layout
-        window.location.reload();
-        return;
-      }
-
-      const select = document.querySelector('.goog-te-combo');
-      if (select) {
-        select.value = langCode;
-        select.dispatchEvent(new Event('change'));
-
-        // Re-hide the bar after translation triggers
-        setTimeout(hideBanner, 100);
-        setTimeout(hideBanner, 500);
-        setTimeout(hideBanner, 1500);
+        // Restore original Turkish: clear the translation cookie and reload
+        clearGoogTransCookie();
       } else {
-        // Fallback: cookie + reload
-        document.cookie = 'googtrans=/tr/' + langCode + '; path=/; domain=' + window.location.hostname;
-        document.cookie = 'googtrans=/tr/' + langCode + '; path=/; domain=.' + window.location.hostname;
-        window.location.reload();
+        // EN or NL: set cookie; Google Translate will auto-apply it on the next load
+        setGoogTransCookie('/tr/' + langCode);
       }
+
+      window.location.reload();
     }
 
     // Close dropdown when clicking outside
@@ -1235,45 +1226,20 @@
       }
     });
 
-    // On page load: sync button label, flag, and dropdown option languages from stored cookie
+    // On page load: sync button label, flag, and dropdown labels from stored cookie
     (function syncLangButton() {
-      let cookie = document.cookie.split(';').find(c => c.trim().startsWith('googtrans='));
-
-      // If no language cookie is present, default to English (EN)
-      if (!cookie) {
-        document.cookie = 'googtrans=/tr/en; path=/';
-        document.cookie = 'googtrans=/tr/en; path=/; domain=' + window.location.hostname;
-        document.cookie = 'googtrans=/tr/en; path=/; domain=.' + window.location.hostname;
-        // Re-read or simulate cookie presence
-        cookie = 'googtrans=/tr/en';
-      }
-
-      let activeLang = 'tr';
-      let activeLabel = 'TR';
-
-      if (cookie) {
-        const val = cookie.trim().split('/').pop().trim();
-        if (val === 'en') {
-          activeLang = 'en';
-          activeLabel = 'EN';
-        } else if (val === 'nl') {
-          activeLang = 'nl';
-          activeLabel = 'NL';
-        } else if (val === 'tr') {
-          activeLang = 'tr';
-          activeLabel = 'TR';
-        }
-      }
+      var activeLang = getCurrentLangFromCookie();
+      var activeLabel = activeLang.toUpperCase();
 
       document.getElementById('lang-current').textContent = activeLabel;
       document.getElementById('lang-btn-flag').src = flagUrls[activeLang];
 
-      ['lang-en', 'lang-tr', 'lang-nl'].forEach(id => {
+      ['lang-en', 'lang-tr', 'lang-nl'].forEach(function(id) {
         document.getElementById(id).classList.remove('active');
       });
       document.getElementById('lang-' + activeLang).classList.add('active');
 
-      const labels = langLabels[activeLang];
+      var labels = langLabels[activeLang] || langLabels.tr;
       document.getElementById('label-en').textContent = labels.en;
       document.getElementById('label-tr').textContent = labels.tr;
       document.getElementById('label-nl').textContent = labels.nl;
@@ -1318,7 +1284,7 @@
     }
   </script>
   <script type="text/javascript"
-    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 
 
