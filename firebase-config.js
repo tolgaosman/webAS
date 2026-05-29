@@ -18,16 +18,21 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase App Check (reCAPTCHA v3 integration)
-// Protects the app from bot traffic, curl requests, and API abuse
-// Wrapped in try/catch: if App Check fails (bad key, CSP, localhost), Firebase still works via Auth + Rules
-try {
-  self.FIREBASE_APPCHECK_DEBUG_TOKEN = true; // Allows local debugging on localhost
-  initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider("6LcmiAItAAAAAEn68HCQE7hZWSFIOSw17-7_cu7-"),
-    isTokenAutoRefreshEnabled: true
-  });
-} catch (appCheckError) {
-  console.warn("App Check initialization failed (non-blocking):", appCheckError);
+// Initialize Firebase App Check (reCAPTCHA v3 integration)
+// Protects the app from bot traffic, curl requests, and API abuse.
+// Only enabled in production to prevent 403 errors during local testing on 127.0.0.1
+if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
+  try {
+    initializeAppCheck(app, {
+      provider: new ReCaptchaV3Provider("6LcmiAItAAAAAEn68HCQE7hZWSFIOSw17-7_cu7-"),
+      isTokenAutoRefreshEnabled: true
+    });
+    console.log("App Check initialized (Production Mode).");
+  } catch (appCheckError) {
+    console.warn("App Check initialization failed:", appCheckError);
+  }
+} else {
+  console.log("Local development detected: Firebase App Check bypassed.");
 }
 
 const db = getFirestore(app);

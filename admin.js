@@ -1,8 +1,8 @@
-import { db, auth, storage } from "./firebase-config.js";
+import { db, auth, storage } from "./firebase-config.js?v=3";
 import { doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { signInWithEmailAndPassword, onAuthStateChanged, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
-import { escapeHtml, sanitizeUrl, sanitizeImgSrc } from "./sanitize.js";
+import { escapeHtml, sanitizeUrl, sanitizeImgSrc } from "./sanitize.js?v=3";
 
 const DEFAULT_PORTFOLIO_DATA = {
   personal: {
