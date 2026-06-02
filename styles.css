@@ -175,6 +175,10 @@ header.scrolled {
   border-bottom: 2px solid var(--border-color);
 }
 
+header.nav-hidden {
+  transform: translateY(-100%);
+}
+
 .nav-container {
   display: grid;
   grid-template-columns: 1fr auto 1fr;

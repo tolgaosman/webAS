@@ -427,13 +427,24 @@ function initNavigation() {
   const navLinks = document.querySelectorAll(".nav-link");
   const sections = document.querySelectorAll("section");
 
+  let lastScrollY = window.scrollY;
+
   // Sticky header background addition on scroll
   window.addEventListener("scroll", () => {
     if (window.scrollY > 50) {
       header.classList.add("scrolled");
+      
+      if (window.scrollY > lastScrollY) {
+        header.classList.add("nav-hidden");
+      } else {
+        header.classList.remove("nav-hidden");
+      }
     } else {
       header.classList.remove("scrolled");
+      header.classList.remove("nav-hidden");
     }
+    
+    lastScrollY = window.scrollY;
 
     // Track active section to highlight navigation link
     let currentActiveSection = "";
