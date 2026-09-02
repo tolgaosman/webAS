@@ -82,9 +82,13 @@ class PortfolioController extends Controller
         $suffix = bin2hex(random_bytes(6));
         $filename = "{$safeBase}-{$suffix}." . $ext;
 
-        // Public disk root should be configured to the same directory nginx
-        // serves as /assets/uploads (bind-mounted, see migration plan §Faz 8).
-        $file->storeAs('uploads', $filename, 'public_uploads');
+        // Write directly at the public_uploads disk root (empty path
+        // prefix), NOT under a nested "uploads/" subdirectory — the disk
+        // root (config/filesystems.php) already points at the uploads
+        // directory nginx serves as /assets/uploads (see migration plan
+        // §Faz 8). storeAs('uploads', ...) here would double the path
+        // segment and 404 every upload.
+        $file->storeAs('', $filename, 'public_uploads');
 
         return response()->json(['url' => "/assets/uploads/{$filename}"], 200, [], self::JSON_FLAGS);
     }

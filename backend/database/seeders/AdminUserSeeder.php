@@ -19,8 +19,11 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        $email = env('ADMIN_EMAIL', 'admin@alarasysn.com');
-        $password = env('ADMIN_PASSWORD');
+        // config('webas.*'), not env() directly — see config/webas.php's
+        // docblock (hata #2): a seeder run after `config:cache` would
+        // otherwise silently see null and refuse to seed.
+        $email = config('webas.admin_email');
+        $password = config('webas.admin_password');
 
         if (! $password) {
             $this->command?->error('ADMIN_PASSWORD is not set in .env — refusing to seed a blank/default password.');

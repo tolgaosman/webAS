@@ -32,7 +32,9 @@ class SecurityAlerts
         ));
         Cache::put($key, $attempts, self::WINDOW_SECONDS);
 
-        $threshold = (int) (env('FAILED_LOGIN_ALERT_THRESHOLD') ?: 5);
+        // config('webas.failed_login_alert_threshold'), not env() directly
+        // — see config/webas.php's docblock (hata #2).
+        $threshold = (int) config('webas.failed_login_alert_threshold');
         if (count($attempts) < $threshold) {
             return;
         }
@@ -57,7 +59,9 @@ class SecurityAlerts
 
     public static function sendSecurityEvent(string $title, string $description, int $color = 0xffa500): void
     {
-        $webhookUrl = env('DISCORD_WEBHOOK_URL');
+        // config('services.discord.webhook_url'), not env() directly —
+        // see config/webas.php's docblock (hata #2).
+        $webhookUrl = config('services.discord.webhook_url');
         if (! $webhookUrl) {
             return; // Matches legacy: silently no-ops (only logs to console) when unset.
         }

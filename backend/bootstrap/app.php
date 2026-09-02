@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
+        web: __DIR__ . '/../routes/web.php',
         api: __DIR__ . '/../routes/api.php',
         commands: __DIR__ . '/../routes/console.php',
     )
@@ -20,6 +21,15 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth.jwt' => RequireAdminAuth::class,
         ]);
+
+        // Behind nginx (see docker-compose.yml/nginx.conf, §Faz 8) every
+        // request otherwise appears to originate from the container IP,
+        // which would bucket ALL traffic into one rate-limit key
+        // (AppServiceProvider's throttle:auth/api/global) and make
+        // $request->ip() useless for SecurityAlerts. '*' is safe here
+        // because nginx is the only thing that can reach php:9000 — it's
+        // never exposed directly to the internet.
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         // Byte-compatible with legacy/backend/src/server.ts's 404 handler

@@ -26,7 +26,12 @@ class RequireAdminAuth
             return response()->json(['error' => 'Oturum bulunamadı. Lütfen giriş yapın.'], 401);
         }
 
-        if (! env('JWT_SECRET')) {
+        // config('webas.jwt_secret'), NOT env('JWT_SECRET') directly — see
+        // config/webas.php's docblock (hata #2). The config always
+        // resolves to at least the public fallback string, so this check
+        // catches an unset .env value the same way the legacy check did,
+        // without itself being fooled by config:cache.
+        if (config('webas.jwt_secret') === 'fallback_secret_change_in_production') {
             report(new \RuntimeException('FATAL: JWT_SECRET is not configured'));
 
             return response()->json(['error' => 'Sunucu yapılandırma hatası.'], 500);

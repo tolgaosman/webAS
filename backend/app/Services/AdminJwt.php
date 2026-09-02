@@ -12,7 +12,9 @@ use UnexpectedValueException;
  * HS256 JWT issuing/verification, byte-compatible with the legacy Express
  * backend (legacy/backend/src/controllers/auth.controller.ts +
  * legacy/backend/src/middleware/auth.ts). Deliberately reuses the same
- * JWT_SECRET env var and claim shape {uid, email, role, iat, exp} so a
+ * JWT_SECRET (via config('webas.jwt_secret') — see config/webas.php for
+ * why this must go through config() and never call env() directly) and
+ * claim shape {uid, email, role, iat, exp} so a
  * session cookie issued by the OLD backend keeps validating after cutover
  * (see migration plan §Faz 5 — this is why firebase/php-jwt was chosen
  * over Sanctum).
@@ -58,7 +60,10 @@ class AdminJwt
 
     private static function secret(): string
     {
-        // Matches legacy's fallback so a misconfigured .env fails the same way.
-        return (string) (env('JWT_SECRET') ?: 'fallback_secret_change_in_production');
+        // config('webas.jwt_secret'), NOT env('JWT_SECRET') — see
+        // config/webas.php's docblock (hata #2). Calling env() here would
+        // silently fall through to the public default the moment
+        // `php artisan config:cache` runs in production.
+        return (string) config('webas.jwt_secret');
     }
 }

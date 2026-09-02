@@ -10,4 +10,4 @@ storage/framework/views/*
 tests/
 .git
 .gitignore
-SETUP.md
+README.md

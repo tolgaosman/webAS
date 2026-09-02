@@ -14,7 +14,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./assets/uploads:/var/www/uploads:ro
+      - ./uploads:/var/www/uploads:ro
       - certbot-conf:/etc/letsencrypt:ro
       - certbot-www:/var/www/certbot:ro
     depends_on:
@@ -23,21 +23,24 @@ services:
 
   php:
     build:
-      context: ./api
+      context: ./backend
       dockerfile: Dockerfile
     # Port 9000 is not exported to the host — only nginx (the "web"
     # service) talks to it, over the compose network.
     env_file:
-      - ./api/.env
+      - ./backend/.env
     volumes:
-      - ./assets/uploads:/var/www/uploads
+      - ./uploads:/var/www/uploads
     depends_on:
-      - mysql
-      - redis
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
     restart: always
 
   mysql:
     image: mysql:8.0
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       - MYSQL_DATABASE=${DB_DATABASE:-webas}
       - MYSQL_USER=${DB_USERNAME:-webas}
@@ -45,10 +48,16 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
     volumes:
       - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
     restart: always
 
   redis:
     image: redis:7-alpine
+    command: redis-server --appendonly yes
     volumes:
       - redis-data:/data
     restart: always
@@ -66,7 +75,11 @@ volumes:
   certbot-conf:
   certbot-www:
 
-# ./assets/uploads is a plain host bind-mount (not a named volume above),
-# same as the legacy setup — both web (read-only serving) and php
-# (writes uploads) mount it; see nginx.conf's /assets/uploads/ location
-# and api's public_uploads disk (config/filesystems.php, api/SETUP.md).
+# ./uploads is a plain host bind-mount (not a named volume above) —
+# both web (read-only serving) and php (writes uploads) mount it; see
+# nginx.conf's /assets/uploads/ location and backend's public_uploads
+# disk (backend/config/filesystems.php, backend/README.md). This is NOT
+# the same directory as frontend/public/assets/uploads/, which is build
+# input baked into the "web" image, not runtime storage — mkdir -p
+# ./uploads and move any existing live images there before first
+# `docker compose up` (see migration plan §Faz 8 cutover checklist).

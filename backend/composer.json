@@ -1,7 +1,7 @@
 {
-    "name": "webas/api",
+    "name": "webas/backend",
     "type": "project",
-    "description": "webAS portfolio API — Laravel port of legacy/backend (see migration plan §Faz 4-8).",
+    "description": "webAS portfolio API — full Laravel 11 rewrite of legacy/backend (see backend/README.md).",
     "require": {
         "php": "^8.2",
         "laravel/framework": "^11.9",
@@ -52,7 +52,6 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true,
             "php-http/discovery": true
         }
     },
