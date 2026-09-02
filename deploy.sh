@@ -28,7 +28,30 @@ docker compose up -d --build
 echo "⏳ Veritabanı bağlantısı bekleniyor..."
 sleep 5
 
-# 4. Laravel veritabanı migration ve optimizasyon komutları
+# 4. İzinleri düzelt (storage ve uploads klasörlerinin yazılabilir olması
+# gerekir). php konteyneri normalde www-data kullanıcısıyla çalışıyor
+# (backend/Dockerfile'daki USER www-data), chown için root'a ihtiyaç var
+# — bu yüzden -u root ile çalıştırıyoruz. Bu adım 5'ten (Laravel
+# migration/cache) ÖNCE gelmeli: config:cache ve route:cache
+# bootstrap/cache'e www-data olarak yazıyor, izinler verilmeden
+# çalıştırılırsa taze bir sunucuda patlar. uploads chown'u önceden hiç
+# yapılmıyordu; bu, admin panelindeki görsel yüklemenin "Sunucu hatası
+# oluştu" ile 500 vermesinin ana sebebiydi (uploads root:root 775 ile
+# oluşuyor, www-data yazamıyordu).
+echo "🔐 Laravel Storage ve uploads izinleri ayarlanıyor..."
+docker compose exec -T -u root php chown -R www-data:www-data /var/www/backend/storage /var/www/backend/bootstrap/cache
+docker compose exec -T -u root php chown -R www-data:www-data /var/www/uploads
+
+# uploads klasörünün gerçekten www-data tarafından yazılabildiğini
+# doğrula — chown sessizce başarısız olabilir (ör. yanlış bind-mount
+# yolu), bu adım olmadan sorun bir sonraki admin panel yüklemesine kadar
+# fark edilmezdi.
+echo "🧪 uploads klasörü yazma testi..."
+docker compose exec -T php sh -c \
+  'touch /var/www/uploads/.write-test && rm /var/www/uploads/.write-test' \
+  || { echo "❌ uploads klasörü www-data tarafından yazılamıyor — deploy durduruldu."; exit 1; }
+
+# 5. Laravel veritabanı migration ve optimizasyon komutları
 echo "🛠️ Laravel: Migration ve Cache optimizasyonları yapılıyor..."
 
 # Artisan komutlarını 'php' isimli konteynerin içinde çalıştırıyoruz
@@ -36,16 +59,5 @@ docker compose exec -T php php artisan migrate --force --seed
 docker compose exec -T php php artisan optimize:clear
 docker compose exec -T php php artisan config:cache
 docker compose exec -T php php artisan route:cache
-
-# 5. İzinleri düzelt (storage ve uploads klasörlerinin yazılabilir olması
-# gerekir). php konteyneri normalde www-data kullanıcısıyla çalışıyor
-# (backend/Dockerfile'daki USER www-data), chown için root'a ihtiyaç var
-# — bu yüzden -u root ile çalıştırıyoruz. uploads chown'u önceden hiç
-# yapılmıyordu; bu, admin panelindeki görsel yüklemenin "Sunucu hatası
-# oluştu" ile 500 vermesinin ana sebebiydi (uploads root:root 775 ile
-# oluşuyor, www-data yazamıyordu).
-echo "🔐 Laravel Storage ve uploads izinleri ayarlanıyor..."
-docker compose exec -T -u root php chown -R www-data:www-data /var/www/backend/storage /var/www/backend/bootstrap/cache
-docker compose exec -T -u root php chown -R www-data:www-data /var/www/uploads
 
 echo "✅ Deployment başarıyla tamamlandı! Site yayında."

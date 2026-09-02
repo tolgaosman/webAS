@@ -1,8 +1,14 @@
 /**
- * Whole-page proportional scaling — the site is designed at 1440px and
- * should look visually identical (same layout, same proportions) at any
- * wider or narrower desktop viewport, not just re-flow into more/less
- * empty margin the way `.container { max-width: 1200px }` does today.
+ * Whole-page proportional DOWN-scaling — the site is designed at 1440px
+ * and shrinks to fit narrower desktop viewports so the layout keeps its
+ * proportions instead of getting cramped.
+ *
+ * It deliberately never scales UP past 1.0 (MAX_ZOOM). An earlier version
+ * scaled in both directions, which made a 1920px monitor render everything
+ * 33% larger than authored (1920/1440) and a 2560px one 75% larger — the
+ * headings and line lengths ended up uncomfortably inflated. Above 1440px
+ * the site now renders at its natural size and `.container`'s
+ * `max-width: 1200px` centers it with margin, which is the intended look.
  *
  * Uses CSS `zoom` rather than `transform: scale()`: this site relies on
  * `position: fixed` (the sticky header, the admin bg pattern, the nav
@@ -24,7 +30,7 @@
 const DESIGN_WIDTH = 1440;
 const MIN_WIDTH = 1024;
 const MIN_ZOOM = 0.8;
-const MAX_ZOOM = 1.75;
+const MAX_ZOOM = 1;
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(max, Math.max(min, value));
