@@ -1,5 +1,5 @@
 # php-fpm image for the Laravel API (§Faz 8).
-FROM php:8.3-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 RUN apk add --no-cache \
         git curl libzip-dev zip unzip icu-dev oniguruma-dev \
