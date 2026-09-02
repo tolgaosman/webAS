@@ -38,7 +38,6 @@ docker compose exec -T php php artisan migrate --force --seed
 docker compose exec -T php php artisan optimize:clear
 docker compose exec -T php php artisan config:cache
 docker compose exec -T php php artisan route:cache
-docker compose exec -T php php artisan view:cache
 
 # 5. İzinleri düzelt (storage klasörünün yazılabilir olması gerekir)
 echo "🔐 Laravel Storage izinleri ayarlanıyor..."
