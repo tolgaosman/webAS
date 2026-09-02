@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.local
+
+# Runtime uploads (served from a bind-mounted volume, not build input —
+# see migration plan §Faz 8, docker-compose.yml's "uploads" volume)
+public/assets/uploads/

@@ -1,22 +1,20 @@
-# Environment variables (NEVER commit)
+/vendor
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
 .env
-.env.local
+.env.backup
 .env.production
-
-# Firebase service account key
-serviceAccountKey.json
-*-firebase-adminsdk-*.json
-
-# Build output
-dist/
-
-# Dependencies
-node_modules/
-
-# Logs
-*.log
-npm-debug.log*
-
-# OS files
-.DS_Store
-Thumbs.db
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed

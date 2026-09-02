@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://translate.google.com https://translate.googleapis.com https://translate-pa.googleapis.com https://www.gstatic.com https://www.google.com https://www.recaptcha.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com https://www.gstatic.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; frame-src 'self' https://www.google.com https://www.recaptcha.net; connect-src 'self' http://localhost:4000 https://translate.googleapis.com https://translate-pa.googleapis.com https://www.google.com;">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/browserLogo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/browserLogo.png">
+  <link rel="shortcut icon" href="/browserLogo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/browserLogo.png">
+
+  <!-- SEO Meta Tags -->
+  <title>Alara Soysan | Marketing & Branding Portfolio</title>
+  <meta name="description"
+    content="Alara Soysan's digital marketing, brand management and organisational development portfolio. Rotterdam Business School.">
+  <meta name="keywords"
+    content="Alara Soysan, Portfolio, Digital Marketing, Rotterdam, Turkcell Intern, Social Media Campaign, Employer Branding">
+  <meta name="author" content="Alara Soysan">
+
+  <!-- Google Translate: completely hide the toolbar -->
+  <style>
+    /* Kill every possible Google Translate top bar, iframe, and balloon container */
+    iframe.goog-te-banner-frame,
+    .goog-te-banner-frame,
+    .goog-te-banner,
+    .goog-te-balloon-frame,
+    #goog-gt-tt,
+    .goog-te-ftab-float,
+    .goog-te-menu-value:hover,
+    .goog-te-gadget-icon,
+    .goog-te-gadget img,
+    iframe[id*="container"],
+    iframe[id*="google"],
+    iframe.skiptranslate,
+    .skiptranslate {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      width: 0 !important;
+    }
+
+
+
+    /* Prevent body and html from being pushed down by 40px */
+    html,
+    body {
+      top: 0px !important;
+      position: static !important;
+    }
+
+    body.translated-ltr,
+    body.translated-rtl,
+    html.translated-ltr,
+    html.translated-rtl {
+      margin-top: 0px !important;
+      top: 0px !important;
+    }
+
+    /* Hide the widget container completely */
+    .goog-te-gadget {
+      font-size: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .goog-te-gadget select {
+      display: none !important;
+    }
+
+    /* Language Selector Dropdown */
+    .lang-selector {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--card-bg, #fff);
+      border: 2px solid var(--border-color, #1c2c3d);
+      border-radius: 20px;
+      padding: 0.35rem 0.85rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-primary, #1c2c3d);
+      cursor: pointer;
+      box-shadow: 2px 2px 0px var(--border-color, #1c2c3d);
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .lang-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 3px 3px 0px var(--border-color, #1c2c3d);
+    }
+
+    .lang-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .lang-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      background: var(--card-bg, #fff);
+      border: 2px solid var(--border-color, #1c2c3d);
+      border-radius: 12px;
+      box-shadow: 3px 3px 0px var(--border-color, #1c2c3d);
+      overflow: hidden;
+      z-index: 2000;
+      min-width: 130px;
+    }
+
+    .lang-dropdown.open {
+      display: block;
+    }
+
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary, #1c2c3d);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .lang-option:hover {
+      background: var(--folder-bg, #d2e4f5);
+    }
+
+    .lang-option.active {
+      background: var(--folder-bg, #d2e4f5);
+      font-weight: 800;
+    }
+
+    .lang-flag-img {
+      width: 20px;
+      height: 14px;
+      border-radius: 2px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .lang-btn-flag {
+      width: 18px;
+      height: 13px;
+      border-radius: 2px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    #mobile-lang-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      padding: 0 1.5rem;
+      list-style: none;
+    }
+
+    .resume-actions-group {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: center !important;
+      align-items: center !important;
+      gap: 1rem !important;
+      margin-top: 3rem !important;
+      flex-wrap: wrap !important;
+      width: 100% !important;
+    }
+
+    .resume-actions-group .btn {
+      flex: 0 1 auto !important;
+      min-width: 180px !important;
+      max-width: 260px !important;
+      white-space: normal !important;
+      text-align: center !important;
+      padding: 0.85rem 1.5rem !important;
+      font-size: 0.85rem !important;
+      line-height: 1.3 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 0.5rem !important;
+    }
+
+    .resume-actions-group .btn svg {
+      width: 16px !important;
+      height: 16px !important;
+      flex-shrink: 0 !important;
+    }
+
+    /* Dutch Specific Layout Adjustments */
+    html[lang="nl"] .hero-main-title br {
+      display: none !important;
+    }
+
+    html[lang="nl"] .skill-sticky {
+      padding: 1.5rem 0.8rem !important;
+    }
+
+    html[lang="nl"] .skill-sticky h4 {
+      font-size: 0.82rem !important;
+      word-break: normal !important;
+    }
+  </style>
+
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+
+  <!-- Fixed Header & Navigation -->
+  <header>
+    <div class="nav-container">
+
+      <!-- Logo (Left) -->
+      <a href="#hero" class="logo" style="display: flex; align-items: center;">
+        <img src="/siteLogo.png" alt="Alara Soysan Logo" class="nav-logo-img" height="80"
+          style="max-height: 80px; width: auto; display: block;">
+      </a>
+
+      <!-- Mobile Drawer Trigger -->
+      <button class="hamburger" id="hamburger" aria-label="Open Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Navigation Link List (Centered) -->
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#hero" class="nav-link active">Ana Sayfa</a></li>
+        <li><a href="#about" class="nav-link">Hakkımda</a></li>
+        <li><a href="#specialties" class="nav-link">Uzmanlık Alanları</a></li>
+        <li><a href="#portfolio" class="nav-link">Portfolyo</a></li>
+        <li><a href="#resume" class="nav-link">Özgeçmiş</a></li>
+        <li><a href="#certificates" class="nav-link">Sertifikalar</a></li>
+        <li><a href="#contact" class="nav-link">İletişim</a></li>
+      </ul>
+
+      <!-- Right: Language Selector -->
+      <div class="nav-actions">
+        <div class="lang-selector" id="lang-selector">
+          <button class="lang-btn notranslate" id="lang-btn" onclick="toggleLangDropdown()">
+            <img id="lang-btn-flag" class="lang-btn-flag notranslate" src="https://flagcdn.com/w40/tr.png" alt="TR">
+            <span id="lang-current" class="notranslate">TR</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round" style="width:10px;height:10px">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="lang-dropdown" id="lang-dropdown">
+            <div class="lang-option active" id="lang-en" onclick="setLang('en','EN')">
+              <img class="lang-flag-img" src="https://flagcdn.com/w40/gb.png" alt="GB"> <span id="label-en"
+                class="notranslate">English</span>
+            </div>
+            <div class="lang-option" id="lang-tr" onclick="setLang('tr','TR')">
+              <img class="lang-flag-img" src="https://flagcdn.com/w40/tr.png" alt="TR"> <span id="label-tr"
+                class="notranslate">Turkish</span>
+            </div>
+            <div class="lang-option" id="lang-nl" onclick="setLang('nl','NL')">
+              <img class="lang-flag-img" src="https://flagcdn.com/w40/nl.png" alt="NL"> <span id="label-nl"
+                class="notranslate">Dutch</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero">
+    <div class="container hero-grid">
+      <!-- Polaroid Snapshot Visual (Left Column) -->
+      <div class="hero-visual reveal active">
+        <div class="polaroid-frame">
+          <div class="polaroid-image-box">
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Alara Soysan Portrait">
+          </div>
+          <div class="polaroid-caption">Alara Soysan</div>
+        </div>
+      </div>
+
+      <!-- Hero Headline Details (Right Column) -->
+      <div class="hero-content reveal active" style="transition-delay: 0.1s;">
+        <div class="hero-title-group">
+          <span class="hero-marketing-label">Dijital Markalama Öğrencisi</span>
+          <h1 class="hero-main-title">Pazarlama<br>Portfolyosu</h1>
+          <span class="hero-by-line">Alara Soysan Tarafından</span>
+        </div>
+
+        <!-- Folder Styled Introductory Box -->
+        <div class="folder-container hero-desc-folder">
+          <span class="folder-tab">Hoş Geldiniz</span>
+          <p>
+            Rotterdam merkezli, Kıbrıs kökenli, Rotterdam İşletme Okulu Uluslararası İşletme 3. sınıf öğrencisiyim.
+            Dijital pazarlama, işveren markası ve sakin estetik tasarımlar geliştiriyorum.
+          </p>
+          <div class="hero-actions">
+            <a href="#portfolio" class="btn btn-primary">Portfolyo</a>
+            <a href="#contact" class="btn btn-secondary">İletişim</a>
+
+            <div class="hero-socials">
+              <a href="https://nl.linkedin.com/in/alara-soysan-84b99a298" target="_blank" rel="noopener"
+                class="social-btn" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                </svg>
+              </a>
+              <a href="https://www.instagram.com/alarasysn/" target="_blank" rel="noopener" class="social-btn"
+                aria-label="Instagram">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Me Section -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header-group">
+        <span class="section-tag">Hakkımda</span>
+        <h2 class="section-title">Netlik & Yapı</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="about-layout reveal">
+        <!-- Bio Card (Styled as large Vintage Card) -->
+        <div class="folder-container about-bio-card">
+          <span class="folder-tab">Biografi</span>
+          <p>
+            Merhaba, ben Alara. Rotterdam'da yaşayan; Hogeschool Rotterdam'da Uluslararası İşletme okuyan bir son sınıf
+            öğrencisiyim. Dijital pazarlama, markalama ve örgütsel değişim
+            yönetimi alanlarına odaklanıyorum.
+          </p>
+          <p>
+            Aslen Kıbrıslıyım; şu anda Turkcell'de işveren markası, iç iletişim ve dijital içerik üretimi üzerine
+            çalıştığım bir İK ve Marka stajı yapmaktayım. Hem görsel olarak çekici hem de stratejik olarak anlamlı
+            projeler üretmek için yaratıcılık ile yapıyı bir araya getirmeyi seviyorum.
+          </p>
+          <p>
+            Özellikle sade estetikten, düşünülmüş iletişimden ve tasarım yoluyla netlik yaratmaktan besleniyorum.
+            İçerik, markalama veya dijital deneyimler üzerine çalışırken; dengeye, düzenli olmaya ve bilinçli detaylara
+            değer veriyorum.
+          </p>
+          <p>
+            Bu portfolyo; projelerimi, fikirlerimi, dijital çalışmalarımı ve görsel bakış açımı paylaştığım, yaratıcı ve
+            profesyonel yolculuğumun bir yansımasıdır.
+          </p>
+        </div>
+
+        <!-- Sidebar Details -->
+        <div class="about-sidebar">
+          <div class="folder-container about-interests-card">
+            <span class="folder-tab">İlgi Alanları</span>
+            <h3>Hobiler & İlgi Alanları</h3>
+            <div class="hobbies-list">
+              <div class="hobby-item">
+                <span style="font-size: 1.2rem;">🧘🏻‍♀️</span>
+                Yoga
+              </div>
+              <div class="hobby-item">
+                <span style="font-size: 1.2rem;">🍳</span>
+                Cooking
+              </div>
+              <div class="hobby-item">
+                <span style="font-size: 1.2rem;">🎤</span>
+                Singing
+              </div>
+              <div class="hobby-item">
+                <span style="font-size: 1.2rem;">📸</span>
+                Photography
+              </div>
+              <div class="hobby-item">
+                <span style="font-size: 1.2rem;">🎨</span>
+                Coloring
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Push-pin Sticky Notes Core Skills Grid -->
+      <div class="skills-intro-group reveal">
+        <h3>Temel Yetenekler</h3>
+        <div class="skills-grid">
+          <!-- Card 1 -->
+          <div class="skill-sticky">
+            <div class="skill-sticky-content">
+              <h4>Digital Content</h4>
+              <p>Canva, CapCut ile işveren markası ve sosyal medya görsel tasarımı.</p>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="skill-sticky skill-sticky-2">
+            <div class="skill-sticky-content">
+              <h4>Structured Details</h4>
+              <p>Bilgiyi analiz edip sade, temiz ve mantıklı sistemler içinde sunma.</p>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="skill-sticky skill-sticky-3">
+            <div class="skill-sticky-content">
+              <h4>Website UX</h4>
+              <p>Kullanıcı odaklı arayüzler ve dengeli sayfa estetiği oluşturma.</p>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="skill-sticky skill-sticky-4">
+            <div class="skill-sticky-content">
+              <h4>Communication</h4>
+              <p>Farklı paydaşlarla şeffaf, etkili ve çözüm odaklı iletişim kurabilme.</p>
+            </div>
+          </div>
+          <!-- Card 5 -->
+          <div class="skill-sticky skill-sticky-5">
+            <div class="skill-sticky-content">
+              <h4>Adaptability</h4>
+              <p>Dinamik ortamlara ve yeni projelere hızlıca uyum sağlayabilme.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specialties Section (Fashion cutouts layout like Slide 4) -->
+  <section id="specialties">
+    <div class="container">
+      <div class="section-header-group">
+        <span class="section-tag">Odak Alanları</span>
+        <h2 class="section-title">Uzmanlık Alanlarım</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="specialties-grid reveal">
+        <!-- Specialty 1 -->
+        <div class="specialty-panel">
+          <div class="specialty-frame">
+            <img src="/assets/images/social.jpg" alt="Alara Soysan - Social Content">
+          </div>
+          <h3 class="specialty-title">Sosyal İçerik</h3>
+          <p class="specialty-desc">Görsel anlatı stratejileri, Instagram ızgara yerleşimleri ve estetik post
+            tasarımları.</p>
+          <a href="#portfolio" class="btn btn-secondary">projeleri gör</a>
+        </div>
+
+        <!-- Specialty 2 -->
+        <div class="specialty-panel">
+          <div class="specialty-frame">
+            <img src="/assets/images/seo.jpg" alt="Alara Soysan - SEO & Digital Advertising">
+          </div>
+          <h3 class="specialty-title">SEO & Dijital Reklam</h3>
+          <p class="specialty-desc">Anahtar kelime stratejileri, Google Analytics entegrasyonu ve dijital kampanya
+            kurulumu.</p>
+          <a href="#certificates" class="btn btn-secondary">sertifikaları gör</a>
+        </div>
+
+        <!-- Specialty 3 -->
+        <div class="specialty-panel">
+          <div class="specialty-frame">
+            <img src="/assets/images/branding.jpg" alt="Alara Soysan - Employer Branding">
+          </div>
+          <h3 class="specialty-title">İşveren Markası</h3>
+          <p class="specialty-desc">Şirket içi marka algısının güçlendirilmesi ve employer branding içerik üretim
+            süreçleri.</p>
+          <a href="#resume" class="btn btn-secondary">özgeçmişi gör</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Section -->
+  <section id="portfolio">
+    <div class="container">
+      <div class="section-header-group">
+        <span class="section-tag">Yaratıcı Çalışmalar</span>
+        <h2 class="section-title">Seçilmiş Kampanyalar</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="portfolio-grid reveal">
+        <!-- Card 1 -->
+        <div class="portfolio-card" data-project-id="1">
+          <div class="portfolio-img-box">
+            <img src="/assets/images/schouwKapak.jpeg" alt="de Schouw Campaign Image">
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-cat">Branding / Social</span>
+            <h3 class="portfolio-name">Long-Term Campaign (de Schouw)</h3>
+            <p class="portfolio-desc">Bu, Rotterdam'daki yerel bir bar için hazırladığım ödev tasarımlarımdan biri. Grup
+              olarak önerdiğimiz bir kampanya tasarımı fikrini gösteriyor. Kampanyanın tüm unsurlarını ben tasarladım.
+            </p>
+            <span class="portfolio-action-btn">
+              Detayları Gör
+              <svg viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </div>
+          <!-- Hidden Data for Modal Translation -->
+          <div class="portfolio-hidden-data visually-hidden">
+            <div class="data-category">Social Media Branding</div>
+            <div class="data-title">Long-Term Campaign (de Schouw)</div>
+            <div class="data-image notranslate">assets/images/schouw1.jpeg, assets/images/schouw2.jpeg,
+              assets/images/schouw3.jpeg, assets/images/schouw4.jpeg, assets/images/schouw5.jpeg</div>
+            <div class="data-description">
+              <p>This project showcases a long-term social media branding campaign developed for <strong>de
+                  Schouw</strong>. The campaign focused on cultural storytelling, utilizing creative visuals and
+                engaging narratives on Instagram to strengthen brand affinity and community engagement.</p>
+              <p><strong>Key Achievements:</strong></p>
+              <ul>
+                <li>Designed a cohesive visual grid system utilizing Canva and custom design structures.</li>
+                <li>Wrote persuasive, story-driven captions that raised post interactions by 35%.</li>
+                <li>Formulated team strategies ("Team Iron Man 4") to ensure consistent content scheduling and high
+                  aesthetic quality.</li>
+              </ul>
+              <p>The campaign successfully transformed the client's digital presence into a structured, visually calm,
+                and structured space, reflecting modern layout design principles.</p>
+            </div>
+            <div class="data-meta-role">Branding & Content Creator</div>
+            <div class="data-client-label">Client / Group</div>
+            <div class="data-meta-client">de Schouw (Team Iron Man 4)</div>
+            <div class="data-meta-tools">Canva, Figma, CapCut, Instagram Insights</div>
+            <div class="data-meta-category">Social Media Strategy</div>
+            <div class="data-goals">Instagram Grid Layout, Storytelling Copywriting, Engagement Optimization</div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="portfolio-card" data-project-id="2">
+          <div class="portfolio-img-box">
+            <img src="/assets/images/project_nike.png" alt="Nike Eco Campaign Image">
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-cat">Eco / Digital Strategy</span>
+            <h3 class="portfolio-name">Move to Zero (Bloom Over Doom)</h3>
+            <p class="portfolio-desc">İkinci yılımızda, araştırma yapmak ve sektörlerine yönelik yeni ürünler
+              geliştirmek üzere şirket olarak Nike'ı seçmiştik. Ödev gereği, gerçek bir toplantı yapılması gerekiyordu;
+              bu yüzden ben de konsepti ve ekstra notlar kısmını içeren bir toplantı afişi hazırladım.</p>
+            <span class="portfolio-action-btn">
+              Detayları Gör
+              <svg viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </div>
+          <!-- Hidden Data for Modal Translation -->
+          <div class="portfolio-hidden-data visually-hidden">
+            <div class="data-category">Sustainable Marketing</div>
+            <div class="data-title">Move to Zero (Bloom Over Doom)</div>
+            <div class="data-image notranslate">assets/images/project_nike.png</div>
+            <div class="data-description">
+              <p><strong>Move to Zero (Bloom Over Doom)</strong> is a comprehensive mock digital marketing campaign
+                aligned with Nike's circular design principles and global sustainability mission.</p>
+              <p>The campaign structure is directly mapped to the United Nations Sustainable Development Goals:</p>
+              <ul>
+                <li><strong>UNSDG Goal 11 (Sustainable Cities and Communities):</strong> Promoted circular fashion
+                  solutions that minimize urban textile wastes.</li>
+                <li><strong>UNSDG Goal 12 (Responsible Consumption and Production):</strong> Educated consumers on
+                  product lifecycle, return-to-store recycling schemes, and durable apparel care.</li>
+              </ul>
+              <p>The strategy incorporated digital advertising mockups, visual storytelling, and a structured email
+                nurturing plan to guide consumers from "eco-anxiety" (Doom) to "active green solutions" (Bloom).</p>
+            </div>
+            <div class="data-meta-role">Campaign Strategist / SEO Specialist</div>
+            <div class="data-client-label">Course Context</div>
+            <div class="data-meta-course">Digital Marketing Minor (RBS)</div>
+            <div class="data-meta-tools">Adobe Photoshop, Mailchimp, SEO Keywords, Hubspot</div>
+            <div class="data-meta-category">UNSDG Alignments</div>
+            <div class="data-goals">UNSDG 11, UNSDG 12, Email Marketing & SEO</div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="portfolio-card" data-project-id="3">
+          <div class="portfolio-img-box">
+            <img src="/assets/images/yogaProject/kapak.jpeg" alt="Yoga Brand Identity Image">
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-cat">Visual Design</span>
+            <h3 class="portfolio-name">The Yoga Project</h3>
+            <p class="portfolio-desc">Bu, yoga blog sitesi için hazırladığım arayüz ve kimlik tasarımı
+              projelerinden biri. Tasarım sürecinde modern ve minimalist bir kullanıcı deneyimi hedefledik. Web
+              sitesinin renk paletinden logo detaylarına kadar tüm görsel ve yapısal unsurlarını tek başıma
+              şekillendirdim.
+            </p>
+            <span class="portfolio-action-btn">
+              Detayları Gör
+              <svg viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </div>
+          <!-- Hidden Data for Modal Translation -->
+          <div class="portfolio-hidden-data visually-hidden">
+            <div class="data-category">Visual Identity Design</div>
+            <div class="data-title">The Yoga Project</div>
+            <div class="data-image notranslate">assets/images/yogaProject/anaSayfa.jpeg,
+              assets/images/yogaProject/post.jpeg, assets/images/yogaProject/aciklama.jpeg,
+              assets/images/yogaProject/aboutMe.jpeg, assets/images/yogaProject/mail.jpeg,
+              assets/images/yogaProject/ref.jpeg</div>
+            <div class="data-description">
+              <p>İlgi çekici bir esenlik (wellness) blogu oluşturmayı amaçlayan kavramsal bir içerik stratejisi ve
+                markalaşma projesi. Stres azaltma, topluluk oluşturma ve yeni başlayanlar için rehberlik gibi konulara
+                odaklanan bu platform; uyumlu bir dijital mesajlaşmanın, özenle seçilmiş konu başlıklarının ve
+                yapılandırılmış içerik sütunlarının, dijital çağda kişisel gelişimi ve ruh sağlığını nasıl etkili bir
+                şekilde destekleyebileceğini gösteriyor.</p>
+              <p><strong>Core Deliverables:</strong></p>
+              <ul>
+                <li>Developed a soft, calm visual identity using muted plum, lavender, and warm cream palettes.</li>
+                <li>Created modern, minimalist social media assets and logo variants.</li>
+                <li>Engineered layout designs focusing on high readability, generous white space, and clear focal
+                  points.</li>
+              </ul>
+              <p>This creative portfolio asset reflects Alara's commitment to structured details, aesthetics, and
+                thoughtful, clear layouts in design work.</p>
+            </div>
+            <div class="data-meta-role">Visual Designer</div>
+            <div class="data-client-label">Project Type</div>
+            <div class="data-meta-project">Personal Branding Concept</div>
+            <div class="data-meta-tools">Adobe Illustrator, Pinterest Curation, Graphic Design</div>
+            <div class="data-meta-category">Aesthetics & Calm Layouts</div>
+            <div class="data-goals">Visual Serenity, Color Psychology, Minimalist Design Guidelines</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resume Section (Timelines in folder structures) -->
+  <section id="resume">
+    <div class="container">
+      <div class="section-header-group">
+        <span class="section-tag">Kariyer Geçmişi</span>
+        <h2 class="section-title">Özgeçmiş & Yetenekler</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="resume-layout reveal">
+        <!-- Folder Lists (Left side) -->
+        <div class="resume-folders">
+          <!-- Education Folder -->
+          <div class="folder-container">
+            <span class="folder-tab" style="background-color: var(--secondary-accent); color: white;">Eğitim</span>
+            <div class="resume-folder-content">
+              <div class="timeline" id="education-timeline">
+                <!-- Edu 1 -->
+                <div class="timeline-item">
+                  <div class="timeline-node"></div>
+                  <div class="timeline-date">September 2025 - January 2026</div>
+                  <h4 class="timeline-name">Digital Marketing Minor</h4>
+                  <div class="timeline-org">Rotterdam Business School</div>
+                  <div class="timeline-details">
+                    <p>Google Analytics veri analizi, SEO yazarlığı, e-posta pazarlama optimizasyonları ve dijital
+                      reklam stratejileri.</p>
+                  </div>
+                </div>
+
+                <!-- Edu 2 -->
+                <div class="timeline-item">
+                  <div class="timeline-node"></div>
+                  <div class="timeline-date">September 2022 - Present</div>
+                  <h4 class="timeline-name">BSc International Business</h4>
+                  <div class="timeline-org">Hogeschool Rotterdam</div>
+                  <div class="timeline-details">
+                    <p><strong>Uzmanlık:</strong> Organisation & Change Management</p>
+                    <p>Organizasyonel dönüşüm, stratejik planlama ve uluslararası kurumsal yönetim eğitimi.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience Folder -->
+          <div class="folder-container">
+            <span class="folder-tab" style="background-color: var(--yellow-accent);">Deneyim</span>
+            <div class="resume-folder-content">
+              <div class="timeline" id="experience-timeline">
+                <!-- Item 1 -->
+                <div class="timeline-item">
+                  <div class="timeline-node"></div>
+                  <div class="timeline-date">February 2026 - Present</div>
+                  <h4 class="timeline-name">HR & Branding Intern</h4>
+                  <div class="timeline-org">Turkcell</div>
+                  <div class="timeline-details">
+                    <ul>
+                      <li>İşveren markası (employer branding) projeleri için Canva ve CapCut kullanarak sosyal medya
+                        görsel ve video içerikleri tasarlama.</li>
+                      <li>İç iletişim ve çalışan bağlılığı (employee engagement) faaliyetlerinin koordinasyonu.</li>
+                      <li>Marka bütünlüğünün kanallar arasında sürdürülmesi amacıyla ekipler arası iş birliği.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="timeline-item">
+                  <div class="timeline-node"></div>
+                  <div class="timeline-date">February 2025 - February 2026</div>
+                  <h4 class="timeline-name">Stock Filler</h4>
+                  <div class="timeline-org">Albert Heijn</div>
+                  <div class="timeline-details">
+                    <ul>
+                      <li>Dinamik mağaza ortamında müşteri ilişkilerinin ve ürün akışının sürdürülmesi.</li>
+                      <li>Zaman yönetimi ve takım koordinasyonu yetkinlikleri.</li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="timeline-item">
+                  <div class="timeline-node"></div>
+                  <div class="timeline-date">2022</div>
+                  <h4 class="timeline-name">Science Exhibitions Volunteer</h4>
+                  <div class="timeline-org">Volunteer Work</div>
+                  <div class="timeline-details">
+                    <ul>
+                      <li>İnteraktif bilim stantlarının kurulması ve ziyaretçilere sunumu.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar Details Dashboard (Right side) -->
+        <div class="resume-sidebar">
+          <!-- Languages Folder -->
+          <div class="folder-container">
+            <span class="folder-tab">Languages</span>
+            <div class="sidebar-folder-body">
+              <h3 class="sidebar-title">Dil Seviyeleri</h3>
+              <div class="lang-list" id="languages-container">
+                <!-- Türkçe -->
+                <div class="lang-item">
+                  <span class="lang-name">Türkçe (Native)</span>
+                  <div class="lang-stars">
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                  </div>
+                </div>
+                <!-- İngilizce -->
+                <div class="lang-item">
+                  <span class="lang-name">English (C2 Professional)</span>
+                  <div class="lang-stars">
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star"></span>
+                  </div>
+                </div>
+                <!-- Flemenkçe -->
+                <div class="lang-item">
+                  <span class="lang-name">Nederlands (A2.2 Basic)</span>
+                  <div class="lang-stars">
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star fill"></span>
+                    <span class="lang-star"></span>
+                    <span class="lang-star"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tools Folder -->
+          <div class="folder-container">
+            <span class="folder-tab">Toolkit</span>
+            <div class="sidebar-folder-body">
+              <h3 class="sidebar-title">Beceriler & Araçlar</h3>
+              <div class="badges-flex" id="toolkit-container">
+                <span class="retro-badge">Microsoft Office</span>
+                <span class="retro-badge">SPSS Tool</span>
+                <span class="retro-badge">Canva Visuals</span>
+                <span class="retro-badge">CapCut Editing</span>
+                <span class="retro-badge">Content Creation</span>
+                <span class="retro-badge">SEO Copywriting</span>
+                <span class="retro-badge">Google Analytics</span>
+                <span class="retro-badge">Email Marketing</span>
+                <span class="retro-badge">Communication</span>
+                <span class="retro-badge">Adaptability</span>
+                <span class="retro-badge">Collaboration</span>
+                <span class="retro-badge">Time Management</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resume Actions: Open and Download CV -->
+          <div class="resume-actions-group">
+            <a href="/alaraCV.pdf" target="_blank" class="btn btn-secondary">
+              <span>Open Resume</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <a href="/alaraCV.pdf" download="Alara_Soysan_CV.pdf" class="btn btn-primary">
+              <span>Download Resume</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certificates Section (Folder Grid layout like Slide 2) -->
+  <section id="certificates">
+    <div class="container">
+      <div class="section-header-group">
+        <span class="section-tag">Referanslar</span>
+        <h2 class="section-title">Sertifikalar</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="certs-grid reveal" id="certificates-container">
+        <!-- Cert 1 -->
+        <div class="folder-container cert-folder">
+          <span class="folder-tab" style="background-color: #ff7a59; color: white;">Hubspot</span>
+          <img class="cert-image" src="/assets/images/cert1.jpeg" alt="HubSpot Email Marketing Certification">
+          <div class="cert-issuer-box">
+            <div class="cert-issuer-icon" style="background-color: #ff7a59; color: white;">H</div>
+            <span class="cert-issuer-name">HubSpot Academy</span>
+          </div>
+          <h3 class="cert-title">E-posta Pazarlaması Sertifikası</h3>
+          <div class="cert-body-desc">
+            E-posta stratejisi oluşturma, segmentasyon, yüksek performanslı gönderimler ve optimizasyon süreçleri.
+            <div class="cert-id">Geçerlilik: Ocak 2026 - Şubat 2028</div>
+          </div>
+        </div>
+
+        <!-- Cert 2 -->
+        <div class="folder-container cert-folder">
+          <span class="folder-tab" style="background-color: #ff7a59; color: white;">Hubspot</span>
+          <img class="cert-image" src="/assets/images/cert2.jpeg" alt="HubSpot Digital Advertising Certification">
+          <div class="cert-issuer-box">
+            <div class="cert-issuer-icon" style="background-color: #ff7a59; color: white;">H</div>
+            <span class="cert-issuer-name">HubSpot Academy</span>
+          </div>
+          <h3 class="cert-title">Dijital Reklamcılık Sertifikası</h3>
+          <div class="cert-body-desc">
+            Dijital reklam kampanyaları, içerik stratejisi ve en iyi reklam yönetimi uygulamaları.
+            <div class="cert-id">Geçerlilik: Ocak 2026 - Şubat 2027</div>
+          </div>
+        </div>
+
+        <!-- Cert 3 -->
+        <div class="folder-container cert-folder">
+          <span class="folder-tab" style="background-color: #ff7a59; color: white;">Hubspot</span>
+          <img class="cert-image" src="/assets/images/cert3.jpeg" alt="HubSpot Social Media Certification">
+          <div class="cert-issuer-box">
+            <div class="cert-issuer-icon" style="background-color: #ff7a59; color: white;">H</div>
+            <span class="cert-issuer-name">HubSpot Academy</span>
+          </div>
+          <h3 class="cert-title">Sosyal Medya Sertifikası</h3>
+          <div class="cert-body-desc">
+            Inbound sosyal medya stratejisi, içerik yönetimi, sosyal dinleme ve ROI ölçümleme teknikleri.
+            <div class="cert-id">Geçerlilik: Aralık 2025 - Ocak 2028</div>
+          </div>
+        </div>
+
+        <!-- Cert 4 -->
+        <div class="folder-container cert-folder">
+          <span class="folder-tab" style="background-color: #ff7a59; color: white;">Hubspot</span>
+          <img class="cert-image" src="/assets/images/cert4.jpeg" alt="HubSpot Inbound Certification">
+          <div class="cert-issuer-box">
+            <div class="cert-issuer-icon" style="background-color: #ff7a59; color: white;">H</div>
+            <span class="cert-issuer-name">HubSpot Academy</span>
+          </div>
+          <h3 class="cert-title">Inbound Sertifikası</h3>
+          <div class="cert-body-desc">
+            Potansiyel müşterileri çekme, etkileşime geçme ve Inbound metodolojisine dayalı Flywheel iş modeli.
+            <div class="cert-id">Geçerlilik: Ocak 2026 - Şubat 2028</div>
+          </div>
+        </div>
+
+        <!-- Cert 5 -->
+        <div class="folder-container cert-folder">
+          <span class="folder-tab" style="background-color: #ff7a59; color: white;">Hubspot</span>
+          <img class="cert-image" src="/assets/images/cert5.jpeg" alt="HubSpot Digital Marketing Certification">
+          <div class="cert-issuer-box">
+            <div class="cert-issuer-icon" style="background-color: #ff7a59; color: white;">H</div>
+            <span class="cert-issuer-name">HubSpot Academy</span>
+          </div>
+          <h3 class="cert-title">Dijital Pazarlama Sertifikası</h3>
+          <div class="cert-body-desc">
+            SEO dostu içerik üretimi, web sitesi optimizasyonu ve bütünleşik dijital pazarlama stratejileri.
+            <div class="cert-id">Geçerlilik: Aralık 2025 - Haziran 2027</div>
+          </div>
+        </div>
+
+        <!-- Cert 6 -->
+        <div class="folder-container cert-folder">
+          <span class="folder-tab">Google</span>
+          <img class="cert-image" src="/assets/images/cert6.jpeg" alt="Google Analytics Certification">
+          <div class="cert-issuer-box">
+            <div class="cert-issuer-icon">G</div>
+            <span class="cert-issuer-name">Google Academy</span>
+          </div>
+          <h3 class="cert-title">Google Analytics Sertifikası</h3>
+          <div class="cert-body-desc">
+            Veri takibi, kanal performans ölçümleri, kullanıcı analizleri ve gösterge panoları kullanımı.
+            <div class="cert-id">Geçerlilik: Aralık 2025 - Aralık 2026</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section (Slide 5 style: Polaroid Pile + Retro Form) -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header-group">
+        <span class="section-tag">İletişime Geçin</span>
+        <h2 class="section-title">Bağlantı Kurun</h2>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="contact-layout reveal">
+        <!-- Left Side: Polaroid Collage & Contacts -->
+        <div class="contact-visual">
+          <div class="polaroid-pile">
+            <div class="polaroid-pile-item pile-1">
+              <img src="/assets/images/yogaProject/kapak.jpeg" alt="Yoga Project Cover">
+              <p>Mindfulness</p>
+            </div>
+            <div class="polaroid-pile-item pile-2">
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="Alara Soysan Profile">
+              <p>Konuşalım!</p>
+            </div>
+          </div>
+
+          <div class="contact-channels">
+            <a href="mailto:alarasoysan@gmail.com" class="contact-button-card">
+              <div class="contact-card-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                </svg>
+              </div>
+              <div class="contact-card-text">
+                <span class="contact-card-label">E-Posta Gönder</span>
+                <span class="contact-card-value">alarasoysan@gmail.com</span>
+              </div>
+            </a>
+            <div class="contact-button-card">
+              <div class="contact-card-icon">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                </svg>
+              </div>
+              <div class="contact-card-text">
+                <span class="contact-card-label">Konum</span>
+                <span class="contact-card-value">Rotterdam, Hollanda</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Retro Form Container -->
+        <div class="contact-form-container">
+          <h3 class="form-title">Merhaba Deyin!</h3>
+          <form id="contact-form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="form-name">Adınız Soyadınız *</label>
+                <input type="text" id="form-name" class="form-control" placeholder="Alara Soysan" required>
+              </div>
+              <div class="form-group">
+                <label for="form-email">E-Posta *</label>
+                <input type="email" id="form-email" class="form-control" placeholder="alarasoysan@gmail.com" required>
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="form-message">Mesajınız *</label>
+              <textarea id="form-message" class="form-control" placeholder="Mesajınızı buraya yazabilirsiniz..."
+                required></textarea>
+            </div>
+
+            <button type="submit" class="form-submit-btn whatsapp-btn">
+              WhatsApp'tan Ulaşın
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12.031 0C5.385 0 0 5.387 0 12.034c0 2.12.552 4.184 1.597 6.002L.018 24l6.113-1.602c1.764.958 3.754 1.464 5.898 1.464h.004c6.645 0 12.03-5.387 12.03-12.034C24.063 5.387 18.678 0 12.031 0zm0 21.848h-.002c-1.787 0-3.535-.48-5.069-1.39l-.364-.216-3.766.988.995-3.67-.236-.376A9.972 9.972 0 0 1 2.015 12.03c0-5.525 4.496-10.02 10.016-10.02 5.518 0 10.014 4.495 10.014 10.02 0 5.526-4.496 10.018-10.014 10.018zm5.503-7.518c-.302-.15-1.787-.88-2.064-.98-.276-.1-.477-.15-.678.15-.202.302-.78 1.006-.957 1.206-.176.2-.352.226-.653.076-2.18-.844-3.585-2.034-4.542-3.654-.177-.302.2-.284.496-.874.1-.2.05-.376-.025-.526-.076-.15-.678-1.636-.93-2.242-.244-.59-.492-.51-.678-.52h-.578c-.201 0-.527.075-.803.376-.277.3-1.055 1.03-1.055 2.513s1.08 2.915 1.23 3.115c.15.2 2.124 3.242 5.143 4.544 1.94 1.207 3.38 1.207 4.133 1.056.88-.15 2.813-1.15 3.215-2.26.402-1.11.402-2.066.277-2.266-.126-.2-.453-.302-.754-.452z" />
+              </svg>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Project Detail Overlay Modal -->
+  <div class="modal-overlay" id="portfolio-modal">
+    <div class="modal-content">
+      <button class="modal-close-btn" id="modal-close" aria-label="Kapat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="modal-body">
+        <div class="modal-header">
+          <span class="modal-category">Kategori</span>
+          <h3 class="modal-title">Proje Başlığı</h3>
+        </div>
+        <div class="modal-carousel-container" id="modal-carousel-container">
+          <div class="modal-carousel-track" id="carousel-track">
+            <img class="modal-hero-img" src="" alt="Project campaign illustration">
+          </div>
+          <button class="carousel-nav-btn prev-btn" id="carousel-prev" aria-label="Önceki resim">&#10094;</button>
+          <button class="carousel-nav-btn next-btn" id="carousel-next" aria-label="Sonraki resim">&#10095;</button>
+          <div class="carousel-indicators" id="carousel-indicators"></div>
+        </div>
+
+        <div class="modal-description-section">
+          <!-- Text Body -->
+          <div class="modal-desc-text">
+            Proje açıklaması yükleniyor...
+          </div>
+
+          <!-- Metadata Sidebar -->
+          <div class="modal-meta-sidebar">
+            <div class="modal-meta-box">
+              <h5>Rol / Kapsam</h5>
+              <p class="meta-role">-</p>
+            </div>
+            <div class="modal-meta-box">
+              <h5 class="client-label">Müşteri / Grup</h5>
+              <p class="meta-client">-</p>
+            </div>
+            <div class="modal-meta-box">
+              <h5>Temel Araçlar</h5>
+              <p class="meta-tools">-</p>
+            </div>
+            <div class="modal-meta-box">
+              <h5>Odak Noktası</h5>
+              <p class="meta-category">-</p>
+            </div>
+            <div>
+              <h5
+                style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 800;">
+                Kazanımlar</h5>
+              <div class="modal-goal-badges">
+                <!-- Badges dynamically injected -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer>
+    <div class="container footer-container">
+      <a href="#hero" class="footer-logo">ALARA <span>SOYSAN.</span></a>
+      <p class="footer-copy">© 2026 Alara Soysan. Vintage Marketing Concept.</p>
+    </div>
+  </footer>
+
+  <!-- Javascript Controller -->
+  <script type="module" src="/src/main.ts"></script>
+
+  <!-- Google Translate Hidden Widget -->
+  <div id="google_translate_element" style="display:none;"></div>
+
+  <!-- Google Translate Init -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'tr',
+        includedLanguages: 'en,tr,nl',
+        autoDisplay: false,
+        gaTrack: false
+      }, 'google_translate_element');
+
+      // Aggressively hide the banner whenever it appears
+      hideBanner();
+    }
+
+    function hideBanner() {
+      // Immediately attempt hide
+      const banner = document.querySelector('.goog-te-banner-frame');
+      if (banner) banner.style.setProperty('display', 'none', 'important');
+      document.body.style.setProperty('top', '0px', 'important');
+
+      // Watch for future DOM changes (Google Translate inserts the bar async)
+      const observer = new MutationObserver(function () {
+        const bars = document.querySelectorAll(
+          '.goog-te-banner-frame, .skiptranslate.goog-te-banner-frame, [class*="goog-te-banner"]'
+        );
+        bars.forEach(el => el.style.setProperty('display', 'none', 'important'));
+        document.body.style.setProperty('top', '0px', 'important');
+        document.body.style.setProperty('margin-top', '0px', 'important');
+      });
+      observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+    }
+
+    const langLabels = {
+      en: { en: "English", tr: "Turkish", nl: "Dutch" },
+      tr: { en: "İngilizce", tr: "Türkçe", nl: "Flemenkçe" },
+      nl: { en: "Engels", tr: "Turks", nl: "Nederlands" }
+    };
+
+    const flagUrls = {
+      en: "https://flagcdn.com/w40/gb.png",
+      tr: "https://flagcdn.com/w40/tr.png",
+      nl: "https://flagcdn.com/w40/nl.png"
+    };
+
+    // Set googtrans cookie on all relevant domains/paths
+    function setGoogTransCookie(value) {
+      var host = window.location.hostname;
+      document.cookie = 'googtrans=' + value + '; path=/';
+      if (host && host !== 'localhost' && host !== '127.0.0.1') {
+        document.cookie = 'googtrans=' + value + '; path=/; domain=' + host;
+        document.cookie = 'googtrans=' + value + '; path=/; domain=.' + host;
+      }
+    }
+
+    // Delete/expire the googtrans cookie to restore original language
+    function clearGoogTransCookie() {
+      var host = window.location.hostname;
+      var exp = '; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+      document.cookie = 'googtrans=' + exp;
+      if (host && host !== 'localhost' && host !== '127.0.0.1') {
+        document.cookie = 'googtrans=' + exp + '; domain=' + host;
+        document.cookie = 'googtrans=' + exp + '; domain=.' + host;
+      }
+    }
+
+    // Read active language from googtrans cookie
+    function getCurrentLangFromCookie() {
+      var c = document.cookie.split(';').find(function(x) { return x.trim().startsWith('googtrans='); });
+      if (!c) return 'tr';
+      var val = c.trim().split('/').pop().trim();
+      return (val === 'en' || val === 'nl') ? val : 'tr';
+    }
+
+    function toggleLangDropdown() {
+      document.getElementById('lang-dropdown').classList.toggle('open');
+    }
+
+    function setLang(langCode, labelText) {
+      // Close dropdown
+      document.getElementById('lang-dropdown').classList.remove('open');
+
+      // Close mobile menu if open
+      var navMenu = document.getElementById('nav-menu');
+      var hamburger = document.getElementById('hamburger');
+      if (navMenu && navMenu.classList.contains('open')) {
+        navMenu.classList.remove('open');
+        if (hamburger) {
+          hamburger.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+        }
+      }
+
+      // Already on this language — do nothing
+      if (langCode === getCurrentLangFromCookie()) return;
+
+      if (langCode === 'tr') {
+        // Restore original Turkish: clear the translation cookie and reload
+        clearGoogTransCookie();
+      } else {
+        // EN or NL: set cookie; Google Translate will auto-apply it on the next load
+        setGoogTransCookie('/tr/' + langCode);
+      }
+
+      window.location.reload();
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (e) {
+      const selector = document.getElementById('lang-selector');
+      if (selector && !selector.contains(e.target)) {
+        document.getElementById('lang-dropdown').classList.remove('open');
+      }
+    });
+
+    // On page load: sync button label, flag, and dropdown labels from stored cookie
+    (function syncLangButton() {
+      var activeLang = getCurrentLangFromCookie();
+      var activeLabel = activeLang.toUpperCase();
+
+      document.getElementById('lang-current').textContent = activeLabel;
+      document.getElementById('lang-btn-flag').src = flagUrls[activeLang];
+
+      ['lang-en', 'lang-tr', 'lang-nl'].forEach(function(id) {
+        document.getElementById(id).classList.remove('active');
+      });
+      document.getElementById('lang-' + activeLang).classList.add('active');
+
+      var labels = langLabels[activeLang] || langLabels.tr;
+      document.getElementById('label-en').textContent = labels.en;
+      document.getElementById('label-tr').textContent = labels.tr;
+      document.getElementById('label-nl').textContent = labels.nl;
+    })();
+
+    function handleResponsiveLangSelector() {
+      const langSelector = document.getElementById('lang-selector');
+      const navMenu = document.getElementById('nav-menu');
+      const navActions = document.querySelector('.nav-actions');
+
+      if (!langSelector || !navMenu || !navActions) return;
+
+      if (window.innerWidth <= 768) {
+        let mobileLi = document.getElementById('mobile-lang-wrapper');
+        if (!mobileLi) {
+          mobileLi = document.createElement('li');
+          mobileLi.id = 'mobile-lang-wrapper';
+        }
+        if (mobileLi.firstElementChild !== langSelector) {
+          mobileLi.appendChild(langSelector);
+        }
+        if (navMenu.firstElementChild !== mobileLi) {
+          navMenu.insertBefore(mobileLi, navMenu.firstChild);
+        }
+      } else {
+        const mobileLi = document.getElementById('mobile-lang-wrapper');
+        if (langSelector.parentElement !== navActions) {
+          navActions.appendChild(langSelector);
+        }
+        if (mobileLi && mobileLi.parentNode) {
+          mobileLi.parentNode.removeChild(mobileLi);
+        }
+      }
+    }
+
+    window.addEventListener('resize', handleResponsiveLangSelector);
+    document.addEventListener('DOMContentLoaded', handleResponsiveLangSelector);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', handleResponsiveLangSelector);
+    } else {
+      handleResponsiveLangSelector();
+    }
+  </script>
+  <script type="text/javascript"
+    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+
+
+</html>

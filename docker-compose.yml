@@ -1,0 +1,72 @@
+version: '3.8'
+
+# §Faz 8 topology: nginx (web) + php-fpm (Laravel API) + MySQL + Redis +
+# certbot, replacing the old nginx + single Node/Express container.
+# web and php share ONE origin (see nginx.conf) — same-origin is required
+# for the auth_token cookie's sameSite=strict flag to keep working.
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./assets/uploads:/var/www/uploads:ro
+      - certbot-conf:/etc/letsencrypt:ro
+      - certbot-www:/var/www/certbot:ro
+    depends_on:
+      - php
+    restart: always
+
+  php:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    # Port 9000 is not exported to the host — only nginx (the "web"
+    # service) talks to it, over the compose network.
+    env_file:
+      - ./api/.env
+    volumes:
+      - ./assets/uploads:/var/www/uploads
+    depends_on:
+      - mysql
+      - redis
+    restart: always
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE:-webas}
+      - MYSQL_USER=${DB_USERNAME:-webas}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: always
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis-data:/data
+    restart: always
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - certbot-conf:/etc/letsencrypt
+      - certbot-www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew --webroot -w /var/www/certbot; sleep 12h & wait $${!}; done;'"
+
+volumes:
+  mysql-data:
+  redis-data:
+  certbot-conf:
+  certbot-www:
+
+# ./assets/uploads is a plain host bind-mount (not a named volume above),
+# same as the legacy setup — both web (read-only serving) and php
+# (writes uploads) mount it; see nginx.conf's /assets/uploads/ location
+# and api's public_uploads disk (config/filesystems.php, api/SETUP.md).

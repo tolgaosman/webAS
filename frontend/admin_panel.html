@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.gstatic.com https://www.google.com https://www.recaptcha.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; frame-src 'self' https://www.google.com https://www.recaptcha.net; connect-src 'self' http://localhost:4000 https://www.google.com;">
+  <title>Alara Soysan | Portfolio Admin Panel</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/browserLogo.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/browserLogo.png">
+  <link rel="shortcut icon" href="/browserLogo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/browserLogo.png">
+
+  <!-- Admin Panel Stylesheet -->
+  <link rel="stylesheet" href="/admin.css">
+</head>
+
+<body>
+
+  <!-- Background Pattern -->
+  <div class="admin-bg-pattern"></div>
+
+  <!-- Header -->
+  <header class="admin-header">
+    <div class="admin-header-container">
+      <div class="admin-brand" style="display: flex; align-items: center; gap: 1rem;">
+        <img src="/siteLogo.png" alt="Alara Soysan Logo" class="nav-logo-img" height="60"
+          style="max-height: 60px; width: auto; display: block;">
+        <span class="admin-tag">Admin Panel</span>
+      </div>
+      <div class="admin-nav-actions">
+        <button class="btn btn-secondary logout-btn" id="logout-btn">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Login Card (Security Check) -->
+  <div class="login-wrapper" id="login-wrapper">
+    <div class="folder-container login-card">
+      <span class="folder-tab">Security Entry</span>
+      
+      <!-- Login Body -->
+      <div class="login-body" id="login-form-body">
+        <h2>Admin Login</h2>
+        <p class="login-subtitle">Please enter your administrator email and password.</p>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="admin-email">Email</label>
+            <input type="email" id="admin-email" placeholder="admin@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="admin-password">Password</label>
+            <input type="password" id="admin-password" placeholder="••••••••" required>
+          </div>
+          <div class="forgot-password-container">
+            <a href="#" id="forgot-password-link" class="forgot-password-link">Şifremi Unuttum</a>
+          </div>
+          <button type="submit" class="btn btn-primary full-width">Login</button>
+          <p class="login-tip">Your administrator credentials are active.</p>
+        </form>
+      </div>
+
+      <!-- Forgot Password Body -->
+      <div class="login-body hidden" id="reset-password-body">
+        <h2>Reset Password</h2>
+        <p class="login-subtitle">Enter your administrator email to receive a password reset link.</p>
+        <form id="reset-password-form">
+          <div class="form-group">
+            <label for="reset-email">Email</label>
+            <input type="email" id="reset-email" placeholder="admin@example.com" required>
+          </div>
+          <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
+            <button type="button" id="btn-back-to-login" class="btn btn-secondary" style="flex: 1;">Back</button>
+            <button type="submit" class="btn btn-primary" style="flex: 1.5;">Send Reset Link</button>
+          </div>
+          <p class="login-tip">Check your inbox for further instructions.</p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Main Admin Interface -->
+  <main class="admin-main container hidden" id="admin-main">
+    <!-- Folder-Tabbed Container -->
+    <div class="admin-folder-tabs">
+      <button class="tab-btn active" data-tab="tab-personal">Personal Details</button>
+      <button class="tab-btn" data-tab="tab-skills">Core Skills</button>
+      <button class="tab-btn" data-tab="tab-projects">Project Management</button>
+      <button class="tab-btn" data-tab="tab-resume">Resume & Certificates</button>
+    </div>
+
+    <!-- Active Tab Folder Body -->
+    <div class="folder-container admin-body-folder">
+      
+      <!-- Tab 1: Personal Details -->
+      <section class="tab-content active" id="tab-personal">
+        <form id="personal-form" class="admin-form">
+          <div class="form-grid">
+            <!-- Profile Image Upload with Polaroid Preview -->
+            <div class="profile-upload-group">
+              <div class="admin-polaroid-preview">
+                <div class="admin-polaroid-img-box">
+                  <img id="p-img-preview" src="/assets/images/ALARA.jpeg" alt="Profile Preview">
+                </div>
+                <span class="admin-polaroid-label">Profile Pic</span>
+              </div>
+              <div class="profile-upload-fields">
+                <div class="form-group">
+                  <label for="p-name">Full Name</label>
+                  <input type="text" id="p-name" required>
+                </div>
+                <div class="form-group">
+                  <label for="p-img-path">Profile Image</label>
+                  <div class="file-upload-container">
+                    <input type="text" id="p-img-path" class="file-upload-display" placeholder="assets/images/ALARA.jpeg">
+                    <label class="btn btn-secondary custom-file-upload-btn">
+                      Browse...
+                      <input type="file" id="p-img-file" accept="image/*">
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="p-email">Email Address</label>
+              <input type="email" id="p-email" required>
+            </div>
+            <div class="form-group">
+              <label for="p-phone">Phone Number</label>
+              <input type="text" id="p-phone" required>
+            </div>
+            <div class="form-group">
+              <label for="p-instagram">Instagram Link</label>
+              <input type="url" id="p-instagram">
+            </div>
+            <div class="form-group">
+              <label for="p-linkedin">LinkedIn Link</label>
+              <input type="url" id="p-linkedin">
+            </div>
+            <div class="form-group">
+              <label for="p-cv">Resume File (PDF Upload)</label>
+              <div class="file-upload-container">
+                <input type="text" id="p-cv" class="file-upload-display" placeholder="assets/docs/AlaraSoysan_CV.pdf">
+                <label class="btn btn-secondary custom-file-upload-btn">
+                  Browse...
+                  <input type="file" id="p-cv-file" accept=".pdf">
+                </label>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Update Details</button>
+        </form>
+      </section>
+
+      <!-- Tab 2: Core Skills -->
+      <section class="tab-content" id="tab-skills">
+        <div class="admin-info-box">
+          <p><strong>Skill Layout:</strong> Added skills are listed in 5 columns under "Core Skills" on the main page. The 6th element and beyond will wrap to the next row.</p>
+        </div>
+        
+        <div class="skills-manager">
+          <form id="add-skill-form" class="inline-form skill-inline-form">
+            <input type="hidden" id="edit-skill-index" value="">
+            <div class="form-group">
+              <label for="new-skill-title">Skill Title</label>
+              <input type="text" id="new-skill-title" placeholder="e.g. Digital Content Creation" required>
+            </div>
+            <div class="form-group">
+              <label for="new-skill-desc">Skill Description</label>
+              <input type="text" id="new-skill-desc" placeholder="e.g. Social media and video design" required>
+            </div>
+            <div class="skill-form-actions">
+              <button type="submit" class="btn btn-primary" id="skill-submit-btn">Add</button>
+              <button type="button" class="btn btn-secondary hidden" id="skill-cancel-btn">Cancel</button>
+            </div>
+          </form>
+
+          <div class="list-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Skill Title</th>
+                  <th>Skill Description</th>
+                  <th width="160">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="skills-list-body">
+                <!-- Dynamic Content -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 3: Projects -->
+      <section class="tab-content" id="tab-projects">
+        <div class="projects-manager">
+          <div class="manager-header">
+            <h3>Project List</h3>
+            <button class="btn btn-primary" id="btn-new-project">Add New Project</button>
+          </div>
+
+          <div class="list-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Cover</th>
+                  <th>Project Title</th>
+                  <th>Category</th>
+                  <th>Detail Images</th>
+                  <th width="160">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="projects-list-body">
+                <!-- Dynamic Content -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Project Editor Drawer / Modal -->
+        <div class="admin-editor-overlay hidden" id="project-editor-modal">
+          <div class="folder-container editor-card">
+            <span class="folder-tab" id="editor-title-label">Edit Project</span>
+            <div class="editor-header">
+              <h2 id="project-editor-title">Add/Edit Project</h2>
+              <button class="btn-close" id="project-editor-close">×</button>
+            </div>
+            <div class="editor-body">
+              <form id="project-form">
+                <input type="hidden" id="proj-id">
+                
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="proj-title">Project Title</label>
+                    <input type="text" id="proj-title" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="proj-category">Category (Will Show on Card)</label>
+                    <input type="text" id="proj-category" required placeholder="e.g. SOCIAL MEDIA STRATEGY">
+                  </div>
+                  <div class="form-group col-span-2">
+                    <label for="proj-thumbnail">Thumbnail (Upload Image)</label>
+                    <div class="file-upload-container">
+                      <input type="text" id="proj-thumbnail" class="file-upload-display" placeholder="assets/images/project1.jpg">
+                      <div class="path-prefix-row">
+                        <span class="path-prefix-label">Klasör:</span>
+                        <input type="text" id="proj-thumbnail-prefix" class="path-prefix-input" value="assets/images/" placeholder="assets/images/">
+                        <label class="btn btn-secondary custom-file-upload-btn">
+                          Browse...
+                          <input type="file" id="proj-thumbnail-file" accept="image/*">
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-span-2">
+                    <label for="proj-images">Carousel Images (Multiple Selection)</label>
+                    <div class="file-upload-container">
+                      <input type="text" id="proj-images" class="file-upload-display" placeholder="Comma separated image paths">
+                      <div class="path-prefix-row">
+                        <span class="path-prefix-label">Klasör:</span>
+                        <input type="text" id="proj-images-prefix" class="path-prefix-input" value="assets/images/" placeholder="assets/images/">
+                        <label class="btn btn-secondary custom-file-upload-btn">
+                          Browse...
+                          <input type="file" id="proj-images-file" accept="image/*" multiple>
+                        </label>
+                        <button type="button" class="btn btn-secondary" id="btn-clear-proj-images">Clear</button>
+                      </div>
+                    </div>
+                    <!-- Thumbnail preview strip -->
+                    <div class="carousel-thumb-strip" id="proj-images-thumbs"></div>
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 1rem;">
+                  <label for="proj-description">Project Description (Supports HTML)</label>
+                  <textarea id="proj-description" rows="4" required></textarea>
+                </div>
+
+                <h3 class="editor-section-title">Detail Card Widget Info (Right Panel)</h3>
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="proj-meta-role">Role / Scope</label>
+                    <input type="text" id="proj-meta-role" placeholder="e.g. Branding & Content Creator">
+                  </div>
+                  <div class="form-group">
+                    <label for="proj-meta-client-label">Client / Group Label</label>
+                    <input type="text" id="proj-meta-client-label" placeholder="e.g. CLIENT / GROUP">
+                  </div>
+                  <div class="form-group">
+                    <label for="proj-meta-client">Client / Group Value</label>
+                    <input type="text" id="proj-meta-client" placeholder="e.g. de Schouw (Team Iron Man 4)">
+                  </div>
+                  <div class="form-group">
+                    <label for="proj-meta-tools">Essential Tools</label>
+                    <input type="text" id="proj-meta-tools" placeholder="e.g. Canva, Photoshop, CapCut">
+                  </div>
+                  <div class="form-group">
+                    <label for="proj-meta-category">Focus / Category</label>
+                    <input type="text" id="proj-meta-category" placeholder="e.g. Digital Marketing & Branding">
+                  </div>
+                  <div class="form-group">
+                    <label for="proj-goals">UNSDGs (e.g. UNSDG 11, UNSDG 12)</label>
+                    <input type="text" id="proj-goals" placeholder="e.g. UNSDG 11, UNSDG 12">
+                  </div>
+                </div>
+
+                <h3 class="editor-section-title" style="margin-top: 1.5rem;">Key Achievements (Bullet Points)</h3>
+                <div class="form-group">
+                  <label for="proj-achievements">Write one point per line</label>
+                  <textarea id="proj-achievements" rows="4" placeholder="Visual design system developed with Canva.&#10;Social media engagement increased."></textarea>
+                </div>
+
+                <div class="editor-actions">
+                  <button type="button" class="btn btn-secondary" id="btn-cancel-project">Cancel</button>
+                  <button type="submit" class="btn btn-primary">Save Project</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 4: Resume & Certificates -->
+      <section class="tab-content" id="tab-resume">
+        <div class="resume-manager-tabs">
+          <button class="sub-tab-btn active" data-subtab="sub-education">Education</button>
+          <button class="sub-tab-btn" data-subtab="sub-experience">Experience</button>
+          <button class="sub-tab-btn" data-subtab="sub-languages">Languages</button>
+          <button class="sub-tab-btn" data-subtab="sub-toolkit">Toolkit Skills</button>
+          <button class="sub-tab-btn" data-subtab="sub-certs">Certificates</button>
+        </div>
+
+        <!-- Sub-tab: Education -->
+        <div class="sub-tab-content active" id="sub-education">
+          <form id="education-form" class="inline-form skill-inline-form">
+            <input type="hidden" id="edit-edu-index" value="">
+            <div class="form-group">
+              <label for="edu-date">Date Range</label>
+              <input type="text" id="edu-date" placeholder="e.g. 2021 - Present" required>
+            </div>
+            <div class="form-group">
+              <label for="edu-school">School / Institution</label>
+              <input type="text" id="edu-school" placeholder="e.g. Hogeschool Rotterdam" required>
+            </div>
+            <div class="form-group">
+              <label for="edu-degree">Degree / Major</label>
+              <input type="text" id="edu-degree" placeholder="e.g. International Business" required>
+            </div>
+            <div class="form-group">
+              <label for="edu-desc">Short Description</label>
+              <input type="text" id="edu-desc" placeholder="e.g. Focus: Digital Marketing" required>
+            </div>
+            <div class="skill-form-actions">
+              <button type="submit" class="btn btn-primary" id="edu-submit-btn">Add</button>
+              <button type="button" class="btn btn-secondary hidden" id="edu-cancel-btn">Cancel</button>
+            </div>
+          </form>
+
+          <div class="list-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>School</th>
+                  <th>Degree</th>
+                  <th>Description</th>
+                  <th width="160">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="education-list-body">
+                <!-- Dynamic Content -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sub-tab: Experience -->
+        <div class="sub-tab-content" id="sub-experience">
+          <div class="manager-header">
+            <h3>Work Experiences</h3>
+            <button class="btn btn-primary" id="btn-new-exp">Add New Experience</button>
+          </div>
+
+          <div class="list-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Role</th>
+                  <th>Company</th>
+                  <th width="160">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="experience-list-body">
+                <!-- Dynamic Content -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Experience Modal Drawer -->
+          <div class="admin-editor-overlay hidden" id="exp-editor-modal">
+            <div class="folder-container editor-card" style="max-width: 600px;">
+              <span class="folder-tab">Experience Details</span>
+              <div class="editor-header">
+                <h2>Add/Edit Work Experience</h2>
+                <button class="btn-close" id="exp-editor-close">×</button>
+              </div>
+              <div class="editor-body">
+                <form id="exp-form">
+                  <input type="hidden" id="exp-id">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="exp-date">Date Range</label>
+                      <input type="text" id="exp-date" required placeholder="e.g. FEBRUARY 2026 - PRESENT">
+                    </div>
+                    <div class="form-group">
+                      <label for="exp-role">Role</label>
+                      <input type="text" id="exp-role" required placeholder="e.g. HR & Branding Intern">
+                    </div>
+                    <div class="form-group">
+                      <label for="exp-company">Company / Institution</label>
+                      <input type="text" id="exp-company" required placeholder="e.g. Turkcell">
+                    </div>
+                  </div>
+
+                  <div class="form-group" style="margin-top: 1rem;">
+                    <label for="exp-accomplishments">Accomplishments & Responsibilities (One item per line)</label>
+                    <textarea id="exp-accomplishments" rows="5" required placeholder="Social media video designs created.&#10;Visual communication processes managed."></textarea>
+                  </div>
+
+                  <div class="editor-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-exp">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sub-tab: Languages -->
+        <div class="sub-tab-content" id="sub-languages">
+          <form id="language-form" class="inline-form skill-inline-form">
+            <input type="hidden" id="edit-lang-index" value="">
+            <div class="form-group">
+              <label for="lang-name">Language & Level</label>
+              <input type="text" id="lang-name" placeholder="e.g. English (C2 Professional)" required>
+            </div>
+            <div class="form-group">
+              <label for="lang-stars">Star Level (1 - 5)</label>
+              <input type="number" id="lang-stars" min="1" max="5" value="5" required>
+            </div>
+            <div class="skill-form-actions">
+              <button type="submit" class="btn btn-primary" id="lang-submit-btn">Add</button>
+              <button type="button" class="btn btn-secondary hidden" id="lang-cancel-btn">Cancel</button>
+            </div>
+          </form>
+
+          <div class="list-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Language & Level</th>
+                  <th>Star Rating</th>
+                  <th width="160">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="languages-list-body">
+                <!-- Dynamic Content -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sub-tab: Toolkit -->
+        <div class="sub-tab-content" id="sub-toolkit">
+          <div class="admin-info-box">
+            <p>Add or remove toolkit skill badges.</p>
+          </div>
+          <form id="toolkit-form" class="inline-form skill-inline-form">
+            <div class="form-group">
+              <label for="new-badge">Add New Badge</label>
+              <input type="text" id="new-badge" placeholder="e.g. Microsoft Office" required>
+            </div>
+            <div class="skill-form-actions">
+              <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+          </form>
+
+          <div class="badges-manager-flex" id="toolkit-badges-list">
+            <!-- Dynamic Content -->
+          </div>
+        </div>
+
+        <!-- Sub-tab: Certificates -->
+        <div class="sub-tab-content" id="sub-certs">
+          <div class="manager-header">
+            <h3>Certificates</h3>
+            <button class="btn btn-primary" id="btn-new-cert">Add New Certificate</button>
+          </div>
+
+          <div class="list-table-wrapper">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Issuer</th>
+                  <th>Validity</th>
+                  <th width="160">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="certs-list-body">
+                <!-- Dynamic Content -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Certificate Modal Drawer -->
+          <div class="admin-editor-overlay hidden" id="cert-editor-modal">
+            <div class="folder-container editor-card" style="max-width: 600px;">
+              <span class="folder-tab">Certificate Details</span>
+              <div class="editor-header">
+                <h2>Add/Edit Certificate</h2>
+                <button class="btn-close" id="cert-editor-close">×</button>
+              </div>
+              <div class="editor-body">
+                <form id="cert-form">
+                  <input type="hidden" id="cert-id">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="cert-title">Certificate Title</label>
+                      <input type="text" id="cert-title" required placeholder="e.g. Email Marketing Certification">
+                    </div>
+                    <div class="form-group">
+                      <label for="cert-issuer">Issuing Institution</label>
+                      <input type="text" id="cert-issuer" required placeholder="e.g. HubSpot Academy">
+                    </div>
+                    <div class="form-group">
+                      <label for="cert-issuer-letter">Initial / Logo Text</label>
+                      <input type="text" id="cert-issuer-letter" maxlength="1" required placeholder="e.g. H">
+                    </div>
+                    <div class="form-group col-span-2">
+                      <label for="cert-image">Upload Certificate Image</label>
+                      <div class="file-upload-container">
+                        <input type="text" id="cert-image" class="file-upload-display" placeholder="assets/images/cert1.jpeg">
+                        <label class="btn btn-secondary custom-file-upload-btn">
+                          Browse...
+                          <input type="file" id="cert-image-file" accept="image/*">
+                        </label>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="cert-validity">Validity Date</label>
+                      <input type="text" id="cert-validity" required placeholder="e.g. Validity: Jan 2026 - Feb 2028">
+                    </div>
+                  </div>
+
+                  <div class="form-group" style="margin-top: 1rem;">
+                    <label for="cert-desc">Certificate Description</label>
+                    <textarea id="cert-desc" rows="3" required placeholder="Email strategy creation, segmentation, and optimization processes."></textarea>
+                  </div>
+
+                  <div class="editor-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel-cert">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Admin Panel Scripts -->
+  <script type="module" src="/src/admin/main.ts"></script>
+</body>
+
+</html>

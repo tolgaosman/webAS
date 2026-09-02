@@ -1,9 +1,13 @@
 # Runtime data — never overwrite live admin edits
 portfolio-data.json
 
-# Uploaded files (large binaries, generated at runtime)
-assets/uploads/
+# Uploaded files (large binaries, generated at runtime, bind-mounted by
+# docker-compose.yml's "uploads" volume — see migration plan §Faz 8)
+/uploads/
 
 # Node
 node_modules/
 npm-debug.log*
+
+# docker-compose.yml's ${DB_...} interpolation (see .env.example)
+/.env

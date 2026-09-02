@@ -1,0 +1,16 @@
+.git
+.claude
+*.md
+.env
+.env.*
+docker-compose.yml
+nginx.conf
+
+# Not needed to build the frontend image (context is repo root only
+# because frontend/ pulls in package.json + source via explicit COPYs
+# in Dockerfile) — excluding these keeps the build context small.
+legacy
+api
+node_modules
+frontend/node_modules
+frontend/dist
