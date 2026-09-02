@@ -16,15 +16,19 @@ use App\Models\Toolkit;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Replaces the entire portfolio dataset from a legacy-shaped array
- * (the same shape PortfolioSerializer produces / UpdatePortfolioRequest
- * validates). Mirrors the legacy PUT /api/portfolio semantics — "replace
- * the whole object" — but does it inside one DB transaction so a failed
- * write can no longer leave the site half-updated the way the old
- * fs.writeFileSync(JSON) approach could (see migration plan §Faz 4).
+ * Replaces the entire portfolio dataset from a DB-ready nested array —
+ * i.e. already localized to {tr,en,nl} shape for every translatable
+ * field (see App\Casts\Translatable, which also accepts a plain string
+ * as shorthand for {tr: $value, en:'', nl:''}), and with `images`
+ * already split into a plain array of paths (not the legacy
+ * comma-separated string).
  *
- * Used by both PortfolioController::update() and the one-off
- * `portfolio:import` artisan command (see §Faz 7).
+ * NOT an HTTP handler (§Faz 3 replaced the old whole-object
+ * PUT /api/portfolio with per-resource REST — see
+ * app/Http/Controllers/Admin/*) — this class only exists as the shared
+ * "replace everything" primitive for the one-off `portfolio:import`
+ * command (§Faz 4) and, potentially, future seeders. Wrapped in one DB
+ * transaction so a failed import can't leave the site half-written.
  */
 class PortfolioWriter
 {
@@ -73,7 +77,7 @@ class PortfolioWriter
         Project::query()->delete();
         foreach (array_values($projects) as $i => $p) {
             $proj = Project::query()->create([
-                'slug' => $p['id'],
+                'slug' => $p['slug'] ?? $p['id'] ?? ('project-' . ($i + 1)),
                 'title' => $p['title'],
                 'category' => $p['category'],
                 'thumbnail' => $p['thumbnail'] ?? '',
@@ -87,9 +91,11 @@ class PortfolioWriter
                 'position' => $i,
             ]);
 
-            // Legacy images field is a single comma-separated string.
-            $paths = array_values(array_filter(array_map('trim', explode(',', $p['images'] ?? ''))));
-            foreach ($paths as $j => $path) {
+            // `images` must already be a plain array of paths by this point
+            // — see this class's docblock. The legacy comma-separated
+            // string is split by ImportPortfolioData before it ever
+            // reaches here.
+            foreach (array_values($p['images'] ?? []) as $j => $path) {
                 ProjectImage::query()->create([
                     'project_id' => $proj->id,
                     'path' => $path,
@@ -126,7 +132,7 @@ class PortfolioWriter
         Experience::query()->delete();
         foreach (array_values($rows) as $i => $e) {
             $exp = Experience::query()->create([
-                'slug' => $e['id'],
+                'slug' => $e['slug'] ?? $e['id'] ?? ('exp-' . ($i + 1)),
                 'date' => $e['date'],
                 'role' => $e['role'],
                 'company' => $e['company'],
@@ -171,7 +177,7 @@ class PortfolioWriter
         Certificate::query()->delete();
         foreach (array_values($rows) as $i => $c) {
             Certificate::query()->create([
-                'slug' => $c['id'],
+                'slug' => $c['slug'] ?? $c['id'] ?? ('cert-' . ($i + 1)),
                 'title' => $c['title'],
                 'issuer' => $c['issuer'],
                 'letter' => $c['letter'],

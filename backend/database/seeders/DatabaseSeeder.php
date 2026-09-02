@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminUserSeeder::class,
-            // StaticContentSeeder::class, // added in §Faz 4 (bio/hobbies/specialties/content_blocks)
+            StaticContentSeeder::class,
         ]);
     }
 }

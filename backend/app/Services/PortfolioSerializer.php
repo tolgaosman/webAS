@@ -12,21 +12,23 @@ use App\Models\Project;
 use App\Models\Toolkit;
 
 /**
- * Reassembles the normalized tables into the exact legacy JSON shape that
- * the Express backend produced. This is the byte-compatibility layer the
- * migration plan (§Faz 4) calls the most critical piece — the frontend
- * (see frontend/src/types/portfolio.ts) is written against this exact
- * shape and must not need to change.
+ * Assembles the public GET /api/portfolio payload (§Faz 3). Every
+ * translatable field is a TranslatedText instance, which implements
+ * JsonSerializable (see app/Support/TranslatedText.php) — json_encode()
+ * automatically expands it to {tr,en,nl}, so this class never needs to
+ * touch escaping/locale-resolution itself; the frontend resolves the
+ * active locale client-side (see migration plan §Faz 2 for why).
  *
- * Deliberately returns a plain nested array (not an Eloquent JsonResource)
- * so key order and shape are fully explicit here rather than implied by
- * model attribute order.
+ * `id` is now the real Eloquent primary key (not the legacy "project-1"
+ * string slug) — the frontend contract is being rewritten from scratch
+ * alongside this API, so there is no byte-compatibility constraint left
+ * to preserve here. `slug` still exists in the database purely as an
+ * import/traceability artifact (see
+ * app/Http/Controllers/Admin/Concerns/GeneratesSlug.php) and is not
+ * part of this response.
  *
- * IMPORTANT: whoever calls toArray() must render it with
- * `response()->json($data, 200, [], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)`
- * — without those flags Turkish characters get \uXXXX-escaped and "/"
- * becomes "\/", which is a byte-level difference from the legacy API
- * (see PortfolioController).
+ * `images` is a real array now, not the legacy comma-separated string —
+ * the database already stores it as ordered rows (project_images).
  */
 class PortfolioSerializer
 {
@@ -55,7 +57,7 @@ class PortfolioSerializer
             'phone' => $p?->phone ?? '',
             'instagram' => $p?->instagram ?? '',
             'linkedin' => $p?->linkedin ?? '',
-            'cvUrl' => $p?->cv_url ?? '',
+            'cvUrl' => $p?->cv_url,
             'profileImage' => $p?->profile_image ?? '',
         ];
     }
@@ -66,6 +68,7 @@ class PortfolioSerializer
             ->orderBy('position')
             ->get()
             ->map(fn (CoreSkill $s) => [
+                'id' => $s->id,
                 'title' => $s->title,
                 'desc' => $s->desc,
             ])
@@ -79,12 +82,11 @@ class PortfolioSerializer
             ->orderBy('position')
             ->get()
             ->map(fn (Project $proj) => [
-                'id' => $proj->slug,
+                'id' => $proj->id,
                 'title' => $proj->title,
                 'category' => $proj->category,
                 'thumbnail' => $proj->thumbnail,
-                // Rejoin normalized rows into the legacy comma-separated string.
-                'images' => $proj->images->pluck('path')->implode(', '),
+                'images' => $proj->images->pluck('path')->values()->all(),
                 'description' => $proj->description,
                 'metaRole' => $proj->meta_role,
                 'metaClientLabel' => $proj->meta_client_label,
@@ -103,6 +105,7 @@ class PortfolioSerializer
             ->orderBy('position')
             ->get()
             ->map(fn (Education $e) => [
+                'id' => $e->id,
                 'date' => $e->date,
                 'school' => $e->school,
                 'degree' => $e->degree,
@@ -118,7 +121,7 @@ class PortfolioSerializer
             ->orderBy('position')
             ->get()
             ->map(fn (Experience $exp) => [
-                'id' => $exp->slug,
+                'id' => $exp->id,
                 'date' => $exp->date,
                 'role' => $exp->role,
                 'company' => $exp->company,
@@ -133,6 +136,7 @@ class PortfolioSerializer
             ->orderBy('position')
             ->get()
             ->map(fn (Language $l) => [
+                'id' => $l->id,
                 'name' => $l->name,
                 'stars' => (int) $l->stars,
             ])
@@ -144,8 +148,10 @@ class PortfolioSerializer
         return Toolkit::query()
             ->orderBy('position')
             ->get()
-            ->pluck('badge')
-            ->values()
+            ->map(fn (Toolkit $t) => [
+                'id' => $t->id,
+                'badge' => $t->badge,
+            ])
             ->all();
     }
 
@@ -155,7 +161,7 @@ class PortfolioSerializer
             ->orderBy('position')
             ->get()
             ->map(fn (Certificate $c) => [
-                'id' => $c->slug,
+                'id' => $c->id,
                 'title' => $c->title,
                 'issuer' => $c->issuer,
                 'letter' => $c->letter,

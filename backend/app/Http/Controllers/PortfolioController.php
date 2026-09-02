@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdatePortfolioRequest;
 use App\Services\PortfolioSerializer;
-use App\Services\PortfolioWriter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 /**
- * Byte-compatible port of
- * legacy/backend/src/controllers/data.controller.ts. Response shapes,
- * status codes and Turkish messages are unchanged (see migration plan
- * §Faz 4 and §Faz 6).
+ * Public read + upload endpoints (§Faz 3). The old whole-object
+ * PUT /api/portfolio handler was replaced by the per-resource admin
+ * controllers under App\Http\Controllers\Admin\* — see PortfolioWriter's
+ * docblock for why (churns every primary key on every save, one bad
+ * field anywhere rejects the entire dataset once every field is
+ * {tr,en,nl}).
  *
  * NOTE on JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES: without these
- * flags Laravel's default json() would emit ü for Turkish characters
- * and escape "/" as "\/", both byte-level differences from the legacy
- * Express API (Express's res.json() does neither by default).
+ * flags Laravel's default json() would emit \u-escaped Turkish
+ * characters and escape "/" as "\/".
  */
 class PortfolioController extends Controller
 {
@@ -37,22 +36,6 @@ class PortfolioController extends Controller
             report($e);
 
             return response()->json(['error' => 'Veri alınırken hata oluştu.'], 500);
-        }
-    }
-
-    public function update(UpdatePortfolioRequest $request, PortfolioWriter $writer)
-    {
-        try {
-            $writer->replaceAll($request->validated());
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Portfolyo verisi başarıyla güncellendi.',
-            ], 200, [], self::JSON_FLAGS);
-        } catch (\Throwable $e) {
-            report($e);
-
-            return response()->json(['error' => 'Veri güncellenirken hata oluştu.'], 500);
         }
     }
 

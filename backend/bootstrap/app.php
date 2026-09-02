@@ -46,7 +46,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 return null;
             }
             if ($e instanceof \Illuminate\Validation\ValidationException) {
-                return null; // handled by FailsWithLegacyShape on the FormRequest
+                return null; // handled by the dedicated ValidationException render() below
             }
 
             report($e);
@@ -67,6 +67,37 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, Request $request) {
             if ($request->is('api/*')) {
                 return response()->json(['error' => 'Endpoint bulunamadı.'], 404);
+            }
+        });
+
+        // §Faz 3: the legacy {error, details} validation-failure shape,
+        // applied globally so it covers BOTH FormRequests (LoginRequest,
+        // via App\Http\Requests\Concerns\FailsWithLegacyShape — which
+        // short-circuits before this ever runs, by design, so the two
+        // mechanisms never conflict) AND the plain $request->validate()
+        // calls used by the admin resource controllers (§Faz 3), which
+        // have no FormRequest class of their own to attach the trait to.
+        $exceptions->render(function (\Illuminate\Validation\ValidationException $e, Request $request) {
+            if (! $request->is('api/*')) {
+                return null;
+            }
+
+            $details = [];
+            foreach ($e->errors() as $field => $messages) {
+                $details[] = ['field' => $field, 'message' => $messages[0] ?? ''];
+            }
+
+            return response()->json([
+                'error' => 'Doğrulama hatası. Lütfen girişlerinizi kontrol edin.',
+                'details' => $details,
+            ], 400);
+        });
+
+        // A resource controller's findOrFail() throws this before routing
+        // ever gets a chance to produce the generic 404 above.
+        $exceptions->render(function (\Illuminate\Database\Eloquent\ModelNotFoundException $e, Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json(['error' => 'Kayıt bulunamadı.'], 404);
             }
         });
     })
