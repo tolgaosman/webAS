@@ -45,13 +45,13 @@ class TranslatableString implements ValidationRule
                 continue;
             }
 
-            if (! is_string($value[$locale])) {
+            if ($value[$locale] !== null && ! is_string($value[$locale])) {
                 $fail("{$attribute}.{$locale} bir metin olmalı.");
 
                 return;
             }
 
-            if ($this->max !== null && mb_strlen($value[$locale]) > $this->max) {
+            if ($this->max !== null && mb_strlen((string) $value[$locale]) > $this->max) {
                 $fail("{$attribute}.{$locale} en fazla {$this->max} karakter olabilir.");
 
                 return;
