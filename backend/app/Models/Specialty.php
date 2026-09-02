@@ -5,18 +5,14 @@ namespace App\Models;
 use App\Models\Concerns\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 
-class Personal extends Model
+class Specialty extends Model
 {
     use HasTranslations;
 
-    protected $table = 'personal';
-
-    protected $fillable = [
-        'name', 'email', 'phone', 'instagram', 'linkedin', 'cv_url', 'profile_image',
-    ];
+    protected $fillable = ['image', 'title', 'desc', 'cta_label', 'cta_href', 'position'];
 
     /** @var list<string> */
-    protected array $translatable = ['cv_url'];
+    protected array $translatable = ['title', 'desc', 'cta_label'];
 
     protected function casts(): array
     {

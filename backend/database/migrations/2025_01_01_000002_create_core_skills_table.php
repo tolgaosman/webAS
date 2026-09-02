@@ -6,14 +6,15 @@ use Illuminate\Support\Facades\Schema;
 
 // Mirrors PortfolioData.coreSkills[]. No id/slug is published in the API
 // response (see legacy shape) — array order is carried by `position`.
+// i18n (§Faz 2): title/desc are JSON {tr,en,nl}.
 return new class extends Migration
 {
     public function up(): void
     {
         Schema::create('core_skills', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 100);
-            $table->string('desc', 500);
+            $table->json('title');
+            $table->json('desc');
             $table->unsignedInteger('position')->default(0);
             $table->timestamps();
         });

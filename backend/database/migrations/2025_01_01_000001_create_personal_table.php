@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Schema;
 // legacy/backend/src/schemas/portfolio.schema.ts::PersonalSchema and the
 // migration plan §Faz 4). Always exactly one row (id=1); PortfolioSerializer
 // and portfolio:import both assume that.
+//
+// i18n (§Faz 2): cv_url is JSON {tr,en,nl} so an English/Dutch CV PDF can
+// be served to non-TR visitors, falling back to the TR file when unset
+// (see app/Casts/Translatable.php). Everything else here is either an
+// address/URL/file path (doesn't get translated) or a proper noun.
 return new class extends Migration
 {
     public function up(): void
@@ -19,7 +24,7 @@ return new class extends Migration
             $table->string('phone', 20)->default('');
             $table->string('instagram', 500)->default(''); // URL or ""
             $table->string('linkedin', 500)->default(''); // URL or ""
-            $table->string('cv_url', 500)->default('');
+            $table->json('cv_url'); // {tr,en,nl}
             $table->string('profile_image', 500)->default('');
             $table->timestamps();
         });
