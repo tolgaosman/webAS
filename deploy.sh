@@ -24,7 +24,7 @@ fi
 
 # 3. Docker konteynerlerini yeniden inşa et ve ayağa kaldır
 echo "🐳 Docker konteynerleri (Nginx, PHP, MySQL, Redis) ayağa kaldırılıyor..."
-docker-compose up -d --build
+docker compose up -d --build
 
 # MySQL'in tam olarak ayağa kalkması için kısa bir süre bekle (İlk kurulumda gerekli olabilir)
 echo "⏳ Veritabanı bağlantısı bekleniyor..."
@@ -34,14 +34,14 @@ sleep 5
 echo "🛠️ Laravel: Migration ve Cache optimizasyonları yapılıyor..."
 
 # Artisan komutlarını 'php' isimli konteynerin içinde çalıştırıyoruz
-docker-compose exec -T php php artisan migrate --force --seed
-docker-compose exec -T php php artisan optimize:clear
-docker-compose exec -T php php artisan config:cache
-docker-compose exec -T php php artisan route:cache
-docker-compose exec -T php php artisan view:cache
+docker compose exec -T php php artisan migrate --force --seed
+docker compose exec -T php php artisan optimize:clear
+docker compose exec -T php php artisan config:cache
+docker compose exec -T php php artisan route:cache
+docker compose exec -T php php artisan view:cache
 
 # 5. İzinleri düzelt (storage klasörünün yazılabilir olması gerekir)
 echo "🔐 Laravel Storage izinleri ayarlanıyor..."
-docker-compose exec -T php chown -R www-data:www-data /var/www/backend/storage /var/www/backend/bootstrap/cache
+docker compose exec -T php chown -R www-data:www-data /var/www/backend/storage /var/www/backend/bootstrap/cache
 
 echo "✅ Deployment başarıyla tamamlandı! Site yayında."
