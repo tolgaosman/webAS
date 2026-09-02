@@ -366,6 +366,7 @@ header.nav-hidden {
   gap: 0.5rem;
   transition: var(--transition-fast);
   box-shadow: var(--shadow-retro-md);
+  transform: translate(0, 0);
 }
 
 .btn-primary {
