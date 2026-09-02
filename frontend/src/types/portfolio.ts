@@ -1,81 +1,74 @@
-// ===================================================================
-// Portfolio data model — mirrors legacy/backend/src/schemas/portfolio.schema.ts
-// (Zod) field-for-field. This is the contract both the frontend and the
-// future Laravel API serializer must produce/consume byte-identically.
-//
-// NOTE: `projects[].images` is a single comma-separated STRING, not an
-// array — this matches the legacy API shape and must not change without
-// also changing the backend serializer (see migration plan §Faz 4).
-// ===================================================================
+import type { LocalizedString } from "../i18n/types";
+
+// Mirrors backend/app/Services/PortfolioSerializer.php field-for-field.
+// `id` is the real database primary key (see that serializer's
+// docblock for why this differs from the legacy string-slug contract).
 
 export interface Personal {
   name: string;
   email: string;
   phone: string;
-  instagram: string; // URL or ""
-  linkedin: string; // URL or ""
-  cvUrl: string;
+  instagram: string;
+  linkedin: string;
+  cvUrl: LocalizedString;
   profileImage: string;
 }
 
 export interface CoreSkill {
-  title: string;
-  desc: string;
+  id: number;
+  title: LocalizedString;
+  desc: LocalizedString;
 }
 
 export interface Project {
-  id: string;
-  title: string;
-  category: string;
+  id: number;
+  title: LocalizedString;
+  category: LocalizedString;
   thumbnail: string;
-  images: string; // comma-separated paths, NOT an array
-  description: string;
-  metaRole: string;
-  metaClientLabel: string;
-  metaClient: string;
-  metaTools: string;
-  metaCategory: string;
-  goals: string;
-  achievements: string[];
+  images: string[];
+  description: LocalizedString;
+  metaRole: LocalizedString;
+  metaClientLabel: LocalizedString;
+  metaClient: LocalizedString;
+  metaTools: LocalizedString;
+  metaCategory: LocalizedString;
+  goals: LocalizedString;
+  achievements: LocalizedString[];
 }
 
 export interface Education {
-  date: string;
+  id: number;
+  date: LocalizedString;
   school: string;
-  degree: string;
-  desc: string;
+  degree: LocalizedString;
+  desc: LocalizedString;
 }
 
 export interface Experience {
-  id: string;
-  date: string;
-  role: string;
+  id: number;
+  date: LocalizedString;
+  role: LocalizedString;
   company: string;
-  accomplishments: string[];
+  accomplishments: LocalizedString[];
 }
 
 export interface Language {
-  name: string;
-  stars: number; // 1-5
+  id: number;
+  name: LocalizedString;
+  stars: number;
+}
+
+export interface Toolkit {
+  id: number;
+  badge: LocalizedString;
 }
 
 export interface Certificate {
-  id: string;
-  title: string;
+  id: number;
+  title: LocalizedString;
   issuer: string;
-  letter: string; // 1-2 char avatar initial
+  letter: string;
   image: string;
-  validity: string;
-  desc: string;
-}
-
-export interface PortfolioData {
-  personal: Personal;
-  coreSkills: CoreSkill[];
-  projects: Project[];
-  education: Education[];
-  experience: Experience[];
-  languages: Language[];
-  toolkit: string[];
-  certificates: Certificate[];
+  validity: LocalizedString;
+  desc: LocalizedString;
 }

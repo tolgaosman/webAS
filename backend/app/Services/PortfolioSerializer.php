@@ -2,13 +2,17 @@
 
 namespace App\Services;
 
+use App\Models\BioParagraph;
 use App\Models\Certificate;
+use App\Models\ContentBlock;
 use App\Models\CoreSkill;
 use App\Models\Education;
 use App\Models\Experience;
+use App\Models\Hobby;
 use App\Models\Language;
 use App\Models\Personal;
 use App\Models\Project;
+use App\Models\Specialty;
 use App\Models\Toolkit;
 
 /**
@@ -43,6 +47,14 @@ class PortfolioSerializer
             'languages' => $this->languages(),
             'toolkit' => $this->toolkit(),
             'certificates' => $this->certificates(),
+            // Content that used to be hardcoded in frontend/index.html
+            // (§Faz 2/4) — included here, not behind a separate endpoint,
+            // so the public site still needs exactly one GET for its
+            // entire lifetime (see migration plan §Faz 5-7).
+            'bioParagraphs' => $this->bioParagraphs(),
+            'hobbies' => $this->hobbies(),
+            'specialties' => $this->specialties(),
+            'content' => $this->contentBlocks(),
         ];
     }
 
@@ -152,6 +164,53 @@ class PortfolioSerializer
                 'id' => $t->id,
                 'badge' => $t->badge,
             ])
+            ->all();
+    }
+
+    private function bioParagraphs(): array
+    {
+        return BioParagraph::query()
+            ->orderBy('position')
+            ->get()
+            ->map(fn (BioParagraph $b) => ['id' => $b->id, 'body' => $b->body])
+            ->all();
+    }
+
+    private function hobbies(): array
+    {
+        return Hobby::query()
+            ->orderBy('position')
+            ->get()
+            ->map(fn (Hobby $h) => ['id' => $h->id, 'icon' => $h->icon, 'label' => $h->label])
+            ->all();
+    }
+
+    private function specialties(): array
+    {
+        return Specialty::query()
+            ->orderBy('position')
+            ->get()
+            ->map(fn (Specialty $s) => [
+                'id' => $s->id,
+                'image' => $s->image,
+                'title' => $s->title,
+                'desc' => $s->desc,
+                'ctaLabel' => $s->cta_label,
+                'ctaHref' => $s->cta_href,
+            ])
+            ->all();
+    }
+
+    /**
+     * Keyed by `key` (e.g. "section.about.tag") rather than a flat list
+     * — the frontend does `content["section.about.tag"]` instead of
+     * searching an array (see src/i18n's ContentBlockMap type).
+     */
+    private function contentBlocks(): array
+    {
+        return ContentBlock::query()
+            ->get()
+            ->mapWithKeys(fn (ContentBlock $b) => [$b->key => $b->value])
             ->all();
     }
 

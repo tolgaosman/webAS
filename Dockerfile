@@ -7,6 +7,7 @@ WORKDIR /app
 COPY frontend/package.json frontend/package-lock.json* ./
 RUN npm ci
 COPY frontend/ ./
+ENV NODE_ENV=production
 RUN npm run build
 
 FROM nginx:alpine
