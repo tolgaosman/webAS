@@ -22,7 +22,7 @@ return [
 
     'jwt_secret' => env('JWT_SECRET', 'fallback_secret_change_in_production'),
 
-    'admin_email' => env('ADMIN_EMAIL', 'admin@alarasysn.com'),
+    'admin_email' => env('ADMIN_EMAIL', 'alarasoysan@gmail.com'),
 
     // Read once here by AdminUserSeeder at seed time — never compared at
     // request time (that's what the bcrypt hash in the users table is
