@@ -5,6 +5,8 @@
 // /api/admin/* — see backend/routes/api.php.
 // ===================================================================
 
+import { toCamel, toSnake } from "./caseMap";
+
 interface ErrorBody {
   error?: string;
   details?: { field: string; message: string }[];
@@ -60,7 +62,7 @@ export async function listResource<T>(resource: string): Promise<T[]> {
   const res = await fetch(`${BASE}/${resource}`, { credentials: "include" });
   if (!res.ok) await parseErrorOrThrow(res);
   const body = await res.json();
-  return body.data as T[];
+  return toCamel(body.data) as T[];
 }
 
 export async function createResource<T>(resource: string, payload: unknown): Promise<T> {
@@ -68,11 +70,11 @@ export async function createResource<T>(resource: string, payload: unknown): Pro
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify(payload),
+    body: JSON.stringify(toSnake(payload)),
   });
   if (!res.ok) await parseErrorOrThrow(res);
   const body = await res.json();
-  return body.data as T;
+  return toCamel(body.data) as T;
 }
 
 export async function updateResource<T>(resource: string, id: number, payload: unknown): Promise<T> {
@@ -80,11 +82,11 @@ export async function updateResource<T>(resource: string, id: number, payload: u
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify(payload),
+    body: JSON.stringify(toSnake(payload)),
   });
   if (!res.ok) await parseErrorOrThrow(res);
   const body = await res.json();
-  return body.data as T;
+  return toCamel(body.data) as T;
 }
 
 export async function deleteResource(resource: string, id: number): Promise<void> {
@@ -108,7 +110,7 @@ export async function getPersonal<T>(): Promise<T> {
   const res = await fetch(`${BASE}/personal`, { credentials: "include" });
   if (!res.ok) await parseErrorOrThrow(res);
   const body = await res.json();
-  return body.data as T;
+  return toCamel(body.data) as T;
 }
 
 export async function updatePersonal<T>(payload: unknown): Promise<T> {
@@ -116,11 +118,11 @@ export async function updatePersonal<T>(payload: unknown): Promise<T> {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify(payload),
+    body: JSON.stringify(toSnake(payload)),
   });
   if (!res.ok) await parseErrorOrThrow(res);
   const body = await res.json();
-  return body.data as T;
+  return toCamel(body.data) as T;
 }
 
 // ── Content blocks (bulk map) ───────────────────────────────────
