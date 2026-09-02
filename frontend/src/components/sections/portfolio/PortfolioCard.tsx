@@ -11,7 +11,7 @@ export function PortfolioCard({ project, onOpen }: { project: Project; onOpen: (
   return (
     <div className="portfolio-card" data-project-id={project.id} onClick={onOpen}>
       <div className="portfolio-img-box">
-        <img src={assetUrl(project.thumbnail)} alt={`${t(project.title)} Cover Image`} />
+        <img src={assetUrl(project.thumbnail) || `https://picsum.photos/seed/${encodeURIComponent(project.title)}/800/600`} alt={`${t(project.title)} Cover Image`} />
       </div>
       <div className="portfolio-info">
         <span className="portfolio-cat">{t(project.category)}</span>

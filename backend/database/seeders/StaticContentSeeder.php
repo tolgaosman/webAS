@@ -153,7 +153,7 @@ class StaticContentSeeder extends Seeder
             ['hero.ctaContact', 'hero', 'line', 'İletişim'],
 
             // frontend/index.html:359, 384-385, 414 (folder tabs + headings)
-            ['about.bioTab', 'about', 'line', 'Biografi'],
+            ['about.bioTab', 'about', 'line', 'Biyografi'],
             ['about.interestsTab', 'about', 'line', 'İlgi Alanları'],
             ['about.interestsHeading', 'about', 'line', 'Hobiler & İlgi Alanları'],
             ['about.skillsHeading', 'about', 'line', 'Temel Yetenekler'],

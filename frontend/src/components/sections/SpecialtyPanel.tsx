@@ -8,7 +8,7 @@ export function SpecialtyPanel({ specialty }: { specialty: Specialty }) {
   return (
     <div className="specialty-panel">
       <div className="specialty-frame">
-        <img src={assetUrl(specialty.image)} alt={`Alara Soysan - ${t(specialty.title)}`} />
+        <img src={assetUrl(specialty.image) || `https://picsum.photos/seed/${encodeURIComponent(specialty.title)}/400/533`} alt={`Alara Soysan - ${t(specialty.title)}`} />
       </div>
       <h3 className="specialty-title">{t(specialty.title)}</h3>
       <p className="specialty-desc">{t(specialty.desc)}</p>

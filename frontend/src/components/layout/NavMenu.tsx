@@ -1,6 +1,5 @@
 import { useDict } from "../../i18n/useTranslation";
 import { LangSelector } from "./LangSelector";
-import { ThemeToggle } from "./ThemeToggle";
 
 const SECTION_IDS = ["hero", "about", "specialties", "portfolio", "resume", "certificates", "contact"] as const;
 
@@ -9,10 +8,9 @@ interface NavMenuProps {
   activeSection: string;
   isMobile: boolean;
   onLinkClick: () => void;
-  onThemeToggle: () => void;
 }
 
-export function NavMenu({ open, activeSection, isMobile, onLinkClick, onThemeToggle }: NavMenuProps) {
+export function NavMenu({ open, activeSection, isMobile, onLinkClick }: NavMenuProps) {
   const dict = useDict();
 
   const labels: Record<(typeof SECTION_IDS)[number], string> = {
@@ -35,7 +33,6 @@ export function NavMenu({ open, activeSection, isMobile, onLinkClick, onThemeTog
       {isMobile && (
         <li id="mobile-lang-wrapper">
           <LangSelector onSelect={onLinkClick} />
-          <ThemeToggle onClick={onThemeToggle} />
         </li>
       )}
       {SECTION_IDS.map((id) => (

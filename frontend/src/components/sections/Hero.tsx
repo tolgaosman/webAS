@@ -5,7 +5,7 @@ import { FolderContainer } from "../common/FolderContainer";
 import { assetUrl } from "../../lib/assetUrl";
 import { sanitizeUrl } from "../../lib/sanitize";
 
-const PLACEHOLDER_IMG = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+const PLACEHOLDER_IMG = "https://ui-avatars.com/api/?name=Alara+Soysan&background=ec829c&color=fff&size=512&font-size=0.33";
 
 export function Hero() {
   const { personal, content } = usePortfolio();

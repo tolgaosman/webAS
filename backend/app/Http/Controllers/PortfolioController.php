@@ -41,36 +41,18 @@ class PortfolioController extends Controller
 
     public function uploadImage(Request $request)
     {
+        $request->validate([
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
+        ]);
+
         $file = $request->file('file');
 
-        if (! $file) {
-            return response()->json(['error' => 'Dosya bulunamadı.'], 400);
-        }
-
-        if ($file->getSize() > self::MAX_UPLOAD_BYTES) {
-            return response()->json(['error' => 'Yükleme hatası.'], 400);
-        }
-
-        // Client-declared mime, matching legacy behavior exactly (no magic-byte sniffing).
-        if (! in_array($file->getClientMimeType(), self::ALLOWED_MIME_TYPES, true)) {
-            return response()->json(['error' => 'Yalnızca JPEG, PNG, WEBP veya GIF görselleri yüklenebilir.'], 400);
-        }
-
-        // Filename scheme matches legacy/backend/src/middleware/upload.ts exactly:
-        // {safeBase}-{12 hex chars}{ext}
-        $originalName = $file->getClientOriginalName();
-        $ext = strtolower($file->getClientOriginalExtension());
-        $base = pathinfo($originalName, PATHINFO_FILENAME);
-        $safeBase = Str::substr(preg_replace('/[^a-zA-Z0-9_-]/', '_', $base) ?: 'image', 0, 60);
-        $suffix = bin2hex(random_bytes(6));
-        $filename = "{$safeBase}-{$suffix}." . $ext;
+        // Laravel's hashName() securely generates a unique, safe filename
+        // and automatically applies the correct extension based on magic bytes.
+        $filename = $file->hashName();
 
         // Write directly at the public_uploads disk root (empty path
-        // prefix), NOT under a nested "uploads/" subdirectory — the disk
-        // root (config/filesystems.php) already points at the uploads
-        // directory nginx serves as /assets/uploads (see migration plan
-        // §Faz 8). storeAs('uploads', ...) here would double the path
-        // segment and 404 every upload.
+        // prefix), NOT under a nested "uploads/" subdirectory.
         $file->storeAs('', $filename, 'public_uploads');
 
         return response()->json(['url' => "/assets/uploads/{$filename}"], 200, [], self::JSON_FLAGS);

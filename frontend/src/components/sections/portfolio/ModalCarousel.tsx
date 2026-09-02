@@ -26,7 +26,7 @@ export function ModalCarousel({ images, altText }: ModalCarouselProps) {
     <div className="modal-carousel-container" id="modal-carousel-container">
       <div className="modal-carousel-track" id="carousel-track" style={{ transform: `translateX(-${index * 100}%)` }}>
         {images.map((src, i) => {
-          const safeSrc = assetUrl(src);
+          const safeSrc = assetUrl(src) || `https://picsum.photos/seed/${encodeURIComponent(altText + i)}/800/600`;
           return (
             <div className="carousel-slide" key={i}>
               <img className="carousel-slide-bg" src={safeSrc} aria-hidden="true" alt="" />

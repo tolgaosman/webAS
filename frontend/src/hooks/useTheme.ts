@@ -15,13 +15,7 @@ const STORAGE_KEY = "theme";
  */
 export function useTheme(): { theme: Theme; toggleTheme: () => void } {
   const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === "undefined") return "light";
-    try {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
-      return stored === "dark" ? "dark" : "light";
-    } catch {
-      return "light";
-    }
+    return "light";
   });
 
   useEffect(() => {

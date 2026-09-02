@@ -2,17 +2,14 @@ import { useState } from "react";
 import { Hamburger } from "./Hamburger";
 import { NavMenu } from "./NavMenu";
 import { LangSelector } from "./LangSelector";
-import { ThemeToggle } from "./ThemeToggle";
 import { useStickyHeader } from "../../hooks/useStickyHeader";
 import { useActiveSection } from "../../hooks/useActiveSection";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { useTheme } from "../../hooks/useTheme";
 
 export function Header() {
   const { scrolled, navHidden } = useStickyHeader();
   const activeSection = useActiveSection();
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const { toggleTheme } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const closeMenu = () => setMenuOpen(false);
@@ -37,13 +34,11 @@ export function Header() {
           activeSection={activeSection}
           isMobile={isMobile}
           onLinkClick={closeMenu}
-          onThemeToggle={toggleTheme}
         />
 
         <div className="nav-actions">
           {!isMobile && (
             <>
-              <ThemeToggle onClick={toggleTheme} />
               <LangSelector />
             </>
           )}

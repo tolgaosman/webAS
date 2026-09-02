@@ -41,9 +41,9 @@
   --card-bg: #212c3b;
   --folder-bg: #402c34;
   --folder-bg-active: #563945;
-  --text-primary: #fcebef;
-  --text-secondary: #d4bbc2;
-  --text-muted: #a48c94;
+  --text-primary: #ffffff;
+  --text-secondary: #e2d3d7;
+  --text-muted: #bdaab1;
   --border-color: #fcebef;
   
   --primary-accent: #fca4b7;       /* Pastel Pink */
@@ -439,7 +439,11 @@ header.nav-hidden {
 }
 
 [data-theme="dark"] .polaroid-frame {
-  background-color: var(--folder-bg);
+  background-color: var(--card-bg);
+}
+
+[data-theme="dark"] .nav-logo-img {
+  filter: invert(1) hue-rotate(180deg) brightness(1.2);
 }
 
 .polaroid-frame:hover {
@@ -1329,6 +1333,12 @@ header.nav-hidden {
 .form-control:focus {
   background-color: var(--card-bg);
   box-shadow: var(--shadow-retro-sm);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
+  font-style: italic;
 }
 
 textarea.form-control {

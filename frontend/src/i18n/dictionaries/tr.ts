@@ -43,8 +43,8 @@ const tr: UiDict = {
     pile2Caption: "Konuşalım!",
   },
   resume: {
-    openResume: "Open Resume",
-    downloadResume: "Download Resume",
+    openResume: "Özgeçmişi Görüntüle",
+    downloadResume: "Özgeçmişi İndir",
   },
 };
 

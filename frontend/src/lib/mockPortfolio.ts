@@ -198,7 +198,7 @@ export const mockPortfolio: PortfolioApiResponse = {
     "hero.intro": t("Rotterdam merkezli, Kıbrıs kökenli, Rotterdam İşletme Okulu Uluslararası İşletme 3. sınıf öğrencisiyim. Dijital pazarlama, işveren markası ve sakin estetik tasarımlar geliştiriyorum."),
     "hero.ctaPortfolio": t("Portfolyo"),
     "hero.ctaContact": t("İletişim"),
-    "about.bioTab": t("Biografi"),
+    "about.bioTab": t("Biyografi"),
     "about.interestsTab": t("İlgi Alanları"),
     "about.interestsHeading": t("Hobiler & İlgi Alanları"),
     "about.skillsHeading": t("Temel Yetenekler"),
