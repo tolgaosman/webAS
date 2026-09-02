@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { login, ApiError } from "../lib/adminApi";
 import { FolderContainer } from "../components/common/FolderContainer";
-import { Eye, EyeOff } from "lucide-react"; // Assuming lucide-react is available, or use plain text/emoji if not.
 
 export function LoginCard({ onLoggedIn }: { onLoggedIn: () => void }) {
   const [password, setPassword] = useState("");
