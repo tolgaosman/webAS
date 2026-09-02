@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useCrudResource } from "../../store/useCrudResource";
-import { LocaleTabsProvider, LocaleTabsSwitcher } from "../../fields/LocaleTabs";
 import { TranslatableInput } from "../../fields/TranslatableInput";
 import { emptyLocalized, resolve } from "../../../i18n/resolve";
 import type { Hobby } from "../../../types/content";
@@ -39,26 +38,23 @@ export function HobbiesPanel() {
           <p>Veri yüklenemedi: {error}</p>
         </div>
       )}
-      <LocaleTabsProvider>
-        <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
-          <LocaleTabsSwitcher />
-          <div className="form-group">
-            <label htmlFor="hobby-icon">Emoji</label>
-            <input id="hobby-icon" type="text" value={icon} onChange={(e) => setIcon(e.target.value)} placeholder="🧘🏻‍♀️" required maxLength={8} />
-          </div>
-          <TranslatableInput label="Label" value={label} onChange={setLabel} placeholder="e.g. Yoga" required />
-          <div className="skill-form-actions">
-            <button type="submit" className="btn btn-primary">
-              {editId !== null ? "Save Changes" : "Add"}
+      <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="hobby-icon">Emoji</label>
+          <input id="hobby-icon" type="text" value={icon} onChange={(e) => setIcon(e.target.value)} placeholder="🧘🏻‍♀️" required maxLength={8} />
+        </div>
+        <TranslatableInput label="Label" value={label} onChange={setLabel} placeholder="e.g. Yoga" required />
+        <div className="skill-form-actions">
+          <button type="submit" className="btn btn-primary">
+            {editId !== null ? "Save Changes" : "Add"}
+          </button>
+          {editId !== null && (
+            <button type="button" className="btn btn-secondary" onClick={reset}>
+              Cancel
             </button>
-            {editId !== null && (
-              <button type="button" className="btn btn-secondary" onClick={reset}>
-                Cancel
-              </button>
-            )}
-          </div>
-        </form>
-      </LocaleTabsProvider>
+          )}
+        </div>
+      </form>
 
       <div className="badges-manager-flex">
         {loading && <p>Yükleniyor...</p>}

@@ -1,58 +1,7 @@
-/* New in the i18n rewrite (§Faz 5-7) — styled to match admin.css's
-   .sub-tab-btn (small pill/underline tab look) so <TranslatableInput>/
-   <TranslatableTextarea> feel native to the rest of the admin panel.
-   Additive only; admin.css is never edited. */
+/* Additive only; admin.css is never edited. */
 
-.i18n-tabs {
-  display: flex;
-  gap: 0.35rem;
-  margin-bottom: 0.35rem;
-}
-
-.i18n-tab {
-  background: none;
-  border: 2px solid var(--border-color);
-  border-radius: 6px;
-  padding: 0.15rem 0.55rem;
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  color: var(--text-secondary);
-  cursor: pointer;
-  position: relative;
-  transition: var(--transition-fast);
-}
-
-.i18n-tab:hover {
-  color: var(--text-primary);
-}
-
-.i18n-tab.active {
-  background: var(--primary-accent);
-  border-color: var(--primary-accent);
-  color: #fff;
-}
-
-/* A small dot marks a locale that falls back to Turkish because it's
-   empty — visible at a glance without opening the tab. */
-.i18n-tab.empty::after {
-  content: '';
-  position: absolute;
-  top: -3px;
-  right: -3px;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--yellow-accent, #e8b339);
-  border: 1px solid var(--card-bg);
-}
-
-.i18n-tab.empty.active::after {
-  background: #fff;
-}
-
-.i18n-field .form-group-hint {
+.form-group-hint {
+  display: block;
   font-size: 0.72rem;
   color: var(--text-muted);
   margin-top: -0.2rem;

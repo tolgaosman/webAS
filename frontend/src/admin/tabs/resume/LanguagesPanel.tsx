@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useCrudResource } from "../../store/useCrudResource";
-import { LocaleTabsProvider, LocaleTabsSwitcher } from "../../fields/LocaleTabs";
 import { TranslatableInput } from "../../fields/TranslatableInput";
 import { emptyLocalized, resolve } from "../../../i18n/resolve";
 import type { Language } from "../../../types/portfolio";
@@ -39,26 +38,23 @@ export function LanguagesPanel() {
           <p>Veri yüklenemedi: {error}</p>
         </div>
       )}
-      <LocaleTabsProvider>
-        <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
-          <LocaleTabsSwitcher />
-          <TranslatableInput label="Language & Level" value={name} onChange={setName} placeholder="e.g. English (C2 Professional)" required />
-          <div className="form-group">
-            <label htmlFor="lang-stars">Star Level (1 - 5)</label>
-            <input id="lang-stars" type="number" min={1} max={5} value={stars} onChange={(e) => setStars(Number(e.target.value))} required />
-          </div>
-          <div className="skill-form-actions">
-            <button type="submit" className="btn btn-primary">
-              {editId !== null ? "Save Changes" : "Add"}
+      <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
+        <TranslatableInput label="Language & Level" value={name} onChange={setName} placeholder="e.g. English (C2 Professional)" required />
+        <div className="form-group">
+          <label htmlFor="lang-stars">Star Level (1 - 5)</label>
+          <input id="lang-stars" type="number" min={1} max={5} value={stars} onChange={(e) => setStars(Number(e.target.value))} required />
+        </div>
+        <div className="skill-form-actions">
+          <button type="submit" className="btn btn-primary">
+            {editId !== null ? "Save Changes" : "Add"}
+          </button>
+          {editId !== null && (
+            <button type="button" className="btn btn-secondary" onClick={reset}>
+              Cancel
             </button>
-            {editId !== null && (
-              <button type="button" className="btn btn-secondary" onClick={reset}>
-                Cancel
-              </button>
-            )}
-          </div>
-        </form>
-      </LocaleTabsProvider>
+          )}
+        </div>
+      </form>
 
       <div className="list-table-wrapper">
         <table className="admin-table">

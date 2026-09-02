@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useCrudResource } from "../../store/useCrudResource";
-import { LocaleTabsProvider, LocaleTabsSwitcher } from "../../fields/LocaleTabs";
 import { TranslatableInput } from "../../fields/TranslatableInput";
 import { emptyLocalized, resolve } from "../../../i18n/resolve";
 import type { Toolkit } from "../../../types/portfolio";
@@ -26,17 +25,14 @@ export function ToolkitPanel() {
       <div className="admin-info-box">
         <p>Add or remove toolkit skill badges.</p>
       </div>
-      <LocaleTabsProvider>
-        <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
-          <LocaleTabsSwitcher />
-          <TranslatableInput label="Add New Badge" value={badge} onChange={setBadge} placeholder="e.g. Microsoft Office" required />
-          <div className="skill-form-actions">
-            <button type="submit" className="btn btn-primary">
-              Add
-            </button>
-          </div>
-        </form>
-      </LocaleTabsProvider>
+      <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
+        <TranslatableInput label="Add New Badge" value={badge} onChange={setBadge} placeholder="e.g. Microsoft Office" required />
+        <div className="skill-form-actions">
+          <button type="submit" className="btn btn-primary">
+            Add
+          </button>
+        </div>
+      </form>
 
       <div className="badges-manager-flex">
         {items.map((t) => (

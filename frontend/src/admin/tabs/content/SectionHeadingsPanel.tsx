@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { getContentBlocks, updateContentBlocks, ApiError } from "../../../lib/adminApi";
-import { LocaleTabsProvider } from "../../fields/LocaleTabs";
+import { getContentBlocks, updateContentBlocks, formatApiError } from "../../../lib/adminApi";
 import { TranslatableInput } from "../../fields/TranslatableInput";
 import type { LocalizedString } from "../../../i18n/types";
 
@@ -18,7 +17,7 @@ export function SectionHeadingsPanel() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    getContentBlocks<BlockMap>().then(setBlocks).catch((e) => alert(e instanceof ApiError ? e.message : String(e)));
+    getContentBlocks<BlockMap>().then(setBlocks).catch((e) => alert(formatApiError(e)));
   }, []);
 
   if (!blocks) return <p>Yükleniyor...</p>;
@@ -48,7 +47,7 @@ export function SectionHeadingsPanel() {
       setDirty({});
       alert("Section headings updated.");
     } catch (err) {
-      alert("Hata: " + (err instanceof ApiError ? err.message : String(err)));
+      alert("Hata: " + formatApiError(err));
     } finally {
       setSaving(false);
     }
@@ -60,23 +59,21 @@ export function SectionHeadingsPanel() {
         <p>Section tags, titles, and other short copy that appears across the site chrome.</p>
       </div>
 
-      <LocaleTabsProvider>
-        {Object.entries(grouped).map(([group, entries]) => (
-          <div className="content-group" key={group}>
-            <h4 className="content-group-title">{group}</h4>
-            <div className="form-grid">
-              {entries.map(([key, entry]) => (
-                <TranslatableInput
-                  key={key}
-                  label={key}
-                  value={dirty[key] ?? entry.value}
-                  onChange={(v) => setValue(key, v)}
-                />
-              ))}
-            </div>
+      {Object.entries(grouped).map(([group, entries]) => (
+        <div className="content-group" key={group}>
+          <h4 className="content-group-title">{group}</h4>
+          <div className="form-grid">
+            {entries.map(([key, entry]) => (
+              <TranslatableInput
+                key={key}
+                label={key}
+                value={dirty[key] ?? entry.value}
+                onChange={(v) => setValue(key, v)}
+              />
+            ))}
           </div>
-        ))}
-      </LocaleTabsProvider>
+        </div>
+      ))}
 
       <button className="btn btn-primary" disabled={saving || Object.keys(dirty).length === 0} onClick={handleSaveAll}>
         {saving ? "Saving..." : "Save All Changes"}

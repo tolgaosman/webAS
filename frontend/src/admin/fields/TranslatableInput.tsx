@@ -1,6 +1,4 @@
-import { LOCALES } from "../../i18n/types";
 import type { LocalizedString } from "../../i18n/types";
-import { usePanelLocale } from "./LocaleTabs";
 
 interface TranslatableFieldProps {
   label: string;
@@ -12,41 +10,28 @@ interface TranslatableFieldProps {
 }
 
 /**
- * The reusable core of every translatable field in the admin panel
- * (§Faz 5-7) — renders inside the same `.form-group` every other admin
- * input uses, so it inherits admin.css's input styling unchanged. The
- * TR tab is implicitly required (TranslatedText::get() falls back to
- * it); EN/NL show a dot when empty via `.i18n-tab.empty`.
+ * A single-language input for a {tr,en,nl} field. The admin types once
+ * and the backend auto-translates into the other two locales on save
+ * (see App\Casts\Translatable::set() / App\Services\AutoTranslator) —
+ * no more TR/EN/NL tabs to type the same content into three times.
+ *
+ * Always reads/writes the `tr` slot: it's the site's source-of-truth
+ * fallback (TranslatedText::get()), so after a save the box reflects
+ * the Turkish result regardless of what language was actually typed.
  */
 export function TranslatableInput({ label, value, onChange, required, maxLength, placeholder }: TranslatableFieldProps) {
-  const { active, setActive } = usePanelLocale();
-
   return (
     <div className="form-group i18n-field">
-      <label>
-        {label}
-        {required && active === "tr" ? " *" : ""}
-      </label>
-      <div className="i18n-tabs">
-        {LOCALES.map((l) => (
-          <button
-            key={l}
-            type="button"
-            className={`i18n-tab${l === active ? " active" : ""}${!value[l] ? " empty" : ""}`}
-            onClick={() => setActive(l)}
-          >
-            {l.toUpperCase()}
-          </button>
-        ))}
-      </div>
+      <label>{label}</label>
       <input
         type="text"
-        value={value[active]}
+        value={value.tr}
         maxLength={maxLength}
-        placeholder={active === "tr" ? placeholder : `(${placeholder ?? ""} — boşsa Türkçeye düşer)`}
-        required={required && active === "tr"}
-        onChange={(e) => onChange({ ...value, [active]: e.target.value })}
+        placeholder={placeholder}
+        required={required}
+        onChange={(e) => onChange({ ...value, tr: e.target.value })}
       />
+      <span className="form-group-hint">Herhangi bir dilde yazın — kaydedince diğer diller otomatik çevrilir.</span>
     </div>
   );
 }

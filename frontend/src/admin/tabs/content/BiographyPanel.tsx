@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useCrudResource } from "../../store/useCrudResource";
-import { LocaleTabsProvider } from "../../fields/LocaleTabs";
 import { TranslatableTextarea } from "../../fields/TranslatableTextarea";
 import { emptyLocalized } from "../../../i18n/resolve";
 import type { BioParagraph } from "../../../types/content";
@@ -41,15 +40,13 @@ export function BiographyPanel() {
 
       {loading && <p>Yükleniyor...</p>}
 
-      <LocaleTabsProvider>
-        {items.map((p) => (
-          <ParagraphRow key={p.id} item={p} onSave={(body) => update(p.id, { body })} onDelete={() => remove(p.id)} />
-        ))}
+      {items.map((p) => (
+        <ParagraphRow key={p.id} item={p} onSave={(body) => update(p.id, { body })} onDelete={() => remove(p.id)} />
+      ))}
 
-        <button className="btn btn-primary" onClick={() => create({ body: emptyLocalized() })}>
-          Add Paragraph
-        </button>
-      </LocaleTabsProvider>
+      <button className="btn btn-primary" onClick={() => create({ body: emptyLocalized() })}>
+        Add Paragraph
+      </button>
     </div>
   );
 }

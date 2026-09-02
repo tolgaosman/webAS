@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useCrudResource } from "../../store/useCrudResource";
-import { LocaleTabsProvider, LocaleTabsSwitcher } from "../../fields/LocaleTabs";
 import { TranslatableInput } from "../../fields/TranslatableInput";
 import { emptyLocalized, resolve } from "../../../i18n/resolve";
 import type { Education } from "../../../types/portfolio";
@@ -45,28 +44,25 @@ export function EducationPanel() {
           <p>Veri yüklenemedi: {error}</p>
         </div>
       )}
-      <LocaleTabsProvider>
-        <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
-          <LocaleTabsSwitcher />
-          <TranslatableInput label="Date Range" value={date} onChange={setDate} placeholder="e.g. 2021 - Present" required />
-          <div className="form-group">
-            <label htmlFor="edu-school">School / Institution</label>
-            <input id="edu-school" type="text" value={school} onChange={(e) => setSchool(e.target.value)} placeholder="e.g. Hogeschool Rotterdam" required />
-          </div>
-          <TranslatableInput label="Degree / Major" value={degree} onChange={setDegree} placeholder="e.g. International Business" required />
-          <TranslatableInput label="Short Description" value={desc} onChange={setDesc} placeholder="e.g. Focus: Digital Marketing" required />
-          <div className="skill-form-actions">
-            <button type="submit" className="btn btn-primary">
-              {editId !== null ? "Save Changes" : "Add"}
+      <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
+        <TranslatableInput label="Date Range" value={date} onChange={setDate} placeholder="e.g. 2021 - Present" required />
+        <div className="form-group">
+          <label htmlFor="edu-school">School / Institution</label>
+          <input id="edu-school" type="text" value={school} onChange={(e) => setSchool(e.target.value)} placeholder="e.g. Hogeschool Rotterdam" required />
+        </div>
+        <TranslatableInput label="Degree / Major" value={degree} onChange={setDegree} placeholder="e.g. International Business" required />
+        <TranslatableInput label="Short Description" value={desc} onChange={setDesc} placeholder="e.g. Focus: Digital Marketing" required />
+        <div className="skill-form-actions">
+          <button type="submit" className="btn btn-primary">
+            {editId !== null ? "Save Changes" : "Add"}
+          </button>
+          {editId !== null && (
+            <button type="button" className="btn btn-secondary" onClick={reset}>
+              Cancel
             </button>
-            {editId !== null && (
-              <button type="button" className="btn btn-secondary" onClick={reset}>
-                Cancel
-              </button>
-            )}
-          </div>
-        </form>
-      </LocaleTabsProvider>
+          )}
+        </div>
+      </form>
 
       <div className="list-table-wrapper">
         <table className="admin-table">

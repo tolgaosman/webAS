@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useCrudResource } from "../store/useCrudResource";
-import { LocaleTabsProvider, LocaleTabsSwitcher } from "../fields/LocaleTabs";
 import { TranslatableInput } from "../fields/TranslatableInput";
 import { emptyLocalized, resolve } from "../../i18n/resolve";
 import type { CoreSkill } from "../../types/portfolio";
@@ -50,23 +49,20 @@ export function SkillsTab() {
       </div>
 
       <div className="skills-manager">
-        <LocaleTabsProvider>
-          <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
-            <LocaleTabsSwitcher />
-            <TranslatableInput label="Skill Title" value={title} onChange={setTitle} placeholder="e.g. Digital Content Creation" required />
-            <TranslatableInput label="Skill Description" value={desc} onChange={setDesc} placeholder="e.g. Social media and video design" required />
-            <div className="skill-form-actions">
-              <button type="submit" className="btn btn-primary">
-                {editId !== null ? "Save Changes" : "Add"}
+        <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
+          <TranslatableInput label="Skill Title" value={title} onChange={setTitle} placeholder="e.g. Digital Content Creation" required />
+          <TranslatableInput label="Skill Description" value={desc} onChange={setDesc} placeholder="e.g. Social media and video design" required />
+          <div className="skill-form-actions">
+            <button type="submit" className="btn btn-primary">
+              {editId !== null ? "Save Changes" : "Add"}
+            </button>
+            {editId !== null && (
+              <button type="button" className="btn btn-secondary" onClick={resetForm}>
+                Cancel
               </button>
-              {editId !== null && (
-                <button type="button" className="btn btn-secondary" onClick={resetForm}>
-                  Cancel
-                </button>
-              )}
-            </div>
-          </form>
-        </LocaleTabsProvider>
+            )}
+          </div>
+        </form>
 
         <div className="list-table-wrapper">
           <table className="admin-table">

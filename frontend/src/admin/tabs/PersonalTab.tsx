@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getPersonal, updatePersonal, ApiError } from "../../lib/adminApi";
+import { getPersonal, updatePersonal, ApiError, formatApiError } from "../../lib/adminApi";
 import { assetUrl } from "../../lib/assetUrl";
 import { FileUploadField } from "../fields/FileUploadField";
 import type { Personal } from "../../types/portfolio";
@@ -37,7 +37,7 @@ export function PersonalTab() {
       setData(updated);
       alert("Personal details updated successfully!");
     } catch (err) {
-      alert("Hata: " + (err instanceof ApiError ? err.message : String(err)));
+      alert("Hata: " + formatApiError(err));
     } finally {
       setSaving(false);
     }

@@ -29,6 +29,24 @@ async function parseErrorOrThrow(res: Response): Promise<never> {
   throw new ApiError(body.error || `HTTP ${res.status}`, res.status, body.details);
 }
 
+/**
+ * The backend's validation-failure shape carries a generic top-level
+ * message plus a {field, message} list (see bootstrap/app.php's
+ * ValidationException renderer) — without this, every 400 alert reads
+ * "Doğrulama hatası. Lütfen girişlerinizi kontrol edin." with no way to
+ * tell which field actually failed.
+ */
+export function formatApiError(err: unknown): string {
+  if (err instanceof ApiError) {
+    if (err.details?.length) {
+      const detail = err.details.map((d) => `${d.field}: ${d.message}`).join("; ");
+      return `${err.message} (${detail})`;
+    }
+    return err.message;
+  }
+  return String(err);
+}
+
 // ── Auth ─────────────────────────────────────────────────────────
 
 export async function checkSession(): Promise<boolean> {

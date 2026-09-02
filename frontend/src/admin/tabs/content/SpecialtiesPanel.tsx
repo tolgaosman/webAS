@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useCrudResource } from "../../store/useCrudResource";
-import { LocaleTabsProvider, LocaleTabsSwitcher } from "../../fields/LocaleTabs";
 import { TranslatableInput } from "../../fields/TranslatableInput";
 import { TranslatableTextarea } from "../../fields/TranslatableTextarea";
 import { FileUploadField } from "../../fields/FileUploadField";
@@ -45,33 +44,30 @@ export function SpecialtiesPanel() {
         <p>The 3 "Uzmanlık Alanları" panels shown between About and Portfolio.</p>
       </div>
 
-      <LocaleTabsProvider>
-        <form className="admin-form" onSubmit={handleSubmit}>
-          <LocaleTabsSwitcher />
-          <div className="form-grid">
-            <div className="col-span-2">
-              <FileUploadField label="Image" value={draft.image} onChange={(v) => set("image", v)} />
-            </div>
-            <TranslatableInput label="Title" value={draft.title} onChange={(v) => set("title", v)} required />
-            <div className="form-group">
-              <label>CTA Link Target (anchor)</label>
-              <input type="text" value={draft.ctaHref} onChange={(e) => set("ctaHref", e.target.value)} placeholder="#portfolio" required />
-            </div>
-            <TranslatableInput label="CTA Label" value={draft.ctaLabel} onChange={(v) => set("ctaLabel", v)} placeholder="e.g. projeleri gör" required />
+      <form className="admin-form" onSubmit={handleSubmit}>
+        <div className="form-grid">
+          <div className="col-span-2">
+            <FileUploadField label="Image" value={draft.image} onChange={(v) => set("image", v)} />
           </div>
-          <TranslatableTextarea label="Description" value={draft.desc} onChange={(v) => set("desc", v)} rows={2} fullWidth required />
-          <div className="editor-actions">
-            {editId !== null && (
-              <button type="button" className="btn btn-secondary" onClick={reset}>
-                Cancel
-              </button>
-            )}
-            <button type="submit" className="btn btn-primary">
-              {editId !== null ? "Save Changes" : "Add Specialty"}
+          <TranslatableInput label="Title" value={draft.title} onChange={(v) => set("title", v)} required />
+          <div className="form-group">
+            <label>CTA Link Target (anchor)</label>
+            <input type="text" value={draft.ctaHref} onChange={(e) => set("ctaHref", e.target.value)} placeholder="#portfolio" required />
+          </div>
+          <TranslatableInput label="CTA Label" value={draft.ctaLabel} onChange={(v) => set("ctaLabel", v)} placeholder="e.g. projeleri gör" required />
+        </div>
+        <TranslatableTextarea label="Description" value={draft.desc} onChange={(v) => set("desc", v)} rows={2} fullWidth required />
+        <div className="editor-actions">
+          {editId !== null && (
+            <button type="button" className="btn btn-secondary" onClick={reset}>
+              Cancel
             </button>
-          </div>
-        </form>
-      </LocaleTabsProvider>
+          )}
+          <button type="submit" className="btn btn-primary">
+            {editId !== null ? "Save Changes" : "Add Specialty"}
+          </button>
+        </div>
+      </form>
 
       <div className="list-table-wrapper">
         <table className="admin-table">
