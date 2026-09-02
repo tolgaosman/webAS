@@ -81,7 +81,13 @@
 
 html, body {
   overflow-x: hidden;
-  max-width: 100vw;
+  /* var(--app-vw) is set by src/lib/viewportScale.ts — the true
+     viewport width divided by the current CSS `zoom` factor, so this
+     stays "the full visible width" in the zoomed coordinate space
+     instead of the real (unzoomed) 100vw, which would be wrong once
+     zoom != 1. Falls back to 100vw before the script runs / with JS
+     disabled. */
+  max-width: var(--app-vw, 100vw);
   width: 100%;
 }
 
@@ -406,7 +412,7 @@ header.nav-hidden {
 
 /* Hero Section */
 #hero {
-  min-height: 100vh;
+  min-height: var(--app-vh, 100vh);
   display: flex;
   align-items: center;
   padding-top: 7rem;
@@ -1482,7 +1488,7 @@ footer {
   border: 3px solid var(--border-color);
   width: 100%;
   max-width: 850px;
-  max-height: 90vh;
+  max-height: calc(var(--app-vh, 100vh) * 0.9);
   border-radius: 24px;
   overflow-y: auto;
   position: relative;
@@ -1810,49 +1816,13 @@ footer {
   flex-shrink: 0;
 }
 
-/* Dutch Specific Layout Adjustments */
-html[lang="nl"] .hero-main-title br {
-  display: none !important;
-}
-
-html[lang="nl"] .skill-sticky {
-  padding: 1.5rem 0.8rem !important;
-}
-
-html[lang="nl"] .skill-sticky h4 {
-  font-size: 0.82rem !important;
-  word-break: normal !important;
-}
-
-/* Dutch hero title — shrink so "Marketingportfolio" fits desktop column without breaking */
-html[lang="nl"] .hero-main-title {
-  font-size: clamp(1.8rem, 3.2vw, 3rem) !important;
-}
-
-/* Dutch Mobile Overrides — even smaller for narrow screens */
-@media (max-width: 768px) {
-  html[lang="nl"] .hero-main-title {
-    font-size: clamp(1.2rem, 5.5vw, 2rem) !important;
-  }
-
-  html[lang="nl"] .hero-marketing-label {
-    font-size: 0.65rem !important;
-    letter-spacing: 0.04em !important;
-    overflow-wrap: break-word !important;
-    word-break: break-word !important;
-    max-width: 100% !important;
-  }
-
-  html[lang="nl"] .hero-by-line {
-    font-size: 1.25rem !important;
-  }
-
-  html[lang="nl"] .section-title {
-    font-size: 1.8rem !important;
-    overflow-wrap: break-word !important;
-    word-break: break-word !important;
-  }
-}
+/* The "Dutch Specific Layout Adjustments" block (html[lang="nl"] rules
+   for the Marketingportfolio hero title etc.) that used to live here is
+   removed — dead code now that Google Translate is back (see
+   src/i18n/googleTranslate.ts's docblock): document.documentElement.lang
+   stays "tr" always (index.html and LocaleProvider no longer change it,
+   Google translates the rendered text without touching that attribute),
+   so these selectors could never match. */
 
 /* Intersection Observer Scroll Reveal */
 .reveal {
@@ -1938,7 +1908,7 @@ html[lang="nl"] .hero-main-title {
     right: -100%;
     width: 80%;
     max-width: 320px;
-    height: 100vh;
+    height: var(--app-vh, 100vh);
     background-color: var(--bg-color);
     border-left: 2px solid var(--border-color);
     flex-direction: column;

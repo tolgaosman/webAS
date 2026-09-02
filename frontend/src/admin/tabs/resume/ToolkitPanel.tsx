@@ -7,7 +7,7 @@ import type { Toolkit } from "../../../types/portfolio";
 import type { LocalizedString } from "../../../i18n/types";
 
 export function ToolkitPanel() {
-  const { items, create, remove } = useCrudResource<Toolkit>("toolkit");
+  const { items, error, create, remove } = useCrudResource<Toolkit>("toolkit");
   const [badge, setBadge] = useState<LocalizedString>(emptyLocalized());
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -17,7 +17,12 @@ export function ToolkitPanel() {
   };
 
   return (
-    <div className="sub-tab-content" id="sub-toolkit">
+    <div className="sub-tab-content active" id="sub-toolkit">
+      {error && (
+        <div className="admin-info-box" role="alert">
+          <p>Veri yüklenemedi: {error}</p>
+        </div>
+      )}
       <div className="admin-info-box">
         <p>Add or remove toolkit skill badges.</p>
       </div>

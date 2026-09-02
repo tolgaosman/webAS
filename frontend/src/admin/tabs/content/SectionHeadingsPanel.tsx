@@ -55,7 +55,7 @@ export function SectionHeadingsPanel() {
   };
 
   return (
-    <div className="sub-tab-content" id="sub-content-blocks">
+    <div className="sub-tab-content active" id="sub-content-blocks">
       <div className="admin-info-box">
         <p>Section tags, titles, and other short copy that appears across the site chrome.</p>
       </div>

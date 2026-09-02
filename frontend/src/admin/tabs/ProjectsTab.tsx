@@ -6,7 +6,7 @@ import { resolve } from "../../i18n/resolve";
 import type { Project } from "../../types/portfolio";
 
 export function ProjectsTab() {
-  const { items, loading, create, update, remove } = useCrudResource<Project>("projects");
+  const { items, loading, error, create, update, remove } = useCrudResource<Project>("projects");
   const [editing, setEditing] = useState<Project | null | "new">(null);
 
   const handleSave = async (draft: Omit<Project, "id">) => {
@@ -19,7 +19,12 @@ export function ProjectsTab() {
   };
 
   return (
-    <section className="tab-content" id="tab-projects">
+    <section className="tab-content active" id="tab-projects">
+      {error && (
+        <div className="admin-info-box" role="alert">
+          <p>Veri yüklenemedi: {error}</p>
+        </div>
+      )}
       <div className="projects-manager">
         <div className="manager-header">
           <h3>Project List</h3>

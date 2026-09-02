@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Concerns\GeneratesSlug;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Rules\TranslatableString;
+use App\Services\PortfolioSerializer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +27,8 @@ class ProjectController extends Controller
             'data' => Project::query()
                 ->with(['images', 'achievements'])
                 ->orderBy('position')
-                ->get(),
+                ->get()
+                ->map(fn (Project $p) => PortfolioSerializer::presentProject($p)),
         ]);
     }
 
@@ -48,7 +50,7 @@ class ProjectController extends Controller
             return $project->load(['images', 'achievements']);
         });
 
-        return response()->json(['success' => true, 'data' => $record], 201);
+        return response()->json(['success' => true, 'data' => PortfolioSerializer::presentProject($record)], 201);
     }
 
     public function update(Request $request, int $id)
@@ -63,7 +65,7 @@ class ProjectController extends Controller
             return $project->load(['images', 'achievements']);
         });
 
-        return response()->json(['success' => true, 'data' => $record]);
+        return response()->json(['success' => true, 'data' => PortfolioSerializer::presentProject($record)]);
     }
 
     public function destroy(int $id)

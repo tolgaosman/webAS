@@ -7,7 +7,7 @@ import type { Language } from "../../../types/portfolio";
 import type { LocalizedString } from "../../../i18n/types";
 
 export function LanguagesPanel() {
-  const { items, loading, create, update, remove } = useCrudResource<Language>("languages");
+  const { items, loading, error, create, update, remove } = useCrudResource<Language>("languages");
   const [editId, setEditId] = useState<number | null>(null);
   const [name, setName] = useState<LocalizedString>(emptyLocalized());
   const [stars, setStars] = useState(5);
@@ -33,7 +33,12 @@ export function LanguagesPanel() {
   };
 
   return (
-    <div className="sub-tab-content" id="sub-languages">
+    <div className="sub-tab-content active" id="sub-languages">
+      {error && (
+        <div className="admin-info-box" role="alert">
+          <p>Veri yüklenemedi: {error}</p>
+        </div>
+      )}
       <LocaleTabsProvider>
         <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
           <LocaleTabsSwitcher />

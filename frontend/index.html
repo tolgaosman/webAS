@@ -4,14 +4,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- §Faz 8: Google Translate is gone (real i18n system instead, see
-       src/i18n/), so this CSP no longer needs translate.google.com /
-       gstatic.com / recaptcha.net. img-src stays "https:" broad rather
-       than narrowed to flagcdn.com only, because uploaded image paths
-       stored in the database could in principle be absolute external
-       URLs (see src/lib/sanitize.ts::sanitizeImgSrc, which allows them) —
-       narrow this only after confirming no such URL exists in the DB. -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self';">
+  <!-- Google Translate is back (restored from pre-§Faz 8 history, see
+       src/i18n/googleTranslate.ts's docblock) — this CSP is loosened
+       back to what it was before §Faz 8 removed it: script-src needs
+       'unsafe-inline' (element.js injects an inline init call) plus
+       Google's own script/frame hosts; style-src/connect-src need the
+       matching Google hosts too. This is scoped to the public entry
+       only — admin.html's CSP stays untouched/strict, the admin panel
+       never loads this widget. img-src stays "https:" broad rather than
+       narrowed to flagcdn.com only, because uploaded image paths stored
+       in the database could in principle be absolute external URLs (see
+       src/lib/sanitize.ts::sanitizeImgSrc, which allows them) — narrow
+       this only after confirming no such URL exists in the DB. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://translate.google.com https://translate.googleapis.com https://translate-pa.googleapis.com https://www.gstatic.com https://www.google.com https://www.recaptcha.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://translate.googleapis.com https://www.gstatic.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; frame-src 'self' https://www.google.com https://www.recaptcha.net; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://translate.googleapis.com https://translate-pa.googleapis.com https://www.google.com;">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="/browserLogo.png">

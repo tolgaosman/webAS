@@ -7,7 +7,7 @@ import type { Hobby } from "../../../types/content";
 import type { LocalizedString } from "../../../i18n/types";
 
 export function HobbiesPanel() {
-  const { items, loading, create, update, remove } = useCrudResource<Hobby>("hobbies");
+  const { items, loading, error, create, update, remove } = useCrudResource<Hobby>("hobbies");
   const [editId, setEditId] = useState<number | null>(null);
   const [icon, setIcon] = useState("");
   const [label, setLabel] = useState<LocalizedString>(emptyLocalized());
@@ -33,7 +33,12 @@ export function HobbiesPanel() {
   };
 
   return (
-    <div className="sub-tab-content" id="sub-hobbies">
+    <div className="sub-tab-content active" id="sub-hobbies">
+      {error && (
+        <div className="admin-info-box" role="alert">
+          <p>Veri yüklenemedi: {error}</p>
+        </div>
+      )}
       <LocaleTabsProvider>
         <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
           <LocaleTabsSwitcher />

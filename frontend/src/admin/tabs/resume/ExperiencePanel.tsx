@@ -5,7 +5,7 @@ import { resolve } from "../../../i18n/resolve";
 import type { Experience } from "../../../types/portfolio";
 
 export function ExperiencePanel() {
-  const { items, loading, create, update, remove } = useCrudResource<Experience>("experience");
+  const { items, loading, error, create, update, remove } = useCrudResource<Experience>("experience");
   const [editing, setEditing] = useState<Experience | null | "new">(null);
 
   const handleSave = async (draft: Omit<Experience, "id">) => {
@@ -15,7 +15,12 @@ export function ExperiencePanel() {
   };
 
   return (
-    <div className="sub-tab-content" id="sub-experience">
+    <div className="sub-tab-content active" id="sub-experience">
+      {error && (
+        <div className="admin-info-box" role="alert">
+          <p>Veri yüklenemedi: {error}</p>
+        </div>
+      )}
       <div className="manager-header">
         <h3>Work Experiences</h3>
         <button className="btn btn-primary" id="btn-new-exp" onClick={() => setEditing("new")}>

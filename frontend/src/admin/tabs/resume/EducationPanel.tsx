@@ -7,7 +7,7 @@ import type { Education } from "../../../types/portfolio";
 import type { LocalizedString } from "../../../i18n/types";
 
 export function EducationPanel() {
-  const { items, loading, create, update, remove } = useCrudResource<Education>("education");
+  const { items, loading, error, create, update, remove } = useCrudResource<Education>("education");
   const [editId, setEditId] = useState<number | null>(null);
   const [date, setDate] = useState<LocalizedString>(emptyLocalized());
   const [school, setSchool] = useState("");
@@ -40,6 +40,11 @@ export function EducationPanel() {
 
   return (
     <div className="sub-tab-content active" id="sub-education">
+      {error && (
+        <div className="admin-info-box" role="alert">
+          <p>Veri yüklenemedi: {error}</p>
+        </div>
+      )}
       <LocaleTabsProvider>
         <form className="inline-form skill-inline-form" onSubmit={handleSubmit}>
           <LocaleTabsSwitcher />

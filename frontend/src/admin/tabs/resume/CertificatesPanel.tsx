@@ -5,7 +5,7 @@ import { resolve } from "../../../i18n/resolve";
 import type { Certificate } from "../../../types/portfolio";
 
 export function CertificatesPanel() {
-  const { items, loading, create, update, remove } = useCrudResource<Certificate>("certificates");
+  const { items, loading, error, create, update, remove } = useCrudResource<Certificate>("certificates");
   const [editing, setEditing] = useState<Certificate | null | "new">(null);
 
   const handleSave = async (draft: Omit<Certificate, "id">) => {
@@ -15,7 +15,12 @@ export function CertificatesPanel() {
   };
 
   return (
-    <div className="sub-tab-content" id="sub-certs">
+    <div className="sub-tab-content active" id="sub-certs">
+      {error && (
+        <div className="admin-info-box" role="alert">
+          <p>Veri yüklenemedi: {error}</p>
+        </div>
+      )}
       <div className="manager-header">
         <h3>Certificates</h3>
         <button className="btn btn-primary" id="btn-new-cert" onClick={() => setEditing("new")}>

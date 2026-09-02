@@ -19,7 +19,7 @@ export const mockPortfolio: PortfolioApiResponse = {
     email: "alarasoysan@gmail.com",
     phone: "+31625632446",
     instagram: "https://instagram.com/alarasysn",
-    linkedin: "https://www.linkedin.com/in/alara-soysan-8a901a243/",
+    linkedin: "https://www.linkedin.com/in/alara-soysan-84b99a298/",
     cvUrl: t("alaraCV.pdf"),
     profileImage: "assets/images/ALARA.jpeg",
   },

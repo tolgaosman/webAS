@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Concerns\GeneratesSlug;
 use App\Http\Controllers\Controller;
 use App\Models\Experience;
 use App\Rules\TranslatableString;
+use App\Services\PortfolioSerializer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,7 +25,8 @@ class ExperienceController extends Controller
             'data' => Experience::query()
                 ->with('accomplishments')
                 ->orderBy('position')
-                ->get(),
+                ->get()
+                ->map(fn (Experience $e) => PortfolioSerializer::presentExperience($e)),
         ]);
     }
 
@@ -46,7 +48,7 @@ class ExperienceController extends Controller
             return $experience->load('accomplishments');
         });
 
-        return response()->json(['success' => true, 'data' => $record], 201);
+        return response()->json(['success' => true, 'data' => PortfolioSerializer::presentExperience($record)], 201);
     }
 
     public function update(Request $request, int $id)
@@ -61,7 +63,7 @@ class ExperienceController extends Controller
             return $experience->load('accomplishments');
         });
 
-        return response()->json(['success' => true, 'data' => $record]);
+        return response()->json(['success' => true, 'data' => PortfolioSerializer::presentExperience($record)]);
     }
 
     public function destroy(int $id)

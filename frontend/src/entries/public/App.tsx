@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { PortfolioContext, usePortfolioState } from "../../hooks/usePortfolio";
 import { Header } from "../../components/layout/Header";
 import { Footer } from "../../components/layout/Footer";
@@ -8,9 +9,19 @@ import { Portfolio } from "../../components/sections/portfolio/Portfolio";
 import { Resume } from "../../components/sections/resume/Resume";
 import { Certificates } from "../../components/sections/Certificates";
 import { Contact } from "../../components/sections/contact/Contact";
+import { loadWidget } from "../../i18n/googleTranslate";
 
 export function App() {
   const state = usePortfolioState();
+
+  // Loaded only once the portfolio data has actually rendered — Google
+  // walks and rewrites live text nodes, so starting it while React is
+  // still mounting the "ready" content races the two DOM writers
+  // against each other (see googleTranslateDomGuard.ts's docblock for
+  // the crash this used to cause).
+  useEffect(() => {
+    if (state.status === "ready") loadWidget();
+  }, [state.status]);
 
   return (
     <PortfolioContext.Provider value={state}>

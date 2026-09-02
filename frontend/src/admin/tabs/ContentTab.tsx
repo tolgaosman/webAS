@@ -20,7 +20,7 @@ export function ContentTab() {
   const [active, setActive] = useState<(typeof SUB_TABS)[number]["id"]>("sub-bio");
 
   return (
-    <section className="tab-content" id="tab-content">
+    <section className="tab-content active" id="tab-content">
       <div className="resume-manager-tabs">
         {SUB_TABS.map((t) => (
           <button

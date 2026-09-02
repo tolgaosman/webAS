@@ -7,7 +7,7 @@ import type { CoreSkill } from "../../types/portfolio";
 import type { LocalizedString } from "../../i18n/types";
 
 export function SkillsTab() {
-  const { items, loading, create, update, remove } = useCrudResource<CoreSkill>("core-skills");
+  const { items, loading, error, create, update, remove } = useCrudResource<CoreSkill>("core-skills");
   const [editId, setEditId] = useState<number | null>(null);
   const [title, setTitle] = useState<LocalizedString>(emptyLocalized());
   const [desc, setDesc] = useState<LocalizedString>(emptyLocalized());
@@ -36,7 +36,12 @@ export function SkillsTab() {
   };
 
   return (
-    <section className="tab-content" id="tab-skills">
+    <section className="tab-content active" id="tab-skills">
+      {error && (
+        <div className="admin-info-box" role="alert">
+          <p>Veri yüklenemedi: {error}</p>
+        </div>
+      )}
       <div className="admin-info-box">
         <p>
           <strong>Skill Layout:</strong> Added skills are listed in 5 columns under "Core Skills" on the main page.

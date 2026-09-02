@@ -26,10 +26,15 @@ function ParagraphRow({ item, onSave, onDelete }: { item: BioParagraph; onSave: 
 }
 
 export function BiographyPanel() {
-  const { items, loading, create, update, remove } = useCrudResource<BioParagraph>("bio-paragraphs");
+  const { items, loading, error, create, update, remove } = useCrudResource<BioParagraph>("bio-paragraphs");
 
   return (
     <div className="sub-tab-content active" id="sub-bio">
+      {error && (
+        <div className="admin-info-box" role="alert">
+          <p>Veri yüklenemedi: {error}</p>
+        </div>
+      )}
       <div className="admin-info-box">
         <p>The 4 biography paragraphs shown in the "Hakkımda" section, in order.</p>
       </div>

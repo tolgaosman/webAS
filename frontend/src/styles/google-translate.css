@@ -1,0 +1,58 @@
+/*
+ * Google Translate: completely hide the toolbar it inserts.
+ *
+ * Restored from the pre-§Faz 8 inline <style> block (see git history at
+ * 92f9bca^, frontend/index.html) now that src/i18n/googleTranslate.ts
+ * loads the widget again. The .lang-selector/.lang-btn rules from that
+ * same block are NOT duplicated here — those already live in
+ * src/styles/lang-selector.css (added by the React rewrite, which kept
+ * the app's own language dropdown markup even while the widget itself
+ * was removed).
+ */
+
+/* Kill every possible Google Translate top bar, iframe, and balloon container */
+iframe.goog-te-banner-frame,
+.goog-te-banner-frame,
+.goog-te-banner,
+.goog-te-balloon-frame,
+#goog-gt-tt,
+.goog-te-ftab-float,
+.goog-te-menu-value:hover,
+.goog-te-gadget-icon,
+.goog-te-gadget img,
+iframe[id*="container"],
+iframe[id*="google"],
+iframe.skiptranslate,
+.skiptranslate {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+}
+
+/* Prevent body and html from being pushed down by 40px */
+html,
+body {
+  top: 0px !important;
+  position: static !important;
+}
+
+body.translated-ltr,
+body.translated-rtl,
+html.translated-ltr,
+html.translated-rtl {
+  margin-top: 0px !important;
+  top: 0px !important;
+}
+
+/* Hide the widget container completely */
+.goog-te-gadget {
+  font-size: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+.goog-te-gadget select {
+  display: none !important;
+}

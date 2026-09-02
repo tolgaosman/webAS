@@ -17,7 +17,7 @@ export function ResumeTab() {
   const [active, setActive] = useState<(typeof SUB_TABS)[number]["id"]>("sub-education");
 
   return (
-    <section className="tab-content" id="tab-resume">
+    <section className="tab-content active" id="tab-resume">
       <div className="resume-manager-tabs">
         {SUB_TABS.map((t) => (
           <button

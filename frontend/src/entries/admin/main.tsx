@@ -8,7 +8,12 @@ import { createRoot } from "react-dom/client";
 // break every admin form's layout.
 import "../../../admin.css";
 import "../../styles/admin-i18n.css";
+import { initViewportScale } from "../../lib/viewportScale";
 import { App } from "./App";
+
+// Same proportional scaling as the public site (see viewportScale.ts) —
+// must run before first paint.
+initViewportScale();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

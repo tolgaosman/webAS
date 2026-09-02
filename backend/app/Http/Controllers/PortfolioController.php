@@ -22,10 +22,6 @@ class PortfolioController extends Controller
 {
     private const JSON_FLAGS = JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES;
 
-    private const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-
-    private const MAX_UPLOAD_BYTES = 8 * 1024 * 1024; // 8MB, matches legacy multer limit
-
     public function index(PortfolioSerializer $serializer)
     {
         try {
@@ -51,9 +47,25 @@ class PortfolioController extends Controller
         // and automatically applies the correct extension based on magic bytes.
         $filename = $file->hashName();
 
-        // Write directly at the public_uploads disk root (empty path
-        // prefix), NOT under a nested "uploads/" subdirectory.
-        $file->storeAs('', $filename, 'public_uploads');
+        try {
+            // Write directly at the public_uploads disk root (empty path
+            // prefix), NOT under a nested "uploads/" subdirectory.
+            $file->storeAs('', $filename, 'public_uploads');
+        } catch (\Throwable $e) {
+            report($e);
+
+            // filesystems.php's public_uploads disk has 'throw' => true,
+            // so a permission/missing-directory problem on the server
+            // surfaces here as an exception instead of storeAs() quietly
+            // returning false — without this catch it fell through to
+            // bootstrap/app.php's generic handler and the admin panel
+            // only ever saw "Sunucu hatası oluştu.", with no way to tell
+            // a permissions problem apart from anything else. See
+            // deploy.sh's uploads chown step for the actual fix.
+            return response()->json([
+                'error' => 'Görsel kaydedilemedi — sunucu yükleme klasörüne yazamıyor.',
+            ], 500);
+        }
 
         return response()->json(['url' => "/assets/uploads/{$filename}"], 200, [], self::JSON_FLAGS);
     }

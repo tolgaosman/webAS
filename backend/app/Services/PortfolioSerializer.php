@@ -93,22 +93,34 @@ class PortfolioSerializer
             ->with(['images', 'achievements'])
             ->orderBy('position')
             ->get()
-            ->map(fn (Project $proj) => [
-                'id' => $proj->id,
-                'title' => $proj->title,
-                'category' => $proj->category,
-                'thumbnail' => $proj->thumbnail,
-                'images' => $proj->images->pluck('path')->values()->all(),
-                'description' => $proj->description,
-                'metaRole' => $proj->meta_role,
-                'metaClientLabel' => $proj->meta_client_label,
-                'metaClient' => $proj->meta_client,
-                'metaTools' => $proj->meta_tools,
-                'metaCategory' => $proj->meta_category,
-                'goals' => $proj->goals,
-                'achievements' => $proj->achievements->pluck('text')->values()->all(),
-            ])
+            ->map(fn (Project $proj) => self::presentProject($proj))
             ->all();
+    }
+
+    /**
+     * Shared project shape — also used by Admin\ProjectController so the
+     * admin panel and the public site agree on what `images`/
+     * `achievements` look like (flat arrays, not the raw
+     * project_images/project_achievements relation rows). Requires
+     * `images`/`achievements` to already be eager-loaded on $proj.
+     */
+    public static function presentProject(Project $proj): array
+    {
+        return [
+            'id' => $proj->id,
+            'title' => $proj->title,
+            'category' => $proj->category,
+            'thumbnail' => $proj->thumbnail,
+            'images' => $proj->images->pluck('path')->values()->all(),
+            'description' => $proj->description,
+            'metaRole' => $proj->meta_role,
+            'metaClientLabel' => $proj->meta_client_label,
+            'metaClient' => $proj->meta_client,
+            'metaTools' => $proj->meta_tools,
+            'metaCategory' => $proj->meta_category,
+            'goals' => $proj->goals,
+            'achievements' => $proj->achievements->pluck('text')->values()->all(),
+        ];
     }
 
     private function education(): array
@@ -132,14 +144,24 @@ class PortfolioSerializer
             ->with('accomplishments')
             ->orderBy('position')
             ->get()
-            ->map(fn (Experience $exp) => [
-                'id' => $exp->id,
-                'date' => $exp->date,
-                'role' => $exp->role,
-                'company' => $exp->company,
-                'accomplishments' => $exp->accomplishments->pluck('text')->values()->all(),
-            ])
+            ->map(fn (Experience $exp) => self::presentExperience($exp))
             ->all();
+    }
+
+    /**
+     * Shared experience shape — also used by Admin\ExperienceController,
+     * see presentProject()'s docblock for why. Requires
+     * `accomplishments` to already be eager-loaded on $exp.
+     */
+    public static function presentExperience(Experience $exp): array
+    {
+        return [
+            'id' => $exp->id,
+            'date' => $exp->date,
+            'role' => $exp->role,
+            'company' => $exp->company,
+            'accomplishments' => $exp->accomplishments->pluck('text')->values()->all(),
+        ];
     }
 
     private function languages(): array

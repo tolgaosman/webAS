@@ -11,7 +11,7 @@ type Draft = Omit<Specialty, "id">;
 const emptyDraft = (): Draft => ({ image: "", title: emptyLocalized(), desc: emptyLocalized(), ctaLabel: emptyLocalized(), ctaHref: "" });
 
 export function SpecialtiesPanel() {
-  const { items, loading, create, update, remove } = useCrudResource<Specialty>("specialties");
+  const { items, loading, error, create, update, remove } = useCrudResource<Specialty>("specialties");
   const [editId, setEditId] = useState<number | null>(null);
   const [draft, setDraft] = useState<Draft>(emptyDraft());
 
@@ -35,7 +35,12 @@ export function SpecialtiesPanel() {
   };
 
   return (
-    <div className="sub-tab-content" id="sub-specialties">
+    <div className="sub-tab-content active" id="sub-specialties">
+      {error && (
+        <div className="admin-info-box" role="alert">
+          <p>Veri yüklenemedi: {error}</p>
+        </div>
+      )}
       <div className="admin-info-box">
         <p>The 3 "Uzmanlık Alanları" panels shown between About and Portfolio.</p>
       </div>
