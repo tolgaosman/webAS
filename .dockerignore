@@ -4,7 +4,6 @@
 .env
 .env.*
 docker-compose.yml
-nginx.conf
 
 # Not needed to build the frontend image (context is repo root only
 # because frontend/ pulls in package.json + source via explicit COPYs
