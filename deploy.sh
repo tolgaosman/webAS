@@ -10,10 +10,7 @@ set -e
 
 echo "🚀 webAS deployment başlatılıyor..."
 
-# 1. Klasördeki değişiklikleri sıfırla ve güncel kodu çek
-echo "📥 Git reposu güncelleniyor..."
-git fetch origin main
-git reset --hard origin/main
+# 1. Git adımı burada yok — deploy öncesi `git pull` komutunu elle çalıştırın.
 
 # 2. Uploads klasörü yoksa oluştur (Nginx ve PHP'nin erişmesi için gerekli)
 if [ ! -d "uploads" ]; then
