@@ -1973,4 +1973,71 @@ footer {
   .modal-body {
     padding: 1.5rem;
   }
+
+  .nav-logo-img {
+    max-height: 56px;
+  }
+
+  .modal-title {
+    font-size: 1.6rem;
+  }
+
+  .modal-hero-img {
+    max-height: 260px;
+  }
+
+  .carousel-slide {
+    height: 260px;
+  }
+
+  .carousel-nav-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .resume-actions-group .btn {
+    min-width: 0;
+    flex: 1 1 45%;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .about-bio-card,
+  .hero-desc-folder,
+  .resume-folder-content,
+  .sidebar-folder-body,
+  .cert-folder {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .polaroid-pile {
+    max-width: 260px;
+    height: 320px;
+  }
+
+  .carousel-slide {
+    height: 220px;
+  }
+
+  .modal-hero-img {
+    max-height: 220px;
+  }
+
+  .resume-actions-group .btn {
+    flex: 1 1 100%;
+  }
 }

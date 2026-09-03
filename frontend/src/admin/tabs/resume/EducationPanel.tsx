@@ -49,6 +49,9 @@ export function EducationPanel() {
         <div className="form-group">
           <label htmlFor="edu-school">School / Institution</label>
           <input id="edu-school" type="text" value={school} onChange={(e) => setSchool(e.target.value)} placeholder="e.g. Hogeschool Rotterdam" required />
+          <span className="form-group-hint" aria-hidden="true" style={{ visibility: "hidden" }}>
+            spacer
+          </span>
         </div>
         <TranslatableInput label="Degree / Major" value={degree} onChange={setDegree} placeholder="e.g. International Business" required />
         <TranslatableInput label="Short Description" value={desc} onChange={setDesc} placeholder="e.g. Focus: Digital Marketing" required />

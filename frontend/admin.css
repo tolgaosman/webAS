@@ -34,6 +34,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  row-gap: 0.75rem;
 }
 
 .admin-brand {
@@ -110,6 +112,10 @@
 /* Sections and Forms */
 .tab-content {
   display: none;
+  /* Admin tab panels are <section> elements, so they'd otherwise inherit
+     the public site's section { padding: 7rem 0 } and dashed border. */
+  padding: 0;
+  border-bottom: none;
 }
 
 .tab-content.active {
@@ -174,6 +180,28 @@
   padding: 1.25rem;
   border: 2px solid var(--border-color);
   border-radius: 12px;
+}
+
+@media (max-width: 640px) {
+  .inline-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .inline-form .form-group {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+
+  .inline-form .skill-form-actions {
+    flex-direction: row;
+    align-self: stretch;
+    width: 100%;
+  }
+
+  .inline-form .skill-form-actions .btn {
+    flex: 1;
+  }
 }
 
 .inline-form .form-group {
@@ -357,6 +385,7 @@
 .editor-actions {
   display: flex;
   justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 2rem;
 }
@@ -429,6 +458,7 @@
 
 .export-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
@@ -533,6 +563,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   margin-bottom: 1.5rem;
 }
 
@@ -541,20 +573,64 @@
   .admin-body-folder {
     padding: 1.25rem;
   }
-  
+
   .tab-btn {
     flex: 1 1 45%;
     border-bottom: 2px solid var(--border-color);
     border-radius: 8px;
     margin-bottom: 0.25rem;
   }
-  
+
   .admin-folder-tabs {
     margin-bottom: 1rem;
   }
-  
+
   .resume-manager-tabs {
     flex-wrap: wrap;
+  }
+
+  .editor-card {
+    padding: 1.25rem;
+  }
+
+  .editor-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .admin-table th,
+  .admin-table td {
+    padding: 0.7rem 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-header-container {
+    padding: 0 1rem;
+  }
+
+  .admin-brand {
+    gap: 0.75rem;
+  }
+
+  .tab-btn {
+    flex: 1 1 100%;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .editor-card {
+    width: 95%;
+    padding: 1rem;
+  }
+
+  .editor-actions {
+    flex-direction: column-reverse;
+  }
+
+  .editor-actions .btn {
+    width: 100%;
   }
 }
 
