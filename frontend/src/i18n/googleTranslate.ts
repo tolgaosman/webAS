@@ -65,6 +65,8 @@ export function clearGoogTrans(): void {
  */
 export function ensureDefaultLocale(): void {
   if (typeof document === "undefined") return;
+  if (localStorage.getItem("googtrans_explicit") === "true") return;
+  
   const hasCookie = document.cookie.split(";").some((c) => c.trim().startsWith(`${COOKIE_NAME}=`));
   if (!hasCookie) setGoogTrans("en");
 }

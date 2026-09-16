@@ -37,6 +37,8 @@ export function LangSelector({ onSelect }: { onSelect?: () => void }) {
     setOpen(false);
     if (l === active) return;
 
+    localStorage.setItem("googtrans_explicit", "true");
+    
     if (l === "tr") {
       clearGoogTrans();
     } else {
