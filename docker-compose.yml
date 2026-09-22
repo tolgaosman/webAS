@@ -25,7 +25,7 @@ services:
     # Port 9000 is not exported to the host — only nginx (the "web"
     # service) talks to it, over the compose network.
     env_file:
-      - ./backend/.env
+      - .env
     volumes:
       - ./uploads:/var/www/uploads
     depends_on:
