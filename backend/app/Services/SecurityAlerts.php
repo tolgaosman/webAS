@@ -22,39 +22,47 @@ class SecurityAlerts
 
     public static function recordFailedLogin(string $ip, string $email): void
     {
-        $key = "failed_logins:{$ip}";
-        $attempts = Cache::get($key, []);
-        $attempts[] = ['email' => $email, 'timestamp' => time()];
-        // Drop anything outside the sliding window.
-        $attempts = array_values(array_filter(
-            $attempts,
-            fn ($a) => $a['timestamp'] > time() - self::WINDOW_SECONDS
-        ));
-        Cache::put($key, $attempts, self::WINDOW_SECONDS);
+        try {
+            $key = "failed_logins:{$ip}";
+            $attempts = Cache::get($key, []);
+            $attempts[] = ['email' => $email, 'timestamp' => time()];
+            // Drop anything outside the sliding window.
+            $attempts = array_values(array_filter(
+                $attempts,
+                fn ($a) => $a['timestamp'] > time() - self::WINDOW_SECONDS
+            ));
+            Cache::put($key, $attempts, self::WINDOW_SECONDS);
 
-        // config('webas.failed_login_alert_threshold'), not env() directly
-        // — see config/webas.php's docblock (hata #2).
-        $threshold = (int) config('webas.failed_login_alert_threshold');
-        if (count($attempts) < $threshold) {
-            return;
+            // config('webas.failed_login_alert_threshold'), not env() directly
+            // — see config/webas.php's docblock (hata #2).
+            $threshold = (int) config('webas.failed_login_alert_threshold');
+            if (count($attempts) < $threshold) {
+                return;
+            }
+
+            $cooldownKey = "failed_login_cooldown:{$ip}";
+            if (Cache::has($cooldownKey)) {
+                return;
+            }
+            Cache::put($cooldownKey, true, self::COOLDOWN_SECONDS);
+
+            self::sendSecurityEvent(
+                'Şüpheli Giriş Denemeleri',
+                sprintf('IP %s adresinden %d başarısız giriş denemesi tespit edildi. Son deneme: %s', $ip, count($attempts), $email),
+                0xff0000
+            );
+        } catch (\Throwable $e) {
+            Log::warning('Redis or Cache failed in recordFailedLogin', ['error' => $e->getMessage()]);
         }
-
-        $cooldownKey = "failed_login_cooldown:{$ip}";
-        if (Cache::has($cooldownKey)) {
-            return;
-        }
-        Cache::put($cooldownKey, true, self::COOLDOWN_SECONDS);
-
-        self::sendSecurityEvent(
-            'Şüpheli Giriş Denemeleri',
-            sprintf('IP %s adresinden %d başarısız giriş denemesi tespit edildi. Son deneme: %s', $ip, count($attempts), $email),
-            0xff0000
-        );
     }
 
     public static function clearFailedLogins(string $ip): void
     {
-        Cache::forget("failed_logins:{$ip}");
+        try {
+            Cache::forget("failed_logins:{$ip}");
+        } catch (\Throwable $e) {
+            Log::warning('Redis or Cache failed in clearFailedLogins', ['error' => $e->getMessage()]);
+        }
     }
 
     public static function sendSecurityEvent(string $title, string $description, int $color = 0xffa500): void
