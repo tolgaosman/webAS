@@ -1,5 +1,5 @@
 import { usePortfolio } from "../../hooks/usePortfolio";
-import { useT } from "../../i18n/useTranslation";
+import { useT, useLocale } from "../../i18n/useTranslation";
 import { Reveal } from "../common/Reveal";
 import { FolderContainer } from "../common/FolderContainer";
 import { assetUrl } from "../../lib/assetUrl";
@@ -34,7 +34,17 @@ export function Hero() {
               {t(content["hero.titleLine2"])}
             </h1>
             <span className="hero-by-line">
-              {personal.name} {t(content["hero.bylineSuffix"])}
+              {(() => {
+                // We use the language-specific full string instead of interpolating name + suffix
+                // since word order differs by language (e.g. 'By Alara' vs 'Alara Tarafından')
+                // and the database currently lacks the name since the portfolio import hasn't run yet.
+                const { locale } = useLocale();
+                return {
+                  tr: "Alara Soysan Tarafından",
+                  en: "By Alara Soysan",
+                  nl: "Door Alara Soysan"
+                }[locale];
+              })()}
             </span>
           </div>
 
