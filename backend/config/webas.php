@@ -20,7 +20,7 @@
 
 return [
 
-    'jwt_secret' => env('JWT_SECRET', 'fallback_secret_change_in_production'),
+    'jwt_secret' => env('JWT_SECRET', 'temp-secret-key-12345-webas-fallback-xyz'),
 
     'admin_email' => env('ADMIN_EMAIL', 'alarasoysan@gmail.com'),
 
