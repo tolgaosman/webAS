@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 return [
 
-    'default' => env('CACHE_STORE', 'redis'),
+    'default' => 'file', // FORCED to file to fix Redis connection issues in Coolify
 
     'stores' => [
 
