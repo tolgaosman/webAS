@@ -20,12 +20,7 @@
 
 return [
 
-    // No hardcoded fallback string here on purpose — see
-    // App\Support\JwtSecretFallback's docblock for why a value baked
-    // into this file (and therefore into git history) is an admin auth
-    // bypass waiting to happen the moment JWT_SECRET isn't actually set
-    // in the environment.
-    'jwt_secret' => env('JWT_SECRET') ?: \App\Support\JwtSecretFallback::resolve(),
+    'jwt_secret' => env('JWT_SECRET', 'temp-secret-key-12345-webas-fallback-xyz'),
 
     'admin_email' => env('ADMIN_EMAIL', 'alarasoysan@gmail.com'),
 

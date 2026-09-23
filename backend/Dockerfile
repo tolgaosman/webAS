@@ -2,7 +2,7 @@
 FROM php:8.4-fpm-alpine
 
 RUN apk add --no-cache \
-        git curl libzip-dev zip unzip icu-dev oniguruma-dev su-exec \
+        git curl libzip-dev zip unzip icu-dev oniguruma-dev \
     && docker-php-ext-install pdo pdo_mysql zip intl opcache bcmath
 
 # phpredis (hata #6): CACHE_STORE=redis + REDIS_CLIENT=phpredis need the
@@ -28,17 +28,8 @@ RUN composer dump-autoload --optimize --no-dev
 
 RUN chown -R www-data:www-data storage bootstrap/cache
 
-# entrypoint.sh (hata #7): the container must start as root so it can
-# chown the ./uploads bind mount (docker-compose.yaml) before dropping
-# to www-data — Coolify recreates that host directory as root:root on
-# any deploy where it doesn't already exist, which otherwise makes
-# every /api/portfolio/upload-image request 500 with "sunucu yükleme
-# klasörüne yazamıyor" (see PortfolioController::uploadImage). su-exec
-# does the actual privilege drop; the php-fpm master process still ends
-# up running as www-data, same as the old `USER www-data` line did.
-RUN chmod +x docker/entrypoint.sh
+USER www-data
 
 EXPOSE 9000
 
-ENTRYPOINT ["docker/entrypoint.sh"]
 CMD ["php-fpm"]

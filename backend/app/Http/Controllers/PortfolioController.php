@@ -88,8 +88,10 @@ class PortfolioController extends Controller
             // The route sits behind auth.jwt, so naming the resolved path
             // here isn't a leak to the public — it's what turns a repeat
             // of this failure into a one-look diagnosis instead of
-            // another round of server log spelunking. See
-            // backend/docker/entrypoint.sh for the actual fix.
+            // another round of server log spelunking. The fix is a
+            // chown of the uploads bind mount to www-data on the host
+            // (see deploy.sh) — the container itself runs as www-data
+            // and cannot repair the mount's ownership on its own.
             return response()->json([
                 'error' => "{$label} kaydedilemedi — sunucu yükleme klasörüne yazamıyor ({$root}).",
             ], 500);
