@@ -2,7 +2,7 @@
   "personal": {
     "name": "Alara Soysan",
     "email": "alarasoysan@gmail.com",
-    "phone": "+31625632446",
+    "phone": "+31625632446 / +905338626078",
     "instagram": "https://instagram.com/alarasysn",
     "linkedin": "https://www.linkedin.com/in/alara-soysan-84b99a298/",
     "cvUrl": "alaraCV.pdf",
@@ -101,37 +101,55 @@
       "school": "Hogeschool Rotterdam",
       "degree": "BSc International Business",
       "desc": "Uzmanlık: Organisation &amp;amp; Change Management. Organizasyonel dönüşüm, stratejik planlama ve uluslararası kurumsal yönetim eğitimi."
+    },
+    {
+      "date": "Extra Courses",
+      "school": "Additional Training",
+      "degree": "Certifications & Courses",
+      "desc": "Google Analytics (GA4), Economics and Leadership, Sustainable Marketing, AI Business Essentials."
     }
   ],
   "experience": [
     {
       "id": "exp-1",
       "date": "FEBRUARY 2026 - PRESENT",
-      "role": "HR &amp;amp; Branding Intern",
+      "role": "HR & Branding Intern",
       "company": "Turkcell",
       "accomplishments": [
-        "Designing social media visual and video content for employer branding projects using Canva and CapCut.",
-        "Coordination of internal communication and employee engagement activities.",
-        "Inter-team collaboration to maintain brand integrity across channels."
+        "Supported internal communication and employee engagement initiatives across digital channels.",
+        "Assisted in planning and publishing content across social media platforms.",
+        "Contributed creative ideas to improve engagement and brand visibility."
       ]
     },
     {
       "id": "exp-2",
       "date": "FEBRUARY 2025 - FEBRUARY 2026",
-      "role": "Stock Filler",
+      "role": "Stack Filler",
       "company": "Albert Heijn",
       "accomplishments": [
-        "Maintaining customer relationships and product flow in a dynamic store environment.",
-        "Time management and team coordination skills."
+        "Assisted customers and ensured product availability.",
+        "Worked in a fast-paced environment.",
+        "Improved teamwork skills and time management."
+      ]
+    },
+    {
+      "id": "exp-new-cafe",
+      "date": "2022",
+      "role": "Cafe Worker",
+      "company": "Cyprus",
+      "accomplishments": [
+        "Delivered friendly and efficient customer service.",
+        "Collaborated with team members for smooth operations."
       ]
     },
     {
       "id": "exp-3",
-      "date": "2022",
-      "role": "Science Exhibitions Volunteer",
-      "company": "Volunteer Work",
+      "date": "2021 - 2022",
+      "role": "Volunteer",
+      "company": "Science Exhibitions",
       "accomplishments": [
-        "Setting up and presenting interactive science booths to visitors."
+        "Supported interactive science exhibitions for visitors.",
+        "Developed strong communication and presentation skills."
       ]
     }
   ],
@@ -150,17 +168,16 @@
     }
   ],
   "toolkit": [
-    "Microsoft Office",
-    "SPSS Tool",
-    "Canva Visuals",
-    "CapCut Editing",
-    "Content Creation",
-    "SEO Copywriting",
+    "Microsoft Office Package",
+    "SPSS",
+    "Visual Design",
+    "Video Editing",
+    "Social Media Content Creation",
+    "Basic SEO & Digital Marketing",
     "Google Analytics",
-    "Email Marketing",
     "Communication",
     "Adaptability",
-    "Collaboration",
+    "Team collaboration",
     "Time Management"
   ],
   "certificates": [
