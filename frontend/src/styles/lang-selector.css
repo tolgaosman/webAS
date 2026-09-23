@@ -15,23 +15,23 @@
   gap: 0.4rem;
   background: var(--card-bg, #fff);
   border: 2px solid var(--border-color, #1c2c3d);
-  border-radius: 20px;
+  border-radius: var(--radius-xl, 20px);
   padding: 0.35rem 0.85rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-primary, #1c2c3d);
   cursor: pointer;
-  box-shadow: 2px 2px 0px var(--border-color, #1c2c3d);
-  transition: all 0.15s ease;
+  box-shadow: var(--shadow-retro-sm, 2px 2px 0px #1c2c3d);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
   white-space: nowrap;
 }
 
 .lang-btn:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0px var(--border-color, #1c2c3d);
+  box-shadow: var(--shadow-retro-md, 4px 4px 0px #1c2c3d);
 }
 
 .lang-btn svg {
@@ -47,8 +47,8 @@
   right: 0;
   background: var(--card-bg, #fff);
   border: 2px solid var(--border-color, #1c2c3d);
-  border-radius: 12px;
-  box-shadow: 3px 3px 0px var(--border-color, #1c2c3d);
+  border-radius: var(--radius-md, 12px);
+  box-shadow: var(--shadow-retro-md, 4px 4px 0px #1c2c3d);
   overflow: hidden;
   z-index: 2000;
   min-width: 130px;
@@ -63,7 +63,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.55rem 1rem;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-sans);
   font-size: 0.82rem;
   font-weight: 600;
   color: var(--text-primary, #1c2c3d);

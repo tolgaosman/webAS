@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent } from "react";
 import { uploadImage } from "../../lib/adminApi";
+import { toastError } from "../../lib/toast";
 import { CarouselThumbStrip } from "./CarouselThumbStrip";
 
 interface MultiFileUploadFieldProps {
@@ -30,7 +31,7 @@ export function MultiFileUploadField({ label, paths, onChange }: MultiFileUpload
 
     const newUrls = results.filter((u): u is string => u !== null);
     if (newUrls.length === 0) {
-      alert("Görseller yüklenemedi.");
+      toastError("Görseller yüklenemedi.");
       return;
     }
     onChange([...paths, ...newUrls]);

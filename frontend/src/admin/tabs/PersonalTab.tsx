@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getPersonal, updatePersonal, ApiError, formatApiError } from "../../lib/adminApi";
+import { toastSuccess, toastError } from "../../lib/toast";
 import { assetUrl } from "../../lib/assetUrl";
 import { FileUploadField } from "../fields/FileUploadField";
 import type { Personal } from "../../types/portfolio";
@@ -35,9 +36,9 @@ export function PersonalTab() {
     try {
       const updated = await updatePersonal<Personal>(data);
       setData(updated);
-      alert("Personal details updated successfully!");
+      toastSuccess("Kişisel bilgiler kaydedildi.");
     } catch (err) {
-      alert("Hata: " + formatApiError(err));
+      toastError(formatApiError(err));
     } finally {
       setSaving(false);
     }

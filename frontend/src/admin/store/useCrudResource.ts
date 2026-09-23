@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { createResource, deleteResource, listResource, reorderResource, updateResource, ApiError } from "../../lib/adminApi";
+import { createResource, deleteResource, listResource, reorderResource, updateResource, ApiError, formatApiError } from "../../lib/adminApi";
+import { toastSuccess, toastError } from "../../lib/toast";
 
 interface WithId {
   id: number;
@@ -36,17 +37,29 @@ export function useCrudResource<T extends WithId>(resource: string) {
 
   const create = useCallback(
     async (payload: unknown) => {
-      const item = await createResource<T>(resource, payload);
-      await reload();
-      return item;
+      try {
+        const item = await createResource<T>(resource, payload);
+        await reload();
+        toastSuccess("Kaydedildi.");
+        return item;
+      } catch (e) {
+        toastError(formatApiError(e));
+        throw e;
+      }
     },
     [resource, reload]
   );
 
   const update = useCallback(
     async (id: number, payload: unknown) => {
-      await updateResource<T>(resource, id, payload);
-      await reload();
+      try {
+        await updateResource<T>(resource, id, payload);
+        await reload();
+        toastSuccess("Değişiklikler kaydedildi.");
+      } catch (e) {
+        toastError(formatApiError(e));
+        throw e;
+      }
     },
     [resource, reload]
   );
@@ -54,8 +67,14 @@ export function useCrudResource<T extends WithId>(resource: string) {
   const remove = useCallback(
     async (id: number) => {
       if (!window.confirm("Silmek istediğinize emin misiniz?")) return;
-      await deleteResource(resource, id);
-      await reload();
+      try {
+        await deleteResource(resource, id);
+        await reload();
+        toastSuccess("Silindi.");
+      } catch (e) {
+        toastError(formatApiError(e));
+        throw e;
+      }
     },
     [resource, reload]
   );
@@ -64,7 +83,12 @@ export function useCrudResource<T extends WithId>(resource: string) {
     async (ids: number[]) => {
       // Optimistic — the drag already shows the new order.
       setItems((prev) => ids.map((id) => prev.find((i) => i.id === id)!).filter(Boolean));
-      await reorderResource(resource, ids);
+      try {
+        await reorderResource(resource, ids);
+      } catch (e) {
+        toastError(formatApiError(e));
+        throw e;
+      }
     },
     [resource]
   );

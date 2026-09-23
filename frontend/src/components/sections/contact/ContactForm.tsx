@@ -2,6 +2,7 @@ import { useState } from "react";
 import { usePortfolio } from "../../../hooks/usePortfolio";
 import { useDict, useT } from "../../../i18n/useTranslation";
 import { sanitizeUrl } from "../../../lib/sanitize";
+import { toastError } from "../../../lib/toast";
 
 export function ContactForm() {
   const { personal, content } = usePortfolio();
@@ -15,7 +16,7 @@ export function ContactForm() {
     e.preventDefault();
 
     if (!name || !email || !message) {
-      alert(dict.contact.validationAlert);
+      toastError(dict.contact.validationAlert);
       return;
     }
 

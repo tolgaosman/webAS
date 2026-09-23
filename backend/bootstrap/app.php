@@ -41,22 +41,6 @@ return Application::configure(basePath: dirname(__DIR__))
         // \Throwable catch-all is registered FIRST here so the more
         // specific NotFoundHttpException/AuthenticationException handlers
         // — registered after it — are the ones actually tried first.
-        $exceptions->render(function (\Throwable $e, Request $request) {
-            if (! $request->is('api/*')) {
-                return null;
-            }
-            if ($e instanceof \Illuminate\Validation\ValidationException) {
-                return null; // handled by the dedicated ValidationException render() below
-            }
-
-            report($e);
-
-            return response()->json([
-                'error' => app()->environment('production')
-                    ? 'Sunucu hatası oluştu.'
-                    : $e->getMessage(),
-            ], 500);
-        });
 
         $exceptions->render(function (\Illuminate\Auth\AuthenticationException $e, Request $request) {
             if ($request->is('api/*')) {
@@ -96,9 +80,21 @@ return Application::configure(basePath: dirname(__DIR__))
         // A resource controller's findOrFail() throws this before routing
         // ever gets a chance to produce the generic 404 above.
         $exceptions->render(function (\Illuminate\Database\Eloquent\ModelNotFoundException $e, Request $request) {
-            if ($request->is('api/*')) {
-                return response()->json(['error' => 'Kayıt bulunamadı.'], 404);
+            return response()->json(['error' => 'Kayıt bulunamadı.'], 404);
+        });
+
+        $exceptions->render(function (\Throwable $e, Request $request) {
+            if (! $request->is('api/*')) {
+                return null;
             }
+            
+            report($e);
+
+            return response()->json([
+                'error' => app()->environment('production')
+                    ? 'Sunucu hatası oluştu.'
+                    : $e->getMessage(),
+            ], 500);
         });
     })
     ->create();

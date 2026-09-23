@@ -14,24 +14,75 @@
   --text-muted: #738b9e;
   --border-color: #1f2933;
   
-  --primary-accent: #ec829c;       /* Soft bold pink */
-  --primary-accent-rgb: 236, 130, 156;
+  --primary-accent: #d97a92;       /* Dusty rose — same hue family as the
+                                      original #ec829c, one notch less
+                                      saturated and slightly deeper so white
+                                      is no longer the only readable text
+                                      colour on it (see .btn-primary). */
+  --primary-accent-rgb: 217, 122, 146;
   --secondary-accent: #8cb6d4;     /* Muted sky blue */
   --secondary-accent-rgb: 140, 182, 212;
-  --yellow-accent: #ffdae3;        /* Soft pink highlight */
-  
+  --yellow-accent: #f5e6cd;        /* Warm sand. Used to be #ffdae3, a third
+                                      pink, which made the palette read as
+                                      pink + pink + baby blue. A genuinely
+                                      warm third tone balances the cool
+                                      ground and the rose, and the token name
+                                      finally matches what it holds. */
+
   --nav-bg: rgba(242, 247, 252, 0.9);
   --modal-bg: rgba(242, 247, 252, 0.98);
-  
-  /* Retro Flat Shadows */
+
+  /* Retro Flat Shadows.
+     Every surface in this design casts a hard, zero-blur offset shadow in
+     the ink colour. Hover states step one rung up the scale and translate
+     the element by the difference, which reads as the element lifting off
+     the page; :active steps down, which reads as pressing it in. Before,
+     those hover/active sizes were written out by hand at each call site
+     (3px, 6px, 8px, 12px...), so the scale existed only by convention.
+     xs and xl close the gaps so every call site can use a token. */
+  --shadow-retro-xs: 1px 1px 0px var(--border-color);
   --shadow-retro-sm: 2px 2px 0px var(--border-color);
   --shadow-retro-md: 4px 4px 0px var(--border-color);
   --shadow-retro-lg: 8px 8px 0px var(--border-color);
-  
+  --shadow-retro-xl: 10px 10px 0px var(--border-color);
+
+  /* Radius scale. This file used to carry eight unrelated values
+     (50/30/24/20/16/12/10/8px) picked per component; four rungs plus the
+     circle cover every case and keep inner elements tighter than the
+     containers that hold them. */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-circle: 50%;
+
+  /* Fluid display sizes. Everything else stays on the rem scale; only the
+     headings that have to survive from 320px to 1440px interpolate. */
+  --fs-display: clamp(2.2rem, 1.2rem + 4.2vw, 4rem);
+  --fs-section: clamp(2rem, 1.4rem + 2vw, 2.6rem);
+  --fs-modal-title: clamp(1.6rem, 1.2rem + 1.2vw, 2.2rem);
+  --fs-byline: clamp(1.25rem, 1rem + 0.9vw, 1.8rem);
+
   --font-serif: 'Fraunces', 'Playfair Display', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-fast: all 0.15s ease;
+
+  /* Both transitions used to be `all`, which meant every hover repainted
+     properties nobody was animating. These list only what actually moves. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth:
+    transform 0.35s var(--ease-out-expo),
+    box-shadow 0.35s var(--ease-out-expo),
+    background-color 0.35s var(--ease-out-expo),
+    border-color 0.35s var(--ease-out-expo),
+    color 0.35s var(--ease-out-expo),
+    opacity 0.35s var(--ease-out-expo);
+  --transition-fast:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    opacity 0.15s ease;
 }
 
 /* Dark Navy & Pink Mode (Dark Theme Toggler) */
@@ -50,7 +101,7 @@
   --primary-accent-rgb: 252, 164, 183;
   --secondary-accent: #a9ccee;     /* Light pastel blue */
   --secondary-accent-rgb: 169, 204, 238;
-  --yellow-accent: #4d333e;        /* Dark pink tint */
+  --yellow-accent: #3a3226;        /* Warm dark sand — mirrors the light theme's rename from a third pink to an actual neutral. */
   
   --nav-bg: rgba(26, 34, 46, 0.9);
   --modal-bg: rgba(26, 34, 46, 0.98);
@@ -71,12 +122,74 @@
   border: 0 !important;
 }
 
+.skip-link {
+  position: absolute;
+  top: -4rem;
+  left: 1rem;
+  z-index: 3000;
+  background-color: var(--card-bg);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 0.6rem 1.25rem;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow-retro-md);
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+  outline: 2px solid var(--border-color);
+  outline-offset: 3px;
+}
+
+main:focus {
+  outline: none;
+}
+
+/* Keyboard-only focus ring. :focus-visible already excludes most mouse
+   clicks, so this can stay bold without adding a ring on every click. */
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--border-color);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.form-control:focus-visible {
+  outline: 2px solid var(--border-color);
+  outline-offset: 2px;
+}
+
 /* Base Reset & Grid */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 html, body {
@@ -107,10 +220,12 @@ h1, h2, h3, h4, h5 {
   font-weight: 700;
   color: var(--text-primary);
   line-height: 1.15;
+  text-wrap: balance;
 }
 
 p {
   font-family: var(--font-sans);
+  text-wrap: pretty;
 }
 
 /* Section Header styling like the screenshot */
@@ -123,19 +238,19 @@ p {
 .section-tag {
   font-family: var(--font-sans);
   font-size: 0.85rem;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.12em;
   color: var(--primary-accent);
   margin-bottom: 0.5rem;
   display: block;
 }
 
 .section-title {
-  font-size: 2.8rem;
-  font-weight: 900;
+  font-size: var(--fs-section);
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   margin-bottom: 1rem;
 }
 
@@ -157,6 +272,7 @@ section {
   padding: 7rem 0;
   position: relative;
   border-bottom: 2px dashed var(--border-color);
+  scroll-margin-top: 6.5rem;
 }
 
 section:last-of-type {
@@ -239,13 +355,13 @@ header.nav-hidden {
   font-family: var(--font-sans);
   text-decoration: none;
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-secondary);
   transition: var(--transition-fast);
   padding: 0.4rem 0.6rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   border: 1.5px solid transparent;
   white-space: nowrap;
 }
@@ -325,7 +441,7 @@ header.nav-hidden {
 .folder-container {
   background-color: var(--card-bg);
   border: 2px solid var(--border-color);
-  border-radius: 0 16px 16px 16px;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) var(--radius-lg);
   position: relative;
   margin-top: 1.5rem;
   box-shadow: var(--shadow-retro-md);
@@ -345,9 +461,9 @@ header.nav-hidden {
   padding: 0 1.25rem;
   font-family: var(--font-sans);
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -362,8 +478,8 @@ header.nav-hidden {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   text-decoration: none;
-  padding: 0.75rem 1.75rem;
-  border-radius: 30px;
+  padding: 0.85rem 1.75rem;
+  border-radius: var(--radius-xl);
   border: 2px solid var(--border-color);
   cursor: pointer;
   display: inline-flex;
@@ -378,21 +494,17 @@ header.nav-hidden {
 
 .btn-primary {
   background-color: var(--primary-accent);
-  color: #ffffff;
-}
-
-[data-theme="dark"] .btn-primary {
   color: var(--text-primary);
 }
 
 .btn-primary:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-lg);
 }
 
 .btn-primary:active {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-sm);
 }
 
 .btn-secondary {
@@ -403,12 +515,12 @@ header.nav-hidden {
 .btn-secondary:hover {
   background-color: var(--folder-bg);
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-lg);
 }
 
 .btn-secondary:active {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-sm);
 }
 
 /* Hero Section */
@@ -417,7 +529,7 @@ header.nav-hidden {
   display: flex;
   align-items: center;
   padding-top: 7rem;
-  background-image: radial-gradient(var(--bg-pattern) 1.5px, transparent 1.5px);
+  background-image: radial-gradient(var(--bg-pattern) 2px, transparent 2px);
   background-size: 24px 24px;
 }
 
@@ -455,8 +567,8 @@ header.nav-hidden {
 }
 
 .polaroid-frame:hover {
-  transform: rotate(1deg) scale(1.02);
-  box-shadow: 12px 12px 0px var(--border-color);
+  transform: rotate(-0.5deg) scale(1.015);
+  box-shadow: var(--shadow-retro-xl);
 }
 
 .polaroid-image-box {
@@ -496,7 +608,7 @@ header.nav-hidden {
 .hero-marketing-label {
   font-family: var(--font-sans);
   font-size: 0.9rem;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--primary-accent);
@@ -505,17 +617,16 @@ header.nav-hidden {
 }
 
 .hero-main-title {
-  font-size: 4rem;
+  font-size: var(--fs-display);
   line-height: 1.05;
   text-transform: uppercase;
   margin-bottom: 0.5rem;
   overflow-wrap: break-word;
-  word-wrap: break-word;
 }
 
 .hero-by-line {
   font-family: var(--font-serif);
-  font-size: 1.8rem;
+  font-size: var(--fs-byline);
   font-style: italic;
   color: var(--text-secondary);
 }
@@ -528,6 +639,7 @@ header.nav-hidden {
   font-size: 1.1rem;
   color: var(--text-primary);
   margin-bottom: 1.5rem;
+  max-width: 65ch;
 }
 
 .hero-actions {
@@ -561,7 +673,7 @@ header.nav-hidden {
 .social-btn:hover {
   background-color: var(--folder-bg);
   transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-md);
 }
 
 .social-btn svg {
@@ -585,6 +697,7 @@ header.nav-hidden {
   font-size: 1.1rem;
   color: var(--text-primary);
   margin-bottom: 1.5rem;
+  max-width: 65ch;
 }
 
 .about-bio-card p:last-child {
@@ -602,7 +715,7 @@ header.nav-hidden {
 }
 
 .about-interests-card h3 {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   margin-bottom: 1.5rem;
   border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
@@ -623,7 +736,7 @@ header.nav-hidden {
   background-color: var(--bg-color);
   border: 2px solid var(--border-color);
   padding: 0.5rem 1rem;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   font-weight: 700;
   color: var(--text-primary);
   box-shadow: var(--shadow-retro-sm);
@@ -632,7 +745,7 @@ header.nav-hidden {
 
 .hobby-item:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-md);
   background-color: var(--folder-bg);
 }
 
@@ -649,7 +762,7 @@ header.nav-hidden {
 }
 
 .skills-intro-group h3 {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   margin-bottom: 2rem;
   text-align: center;
 }
@@ -670,7 +783,7 @@ header.nav-hidden {
 .skill-sticky {
   background-color: var(--card-bg);
   border: 2px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 1.5rem;
   box-shadow: var(--shadow-retro-md);
   transition: var(--transition-smooth);
@@ -689,7 +802,7 @@ header.nav-hidden {
   background-color: var(--primary-accent);
   border-radius: 50%;
   border: 2px solid var(--border-color);
-  box-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-retro-xs);
 }
 
 .skill-sticky-2 {
@@ -701,11 +814,11 @@ header.nav-hidden {
 }
 
 .skill-sticky-4 {
-  background-color: #cbd5e1;
+  background-color: #cdddea;
 }
 
 [data-theme="dark"] .skill-sticky-4 {
-  background-color: #4b5563;
+  background-color: #3d4f63;
 }
 
 .skill-sticky-5 {
@@ -717,8 +830,8 @@ header.nav-hidden {
 }
 
 .skill-sticky:hover {
-  transform: translateY(-5px) rotate(1deg);
-  box-shadow: 6px 6px 0px var(--border-color);
+  transform: translateY(-5px) rotate(0.5deg);
+  box-shadow: var(--shadow-retro-lg);
 }
 
 .skill-sticky-content {
@@ -761,7 +874,7 @@ header.nav-hidden {
   width: 100%;
   aspect-ratio: 3 / 4;
   border: 2px solid var(--border-color);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   background-color: var(--folder-bg);
   box-shadow: var(--shadow-retro-md);
@@ -779,7 +892,7 @@ header.nav-hidden {
 
 .specialty-panel:hover .specialty-frame {
   transform: translateY(-6px);
-  box-shadow: 8px 8px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-lg);
 }
 
 .specialty-panel:hover .specialty-frame img {
@@ -800,6 +913,11 @@ header.nav-hidden {
   color: var(--text-secondary);
   margin-bottom: 1.5rem;
   max-width: 280px;
+  flex-grow: 1;
+}
+
+.specialty-panel .btn {
+  margin-top: auto;
 }
 
 /* Portfolio Section */
@@ -812,7 +930,7 @@ header.nav-hidden {
 .portfolio-card {
   background-color: var(--card-bg);
   border: 2px solid var(--border-color);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -823,7 +941,7 @@ header.nav-hidden {
 
 .portfolio-card:hover {
   transform: translate(-3px, -3px);
-  box-shadow: 8px 8px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-lg);
 }
 
 .portfolio-img-box {
@@ -1007,7 +1125,7 @@ header.nav-hidden {
 }
 
 .sidebar-title {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   margin-bottom: 1.5rem;
   border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
@@ -1065,7 +1183,7 @@ header.nav-hidden {
   border: 1.5px solid var(--border-color);
   color: var(--text-primary);
   padding: 0.4rem 0.8rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 0.8rem;
   font-weight: 700;
   box-shadow: var(--shadow-retro-sm);
@@ -1075,7 +1193,7 @@ header.nav-hidden {
 .retro-badge:hover {
   background-color: var(--yellow-accent);
   transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-md);
 }
 
 /* Certificates Section (Folder cards like Slide 2) */
@@ -1094,7 +1212,7 @@ header.nav-hidden {
   aspect-ratio: 1.414 / 1;
   object-fit: cover;
   border: 1.5px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   margin-bottom: 1rem;
 }
 
@@ -1116,7 +1234,7 @@ header.nav-hidden {
   align-items: center;
   font-weight: 800;
   font-size: 0.8rem;
-  color: #3d3028;
+  color: var(--text-primary);
 }
 
 .cert-issuer-name {
@@ -1215,11 +1333,11 @@ header.nav-hidden {
 }
 
 .polaroid-pile:hover .pile-1 {
-  transform: rotate(-14deg) translate(-10px, -5px);
+  transform: rotate(-10deg) translate(-10px, -5px);
 }
 
 .polaroid-pile:hover .pile-2 {
-  transform: rotate(8deg) translate(30px, -5px);
+  transform: rotate(6deg) translate(30px, -5px);
 }
 
 .contact-channels {
@@ -1237,7 +1355,7 @@ header.nav-hidden {
   background-color: var(--card-bg);
   border: 2px solid var(--border-color);
   padding: 1rem 1.25rem;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-retro-sm);
   transition: var(--transition-fast);
   text-decoration: none;
@@ -1246,7 +1364,7 @@ header.nav-hidden {
 
 .contact-button-card:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-md);
   background-color: var(--folder-bg);
 }
 
@@ -1259,7 +1377,7 @@ header.nav-hidden {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #3d3028;
+  color: var(--text-primary);
 }
 
 .contact-card-icon svg {
@@ -1289,7 +1407,7 @@ header.nav-hidden {
 .contact-form-container {
   background-color: var(--card-bg);
   border: 2px solid var(--border-color);
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   padding: 2.5rem;
   box-shadow: var(--shadow-retro-lg);
 }
@@ -1330,7 +1448,7 @@ header.nav-hidden {
   font-family: var(--font-sans);
   background-color: var(--bg-color);
   border: 2px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 0.8rem 1.2rem;
   color: var(--text-primary);
   font-size: 0.95rem;
@@ -1357,14 +1475,14 @@ textarea.form-control {
 .form-submit-btn {
   width: 100%;
   background-color: var(--primary-accent);
-  color: #ffffff;
+  color: var(--text-primary);
   border: 2px solid var(--border-color);
   font-size: 0.9rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   padding: 0.9rem;
-  border-radius: 30px;
+  border-radius: var(--radius-xl);
   cursor: pointer;
   box-shadow: var(--shadow-retro-md);
   transition: var(--transition-fast);
@@ -1374,18 +1492,14 @@ textarea.form-control {
   gap: 0.5rem;
 }
 
-[data-theme="dark"] .form-submit-btn {
-  color: var(--text-primary);
-}
-
 .form-submit-btn:hover {
   transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-lg);
 }
 
 .form-submit-btn:active {
   transform: translate(1px, 1px);
-  box-shadow: 2px 2px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-sm);
 }
 
 .form-submit-btn svg {
@@ -1396,14 +1510,8 @@ textarea.form-control {
 
 .whatsapp-btn {
   background-color: #25D366;
-  border-color: #128C7E;
-  color: #ffffff;
-}
-
-[data-theme="dark"] .whatsapp-btn {
-  background-color: #25D366;
-  border-color: #128C7E;
-  color: #ffffff;
+  border-color: var(--border-color);
+  color: #0d3320;
 }
 
 .form-success-alert {
@@ -1490,7 +1598,7 @@ footer {
   width: 100%;
   max-width: 850px;
   max-height: calc(var(--app-vh, 100vh) * 0.9);
-  border-radius: 24px;
+  border-radius: var(--radius-xl);
   overflow-y: auto;
   position: relative;
   transform: scale(0.95) translateY(15px);
@@ -1561,7 +1669,7 @@ footer {
 }
 
 .modal-title {
-  font-size: 2.2rem;
+  font-size: var(--fs-modal-title);
 }
 
 .modal-hero-img {
@@ -1569,7 +1677,7 @@ footer {
   max-height: 380px;
   object-fit: cover;
   border: 2px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   margin-bottom: 2rem;
 }
 
@@ -1578,7 +1686,7 @@ footer {
   position: relative;
   width: 100%;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   border: 2px solid var(--border-color);
   margin-bottom: 2rem;
   background-color: var(--bg-color);
@@ -1646,13 +1754,13 @@ footer {
   cursor: pointer;
   z-index: 10;
   transition: var(--transition-fast);
-  box-shadow: 2px 2px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-sm);
 }
 
 .carousel-nav-btn:hover {
   background-color: var(--folder-bg-active);
   transform: translateY(-50%) translate(-1px, -1px);
-  box-shadow: 3px 3px 0px var(--border-color);
+  box-shadow: var(--shadow-retro-md);
 }
 
 .carousel-nav-btn.prev-btn {
@@ -1673,7 +1781,7 @@ footer {
   z-index: 10;
   background-color: rgba(255, 255, 255, 0.8);
   padding: 6px 12px;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   border: 2px solid var(--border-color);
 }
 
@@ -1739,7 +1847,7 @@ footer {
   background-color: var(--card-bg);
   border: 2px solid var(--border-color);
   padding: 1rem;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-retro-sm);
 }
 
@@ -1773,7 +1881,7 @@ footer {
   font-size: 0.75rem;
   font-weight: 800;
   padding: 0.3rem 0.6rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   box-shadow: var(--shadow-retro-sm);
 }
 
@@ -1824,6 +1932,29 @@ footer {
    stays "tr" always (index.html and LocaleProvider no longer change it,
    Google translates the rendered text without touching that attribute),
    so these selectors could never match. */
+
+/* Loading / error placeholder screens (App.tsx). Same folder-card
+   language as the rest of the site instead of raw unstyled text. */
+.state-screen {
+  min-height: var(--app-vh, 100vh);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7rem 2rem 4rem;
+  text-align: center;
+}
+
+.state-screen-card {
+  max-width: 420px;
+  background-color: var(--card-bg);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-retro-md);
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  color: var(--text-primary);
+}
 
 /* Intersection Observer Scroll Reveal */
 .reveal {
@@ -1933,14 +2064,6 @@ footer {
     display: none;
   }
   
-  .hero-main-title {
-    font-size: clamp(1.8rem, 8vw, 3rem);
-  }
-  
-  .section-title {
-    font-size: 2.2rem;
-  }
-  
   .skills-grid {
     grid-template-columns: 1fr;
   }
@@ -1976,10 +2099,6 @@ footer {
 
   .nav-logo-img {
     max-height: 56px;
-  }
-
-  .modal-title {
-    font-size: 1.6rem;
   }
 
   .modal-hero-img {
@@ -2018,10 +2137,6 @@ footer {
 @media (max-width: 480px) {
   .container {
     padding: 0 1.25rem;
-  }
-
-  .section-title {
-    font-size: 1.8rem;
   }
 
   .polaroid-pile {

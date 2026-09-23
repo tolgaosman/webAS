@@ -25,32 +25,43 @@ export function App() {
 
   return (
     <PortfolioContext.Provider value={state}>
+      {/* Lets keyboard users jump past the nav straight to the content;
+          only becomes visible on focus (see .skip-link in styles.css). */}
+      <a href="#main" className="skip-link">
+        İçeriğe geç
+      </a>
+
       <Header />
 
-      {state.status === "loading" && (
-        <div className="container" style={{ padding: "6rem 0", textAlign: "center" }}>
-          Yükleniyor...
-        </div>
-      )}
+      <main id="main" tabIndex={-1}>
+        {state.status === "loading" && (
+          <div className="state-screen">
+            <div className="state-screen-card">Yükleniyor...</div>
+          </div>
+        )}
 
-      {state.status === "error" && (
-        <div className="container" style={{ padding: "6rem 0", textAlign: "center" }}>
-          Veri yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.
-        </div>
-      )}
+        {state.status === "error" && (
+          <div className="state-screen">
+            <div className="state-screen-card" role="alert">
+              Veri yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.
+            </div>
+          </div>
+        )}
 
-      {state.status === "ready" && (
-        <>
-          <Hero />
-          <About />
-          <Specialties />
-          <Portfolio />
-          <Resume />
-          <Certificates />
-          <Contact />
-          <Footer />
-        </>
-      )}
+        {state.status === "ready" && (
+          <>
+            <Hero />
+            <About />
+            <Specialties />
+            <Portfolio />
+            <Resume />
+            <Certificates />
+            <Contact />
+          </>
+        )}
+      </main>
+
+      {state.status === "ready" && <Footer />}
     </PortfolioContext.Provider>
   );
 }

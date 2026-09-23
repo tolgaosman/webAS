@@ -8,7 +8,7 @@ export function CertCard({ cert }: { cert: Certificate }) {
   const t = useT();
   const [isOpen, setIsOpen] = useState(false);
   const isHubspot = cert.issuer.toLowerCase().includes("hubspot");
-  const accentStyle = isHubspot ? { backgroundColor: "#ff7a59", color: "white" } : undefined;
+  const accentStyle = isHubspot ? { color: "#ff7a59" } : undefined;
 
   return (
     <>
@@ -18,7 +18,7 @@ export function CertCard({ cert }: { cert: Certificate }) {
         </span>
         <img 
           className="cert-image" 
-          src={assetUrl(cert.image)} 
+          src={assetUrl(cert.image) || `https://picsum.photos/seed/${encodeURIComponent(cert.issuer)}/600/424`} 
           alt={t(cert.title)} 
           onClick={() => setIsOpen(true)}
           style={{ cursor: "zoom-in" }}
@@ -56,7 +56,7 @@ export function CertCard({ cert }: { cert: Certificate }) {
           }}
         >
           <img 
-            src={assetUrl(cert.image)} 
+            src={assetUrl(cert.image) || `https://picsum.photos/seed/${encodeURIComponent(cert.issuer)}/600/424`} 
             alt={t(cert.title)} 
             style={{
               maxHeight: "90vh",

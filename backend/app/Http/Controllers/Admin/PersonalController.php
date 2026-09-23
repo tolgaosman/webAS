@@ -15,7 +15,24 @@ class PersonalController extends Controller
 {
     public function show()
     {
-        return response()->json(['data' => Personal::query()->firstOrFail()]);
+        $record = Personal::query()->first();
+        
+        if (! $record) {
+            // Provide a default empty record if the table is freshly migrated
+            // without data, so the frontend form still loads.
+            $record = new Personal([
+                'id' => 1,
+                'name' => '',
+                'email' => '',
+                'phone' => '',
+                'instagram' => '',
+                'linkedin' => '',
+                'cv_url' => ['tr' => '', 'en' => '', 'nl' => ''],
+                'profile_image' => '',
+            ]);
+        }
+
+        return response()->json(['data' => $record]);
     }
 
     public function update(Request $request)
@@ -45,8 +62,14 @@ class PersonalController extends Controller
             'profile_image' => ['present', 'string', 'max:500'],
         ]);
 
-        $record = Personal::query()->firstOrFail();
-        $record->update($validated);
+        $record = Personal::query()->first();
+        if (! $record) {
+            $record = new Personal();
+            $record->id = 1;
+        }
+        
+        $record->fill($validated);
+        $record->save();
 
         return response()->json(['success' => true, 'data' => $record]);
     }

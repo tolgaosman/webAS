@@ -1,5 +1,6 @@
 import { useState, type ChangeEvent } from "react";
 import { uploadImage } from "../../lib/adminApi";
+import { toastError } from "../../lib/toast";
 
 interface FileUploadFieldProps {
   label: string;
@@ -27,7 +28,7 @@ export function FileUploadField({ label, value, onChange, onUploaded }: FileUplo
       onUploaded?.(url, file);
     } catch (err) {
       const timedOut = err instanceof Error && err.name === "AbortError";
-      alert(timedOut ? "Yükleme zaman aşımına uğradı. Lütfen tekrar deneyin." : "Görsel yüklenemedi: " + (err instanceof Error ? err.message : String(err)));
+      toastError(timedOut ? "Yükleme zaman aşımına uğradı. Lütfen tekrar deneyin." : "Görsel yüklenemedi: " + (err instanceof Error ? err.message : String(err)));
       onChange(original);
     } finally {
       setUploading(false);

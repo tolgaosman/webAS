@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getContentBlocks, updateContentBlocks, formatApiError } from "../../../lib/adminApi";
+import { toastSuccess, toastError } from "../../../lib/toast";
 import { TranslatableInput } from "../../fields/TranslatableInput";
 import type { LocalizedString } from "../../../i18n/types";
 
@@ -17,7 +18,7 @@ export function SectionHeadingsPanel() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    getContentBlocks<BlockMap>().then(setBlocks).catch((e) => alert(formatApiError(e)));
+    getContentBlocks<BlockMap>().then(setBlocks).catch((e) => toastError(formatApiError(e)));
   }, []);
 
   if (!blocks) return <p>Yükleniyor...</p>;
@@ -45,9 +46,9 @@ export function SectionHeadingsPanel() {
         return next;
       });
       setDirty({});
-      alert("Section headings updated.");
+      toastSuccess("Başlıklar kaydedildi.");
     } catch (err) {
-      alert("Hata: " + formatApiError(err));
+      toastError(formatApiError(err));
     } finally {
       setSaving(false);
     }

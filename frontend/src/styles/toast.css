@@ -1,0 +1,32 @@
+/* Toastify overrides so toasts match the site's retro-flat design
+   language (see styles.css's :root / [data-theme="dark"] variables):
+   a hard, zero-blur offset shadow and a 2px ink border, not the soft
+   Material-style shadow this started as. Shared by the admin panel and
+   the public contact form. */
+.app-toast {
+  border-radius: var(--radius-md, 12px);
+  padding: 0.75rem 1.1rem;
+  font-family: var(--font-sans, inherit);
+  font-size: 0.95rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-retro-md, 4px 4px 0px #1f2933);
+  background: var(--card-bg);
+  color: var(--text-primary);
+  border: 2px solid var(--border-color);
+}
+
+.app-toast--success {
+  border-left: 6px solid #4caf7d;
+}
+
+.app-toast--error {
+  border-left: 6px solid #c65b5b;
+}
+
+.app-toast--info {
+  border-left: 6px solid var(--secondary-accent, #8cb6d4);
+}
+
+.toastify.on {
+  opacity: 1;
+}
