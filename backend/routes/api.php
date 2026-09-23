@@ -34,6 +34,14 @@ Route::middleware('throttle:global')->group(function () {
         ]);
     });
 
+    Route::get('/debug-log', function () {
+        $logFile = storage_path('logs/laravel.log');
+        if (file_exists($logFile)) {
+            return response(file_get_contents($logFile), 200, ['Content-Type' => 'text/plain']);
+        }
+        return response('No log file found.', 404);
+    });
+
     Route::prefix('auth')->group(function () {
         Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:auth');
         Route::post('/logout', [AuthController::class, 'logout']);
