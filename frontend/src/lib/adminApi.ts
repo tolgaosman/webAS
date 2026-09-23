@@ -169,6 +169,15 @@ export async function updateContentBlocks(blocks: Record<string, unknown>): Prom
  * Turkish timeout message.
  */
 export async function uploadImage(file: File): Promise<string> {
+  return uploadFile(file, "/api/portfolio/upload-image");
+}
+
+/** Same contract as uploadImage but for CV files (PersonalTab's "CV" field) — see PortfolioController::uploadDocument. */
+export async function uploadDocument(file: File): Promise<string> {
+  return uploadFile(file, "/api/portfolio/upload-document");
+}
+
+async function uploadFile(file: File, endpoint: string): Promise<string> {
   const formData = new FormData();
   formData.append("file", file);
 
@@ -176,7 +185,7 @@ export async function uploadImage(file: File): Promise<string> {
   const timeoutId = setTimeout(() => controller.abort(), 30000);
 
   try {
-    const res = await fetch("/api/portfolio/upload-image", {
+    const res = await fetch(endpoint, {
       method: "POST",
       credentials: "include",
       body: formData,

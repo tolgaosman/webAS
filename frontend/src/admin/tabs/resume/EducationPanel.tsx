@@ -50,7 +50,7 @@ export function EducationPanel() {
           <label htmlFor="edu-school">School / Institution</label>
           <input id="edu-school" type="text" value={school} onChange={(e) => setSchool(e.target.value)} placeholder="e.g. Hogeschool Rotterdam" required />
           <span className="form-group-hint" aria-hidden="true" style={{ visibility: "hidden" }}>
-            spacer
+            Herhangi bir dilde yazın — kaydedince diğer diller otomatik çevrilir.
           </span>
         </div>
         <TranslatableInput label="Degree / Major" value={degree} onChange={setDegree} placeholder="e.g. International Business" required />

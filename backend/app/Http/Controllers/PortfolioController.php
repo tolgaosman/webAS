@@ -42,6 +42,27 @@ class PortfolioController extends Controller
             'file' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:8192',
         ]);
 
+        return $this->storeUpload($request, 'Görsel');
+    }
+
+    /**
+     * Same disk/route as uploadImage — used by PersonalTab's CV field
+     * (see FileUploadField's `accept` prop) so the admin panel can
+     * replace alaraCV.pdf without a redeploy. mimes:pdf,doc,docx covers
+     * the realistic CV formats; max:8192 (8MB) stays under nginx's
+     * client_max_body_size (10m), same margin uploadImage already uses.
+     */
+    public function uploadDocument(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:pdf,doc,docx|max:8192',
+        ]);
+
+        return $this->storeUpload($request, 'Dosya');
+    }
+
+    private function storeUpload(Request $request, string $label)
+    {
         $file = $request->file('file');
 
         // Laravel's hashName() securely generates a unique, safe filename
@@ -62,15 +83,15 @@ class PortfolioController extends Controller
         }
 
         if (! is_writable($root)) {
-            Log::error('portfolio.upload-image: uploads disk not writable', ['root' => $root]);
+            Log::error('portfolio.upload: uploads disk not writable', ['root' => $root]);
 
             // The route sits behind auth.jwt, so naming the resolved path
             // here isn't a leak to the public — it's what turns a repeat
             // of this failure into a one-look diagnosis instead of
-            // another round of server log spelunking. See deploy.sh's
-            // uploads chown step for the actual fix.
+            // another round of server log spelunking. See
+            // backend/docker/entrypoint.sh for the actual fix.
             return response()->json([
-                'error' => "Görsel kaydedilemedi — sunucu yükleme klasörüne yazamıyor ({$root}).",
+                'error' => "{$label} kaydedilemedi — sunucu yükleme klasörüne yazamıyor ({$root}).",
             ], 500);
         }
 
@@ -80,7 +101,7 @@ class PortfolioController extends Controller
             $file->storeAs('', $filename, 'public_uploads');
         } catch (\Throwable $e) {
             report($e);
-            Log::error('portfolio.upload-image: storeAs threw', [
+            Log::error('portfolio.upload: storeAs threw', [
                 'root' => $root,
                 'message' => $e->getMessage(),
             ]);
@@ -93,7 +114,7 @@ class PortfolioController extends Controller
             // only ever saw "Sunucu hatası oluştu.", with no way to tell
             // a permissions problem apart from anything else.
             return response()->json([
-                'error' => "Görsel kaydedilemedi — sunucu yükleme klasörüne yazamıyor ({$root}).",
+                'error' => "{$label} kaydedilemedi — sunucu yükleme klasörüne yazamıyor ({$root}).",
             ], 500);
         }
 

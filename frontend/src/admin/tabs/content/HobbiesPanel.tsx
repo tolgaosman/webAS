@@ -43,7 +43,7 @@ export function HobbiesPanel() {
           <label htmlFor="hobby-icon">Emoji</label>
           <input id="hobby-icon" type="text" value={icon} onChange={(e) => setIcon(e.target.value)} placeholder="🧘🏻‍♀️" required maxLength={8} />
           <span className="form-group-hint" aria-hidden="true" style={{ visibility: "hidden" }}>
-            spacer
+            Herhangi bir dilde yazın — kaydedince diğer diller otomatik çevrilir.
           </span>
         </div>
         <TranslatableInput label="Label" value={label} onChange={setLabel} placeholder="e.g. Yoga" required />

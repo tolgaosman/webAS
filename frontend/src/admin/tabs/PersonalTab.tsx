@@ -80,20 +80,16 @@ export function PersonalTab() {
             <label htmlFor="p-linkedin">LinkedIn URL</label>
             <input id="p-linkedin" type="text" value={data.linkedin} onChange={(e) => set("linkedin", e.target.value)} />
           </div>
-          <div className="form-group">
-            <label htmlFor="p-cv">CV Dosya Yolu</label>
-            {/* No TR/EN/NL split here — the field writes the same value to
-                all three locales at once (see PersonalController's
-                TranslatableString rule, which still requires `tr` to be
-                present). */}
-            <input
-              id="p-cv"
-              type="text"
-              value={data.cvUrl.tr}
-              onChange={(e) => set("cvUrl", { tr: e.target.value, en: e.target.value, nl: e.target.value })}
-              placeholder="alaraCV.pdf"
-            />
-          </div>
+          {/* No TR/EN/NL split here — the field writes the same value to
+              all three locales at once (see PersonalController's
+              TranslatableString rule, which still requires `tr` to be
+              present). */}
+          <FileUploadField
+            label="CV Dosyası"
+            value={data.cvUrl.tr}
+            kind="document"
+            onChange={(v) => set("cvUrl", { tr: v, en: v, nl: v })}
+          />
         </div>
 
         <button type="submit" className="btn btn-primary" disabled={saving}>

@@ -44,7 +44,7 @@ export function LanguagesPanel() {
           <label htmlFor="lang-stars">Star Level (1 - 5)</label>
           <input id="lang-stars" type="number" min={1} max={5} value={stars} onChange={(e) => setStars(Number(e.target.value))} required />
           <span className="form-group-hint" aria-hidden="true" style={{ visibility: "hidden" }}>
-            spacer
+            Herhangi bir dilde yazın — kaydedince diğer diller otomatik çevrilir.
           </span>
         </div>
         <div className="skill-form-actions">
